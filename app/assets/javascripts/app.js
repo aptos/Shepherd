@@ -5,21 +5,36 @@
 //= require filters
 //= require_self
 
-var shepherdModule = angular.module('shepherd',['ngRoute','ngAnimate','ui.router','angularMoment',
+var shepherdModule = angular.module('shepherd',['ngRoute','ngAnimate','ui.router','angularMoment'
   // 'services', 'directives','filters'
   ]);
 
-shepherdModule.config(['$stateProvider','$urlRouterProvider', '$locationProvider',function($stateProvider, $urlRouterProvider, $locationProvider) {
+shepherdModule
+.config(['$stateProvider','$urlRouterProvider', '$locationProvider',
+  function($stateProvider, $urlRouterProvider, $locationProvider) {
+    /**
+     * Routes and States
+     */
+     $stateProvider
+     .state('home', {
+      url: '/',
+      templateUrl: 'home.html',
+      controller: 'HomeCtrl'
+    });
+
+    // default fall back route
+    $urlRouterProvider.otherwise('/');
+
   }])
 .config(["$httpProvider", function(provider) {
   provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content'),
-  provider.defaults.headers.common['Content-Type'] = 'application/json'
-  }])
+  provider.defaults.headers.common['Content-Type'] = 'application/json';
+}])
 .config(['RestangularProvider', function(provider) {
-  provider.setRestangularFields({ id: "_id" })
+  provider.setRestangularFields({ id: "_id" });
 }]);
 
-shepherdModule.run(['$rootScope', '$window', '$q', 'Restangular', 'Storage', function($rootScope, $window, $q, Restangular, Storage) {
+shepherdModule.run(['$rootScope', '$window', function($rootScope, $window) {
 
   // basic media query for angularjs
   $rootScope.mobile = function() {

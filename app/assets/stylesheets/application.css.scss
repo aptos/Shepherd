@@ -8,19 +8,8 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
- *= require font-awesome
- *= require animate.min
- *= require authenty
- *= require_tree ./dialogs/
- *= require select2
- *= require select2-bootstrap
- *= require jquery-ui-1.10.4.custom
- *= require calendar
- *= require custom
- */
 
-@import "font-awesome";
+ */
+@import "bootstrap/bootstrap";
 @import "layouts";
 @import "buttons";
-@import "custom-animations"
