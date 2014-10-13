@@ -1,16 +1,11 @@
-//= require header
 //= require_tree ./controllers
 //= require_tree ./services
 //= require_tree ./directives
-//= require filters
 //= require_self
 
-var shepherdModule = angular.module('shepherd',['ngRoute','ngAnimate','ui.router','angularMoment'
-  // 'services', 'directives','filters'
-  ]);
+var shepherdModule = angular.module('shepherd',['ngAnimate','ui.router','angularMoment','restangular' ]);
 
-shepherdModule
-.config(['$stateProvider','$urlRouterProvider', '$locationProvider',
+shepherdModule.config(['$stateProvider','$urlRouterProvider', '$locationProvider',
   function($stateProvider, $urlRouterProvider, $locationProvider) {
     /**
      * Routes and States
@@ -18,7 +13,7 @@ shepherdModule
      $stateProvider
      .state('home', {
       url: '/',
-      templateUrl: 'home.html',
+      templateUrl: 'welcome.html',
       controller: 'HomeCtrl'
     });
 

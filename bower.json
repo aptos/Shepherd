@@ -1,3 +1,5 @@
+// rake bower:install
+//
 {
   "lib": {
     "name": "bower-rails generated lib assets",
@@ -6,6 +8,8 @@
       "angular": "latest",
       "angular-ui-router": "latest",
       "angular-animate": "latest",
+      "angular-moment": "latest",
+      "restangular": "latest",
       "bootstrap-sass-official": "latest"
     }
     },

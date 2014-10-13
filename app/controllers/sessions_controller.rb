@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     user = User.from_omniauth(env["omniauth.auth"])
     cookies.permanent[:auth_token] = user.auth_token
 
-    url = session[:return_to] || '/#/Dashboard'
+    url = session[:return_to] || '/#/home'
     session[:return_to] = nil
     url = root_path if url.eql?('/signout')
 

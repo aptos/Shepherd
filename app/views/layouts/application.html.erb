@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html ng-app="shepherd" lang="en">
+<html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Shepherd</title>
-
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
 </head>
-<body>
+<body ng-app="shepherd" >
+
 <%= yield %>
 
 </body>
