@@ -1,0 +1,21 @@
+development: &development
+  protocol: 'http'
+  host: localhost
+  port: 5984
+  prefix: shepherd
+  suffix: development
+  username: admin
+  password: admin
+
+test:
+  <<: *development
+  suffix: test
+
+production:
+  protocol: 'https'
+  host: taskit.cloudant.com
+  port: 443
+  prefix: shepherd
+  suffix: production
+  username: taskit
+  password: <%= ENV['COUCH_PASSWORD'] %>

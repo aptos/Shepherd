@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="shepherd" lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shepherd</title>
+
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+  <%= javascript_include_tag("pace.min.js") %>
+  <%= stylesheet_link_tag("pace-theme-minimal.css") %>
+  <%= csrf_meta_tags %>
+  <%= yield(:head) %>
+  <% unless Rails.env.test? %>
+    <%= render 'layouts/rollbar' %>
+  <% end %>
+</head>
+<body>
+<%= yield %>
+
+<!-- Load javascript last -->
+<%= javascript_include_tag "application" %>
+</body>
+</html>
