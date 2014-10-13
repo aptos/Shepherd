@@ -7,9 +7,6 @@ Shepherd::Application.routes.draw do
   get '/signin/:provider' => 'sessions#new'
   get '/signout' => 'sessions#destroy'
   get '/auth/failure' => 'pages#home'
-  resources :identities
 
-
-  # Catch any other routes and display our own 404
-  get "*path", :to => "application#routing_error", via: [:get, :post]
+  get "*path", :to => 'pages#home', via: [:get, :post]
 end

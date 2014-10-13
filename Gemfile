@@ -28,6 +28,9 @@ gem 'couchrest_model', '2.0.1'
 # javascript assets
 gem 'underscore-rails'
 
+# Bower javascript dependency manager
+gem 'bower-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 

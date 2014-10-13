@@ -5,20 +5,15 @@
 //= require filters
 //= require_self
 
-var shepherdModule = angular.module('shepherd',['ngRoute','ngAnimate','ngSanitize','ngDebounce',
-  ,'restangular','Services', 'Directives','Filters']);
+var shepherdModule = angular.module('shepherd',['ngRoute','ngAnimate','ui.router','angularMoment',
+  // 'services', 'directives','filters'
+  ]);
 
-shepherdModule.config(['$routeProvider',function($routeProvider) {
-  $routeProvider.
-  // Start
-    // Default
-    otherwise({templateUrl: 'assets/welcome.html', controller: StartCtrl});
+shepherdModule.config(['$stateProvider','$urlRouterProvider', '$locationProvider',function($stateProvider, $urlRouterProvider, $locationProvider) {
   }])
 .config(["$httpProvider", function(provider) {
   provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content'),
-  provider.defaults.headers.common['Content-Type'] = 'application/json',
-    // loading indicator and message
-    provider.responseInterceptors.push('myHttpInterceptor');
+  provider.defaults.headers.common['Content-Type'] = 'application/json'
   }])
 .config(['RestangularProvider', function(provider) {
   provider.setRestangularFields({ id: "_id" })

@@ -10,12 +10,10 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require lodash.min
-//= require angular.min
-//= require angular-route.min
-//= require angular-animate.min
-//= require angular-sanitize.min
-//= require restangular.min
-//= require moment.min
+//= require lodash
+//= require angular
+//= require angular-animate
+//= require angular-ui-router
+//= require angular-moment
 //= require app
 //= require_tree .
