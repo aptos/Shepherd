@@ -18,5 +18,7 @@
 //= require angular-ui-router
 //= require angular-moment
 //= require restangular
+//= require angular-rails-templates
 //= require app
 //= require_tree .
+//= require_tree ../templates

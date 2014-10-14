@@ -30,6 +30,10 @@ gem 'underscore-rails'
 
 # Bower javascript dependency manager
 gem 'bower-rails'
+gem 'angular-rails-templates'
+
+# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+gem 'spring',        group: :development
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

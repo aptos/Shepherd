@@ -1,0 +1,10 @@
+<% if current_user %>
+<div ng-include="'navbar.html'"></div>
+<div class="main-view-container" ui-view></div>
+<% else %>
+<div class="dark-page full-height">
+	<div class="absolute-center text-center">
+		<a class="btn btn-success btn-lg btn-inverted" href="/signin/google_login">hello.</a>
+	</div>
+</div>
+<% end %>

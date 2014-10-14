@@ -1,5 +1,5 @@
 Shepherd::Application.routes.draw do
-	root :to => "pages#home"
+	root :to => "pages#index"
 
   # Authentications
   match '/auth/:provider/callback' => 'sessions#create', via: [:get, :post]
@@ -8,5 +8,5 @@ Shepherd::Application.routes.draw do
   get '/signout' => 'sessions#destroy'
   get '/auth/failure' => 'pages#home'
 
-  get "*path", :to => 'pages#home', via: [:get, :post]
+  get "*path", :to => 'pages#index'
 end
