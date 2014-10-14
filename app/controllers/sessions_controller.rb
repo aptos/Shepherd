@@ -11,7 +11,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    logger.info "Authorized: #{omniauth.auth}"
+    email = env['omniauth.auth']['info']['email'] rescue nil
+    unless email =~ /.*@(.*)/ && $1 == "taskit.io"
+      redirect_to "/" and return
+    end
     user = User.from_omniauth(env["omniauth.auth"])
     cookies.permanent[:auth_token] = user.auth_token
 
