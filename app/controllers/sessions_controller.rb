@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
   end
 
   def create
+    logger.info "Authorized: #{omniauth.auth}"
     user = User.from_omniauth(env["omniauth.auth"])
     cookies.permanent[:auth_token] = user.auth_token
 
