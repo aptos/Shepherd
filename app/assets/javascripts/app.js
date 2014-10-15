@@ -1,6 +1,6 @@
-var shepherdModule = angular.module('shepherd', [ 'ngAnimate', 'ui.router','templates','restangular' ]);
+var shepherdModule = angular.module('shepherd', [ 'ngAnimate', 'ui.router','templates','restangular','ui.bootstrap' ]);
 
-shepherdModule.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 
+shepherdModule.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     /**

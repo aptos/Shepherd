@@ -19,6 +19,7 @@
 //= require angular-moment
 //= require restangular
 //= require angular-rails-templates
+//= require angular-bootstrap
 //= require app
 //= require_tree .
 //= require_tree ../templates
