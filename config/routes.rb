@@ -8,5 +8,6 @@ Shepherd::Application.routes.draw do
   get '/signout' => 'sessions#destroy'
   get '/auth/failure' => 'pages#home'
 
+	get "*path.html" => "pages#index", :layout => 0
   get "*path", :to => 'pages#index'
 end

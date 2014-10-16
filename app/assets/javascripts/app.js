@@ -1,44 +1,35 @@
-var shepherdModule = angular.module('shepherd', [ 'ngAnimate', 'ui.router','templates','restangular','ui.bootstrap' ]);
+//= require header
+//= require_tree ./controllers
+//= require_tree ./services
+//= require_tree ./directives
+//= require_self
+
+var shepherdModule = angular.module('shepherd', [ 'ngAnimate', 'ui.router','templates','restangular','ui.bootstrap','Directives' ]);
 
 shepherdModule.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
-    /**
-     * Route and States
-     */
-     $stateProvider
-     .state('home', {
+    $stateProvider
+    .state('home', {
       url: '/',
       templateUrl: 'home.html',
       controller: 'HomeCtrl'
     })
-     .state('signout', {
+    .state('signout', {
       url: '/signout',
       templateUrl: 'signin.html',
       controller: 'AdiosCtrl'
     })
-      // an abstract state that just serves as a
-      // parent for the below child states
-      .state('dashboard', {
-        abstract: true,
-        url: '/dashboard',
-        templateUrl: 'dashboard/layout.html'
-      })
-        // the default route when someone hits dashboard
-        .state('dashboard.one', {
-          url: '',
-          templateUrl: 'dashboard/one.html'
-        })
-        // this is /dashboard/two
-        .state('dashboard.two', {
-          url: '/two',
-          templateUrl: 'dashboard/two.html'
-        })
-        // this is /dashboard/three
-        .state('dashboard.three', {
-          url: '/three',
-          templateUrl: 'dashboard/three.html'
-        });
+    .state('dashboard', {
+      url: '/dashboard',
+      views: {
+        '': { templateUrl: 'dashboard/layout.html' },
+        'worldMap@dashboard': {
+          templateUrl: 'dashboard/user_map.html',
+          controller: 'UsersCtrl'
+        }
+      }
+    });
 
     // default fallback route
     $urlRouterProvider.otherwise('/');

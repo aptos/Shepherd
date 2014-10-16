@@ -20,6 +20,8 @@
 //= require restangular
 //= require angular-rails-templates
 //= require angular-bootstrap
+//= require ./plugins/jquery-jvectormap-2.0.0.min
+//= require ./plugins/jquery-jvectormap-world-mill-en
 //= require app
 //= require_tree .
 //= require_tree ../templates
