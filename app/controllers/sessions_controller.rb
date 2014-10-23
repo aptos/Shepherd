@@ -15,14 +15,14 @@ class SessionsController < ApplicationController
     unless email =~ /.*@(.*)/ && $1 == "taskit.io"
       redirect_to "/" and return
     end
-    user = User.from_omniauth(env["omniauth.auth"])
-    cookies.permanent[:auth_token] = user.auth_token
+    admin = Admin.from_omniauth(env["omniauth.auth"])
+    cookies.permanent[:auth_token] = admin.auth_token
 
     url = session[:return_to] || '/dashboard'
     session[:return_to] = nil
     url = root_path if url.eql?('/signout')
 
-    session[:user_id] = user.id
+    session[:user_id] = admin.id
     redirect_to url
   end
 

@@ -1,35 +1,41 @@
 class User < CouchRest::Model::Base
-  property :email, type: String
-  property :provider, type: String
+  property :uid, String
+  property :provider, type: String, :default => 'linkedin'
+  property :admin, TrueClass, :default => false, :read_only => true
   property :name, String
+  property :positions, Array
+  property :company, Hash
+  property :email, type: String
   property :info, Hash
-  property :auth_token, String
-  unique_id :email
-  timestamps!
+  property :address, Hash
+  property :skills, Array
+  property :certifications, Array
+  property :recommendations, Array
+  property :documents, Hash
+  property :s3_img_url, String
+  property :current_location, Hash
+  property :visits, Integer, default: 1
+  unique_id :uid
 
-  before_create { generate_auth_token }
-
-  def self.from_omniauth(auth)
-    User.find(auth['info']['email']) || create_with_omniauth(auth)
-  end
-
-  def self.create_with_omniauth(auth)
-    create! do |user|
-      user.email = auth['info']['email']
-      user.name = auth['info']['name']
-      user.info = auth['info']
-    end
+  design do
+    view :by_uid
   end
 
   design do
     view :by_email
-    view :by_auth_token
   end
 
-  def generate_auth_token
-    begin
-      self[:auth_token] = SecureRandom.urlsafe_base64(12,false)
-    end while User.by_auth_token.key(self[:auth_token]).first
+  design do
+    view :by_company,
+    :map =>
+    "function(doc) {
+    if (doc['type'] == 'User' && doc.company) {
+      emit(doc.company.id, { id: doc.uid, text: doc.name });
+    }
+    };"
   end
 
+  design do
+    view :by_created_at
+  end
 end
