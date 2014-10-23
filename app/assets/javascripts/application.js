@@ -13,10 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require lodash
+//= require moment
 //= require angular
 //= require angular-animate
 //= require angular-ui-router
-//= require angular-moment
 //= require restangular
 //= require angular-rails-templates
 //= require angular-bootstrap

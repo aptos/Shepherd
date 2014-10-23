@@ -4,6 +4,14 @@ html, body, .main-view-container {
   height:100%;
 }
 
+body {
+  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857;
+  color: #626262;
+  background-color: #f3f3f3;
+}
+
 .page {
   height: 100%;
   margin-top: -20px;

@@ -1,10 +1,16 @@
 function UsersCtrl($scope, Restangular) {
 
+  $scope.as_of = "month";
+
   Restangular.all('api/users').getList()
   .then( function(users) {
     $scope.users = users;
     updateMap();
+    $scope.total_users = $scope.users.length;
+    $scope.new_users = users.reduce(function(u, user) { return (moment(user.created_at).isSame(moment(),$scope.as_of)) ? u + 1 : u; }, 0);
+    $scope.visitors = users.reduce(function(u, user) { return (moment(user.updated_at).isSame(moment(),$scope.as_of)) ? u + 1 : u; }, 0);
   });
+
 
   // Initialize map
   var marker_data;

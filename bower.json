@@ -6,7 +6,7 @@
       "angular": "~1.2.26",
       "angular-ui-router": "latest",
       "angular-animate": "~1.2.26",
-      "angular-moment": "latest",
+      "moment": "latest",
       "angular-bootstrap": "latest",
       "restangular": "latest",
       "bootstrap-sass-official": "latest"
