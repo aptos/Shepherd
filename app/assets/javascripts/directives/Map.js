@@ -2,9 +2,10 @@ var directives = angular.module('Directives');
 
 directives.directive('uiJvectormap', function () {
   return {
-    restrict: 'A',
+    restrict: 'AE',
     scope: {
-      options: '='
+      options: '=',
+      markers: '='
     },
     link: function(scope, ele, attrs) {
       var options;
@@ -40,8 +41,15 @@ directives.directive('uiJvectormap', function () {
       };
 
       angular.extend(config, options);
+      ele.vectorMap(config);
 
-      return ele.vectorMap(config);
+      var map = ele.vectorMap('get', 'mapObject');
+
+      scope.$watch(attrs.markers, function (markers) {
+        if (!!markers) {
+          map.addMarkers( markers );
+        }
+      });
     }
   };
 });

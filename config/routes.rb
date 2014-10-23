@@ -8,8 +8,8 @@ Shepherd::Application.routes.draw do
   get '/signout' => 'sessions#destroy'
   get '/auth/failure' => 'pages#home'
 
-  get '/users' => 'users#index'
-  get '/users/:id' => 'users#show', :constraints => { :id => /[^\/]*/ }
+  get '/api/users' => 'users#index'
+  get '/api/users/:id' => 'users#show', :constraints => { :id => /[^\/]*/ }
 
 	get "*path.html" => "pages#index", :layout => 0
   get "*path", :to => 'pages#index'
