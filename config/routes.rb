@@ -11,6 +11,10 @@ Shepherd::Application.routes.draw do
   get '/api/users' => 'users#index'
   get '/api/users/:id' => 'users#show', :constraints => { :id => /[^\/]*/ }
 
+  get '/api/tasks' => 'tasks#index'
+  get '/api/tasks/stats' => 'tasks#stats'
+  get '/api/tasks/:id' => 'tasks#summary', :constraints => { :id => /[^\/]*/ }
+
 	get "*path.html" => "pages#index", :layout => 0
   get "*path", :to => 'pages#index'
 end

@@ -1,5 +1,5 @@
 <section class="panel panel-default map-panel center-block">
-	<div class="panel-heading text-left"><strong><i class="fa fa-globe fa-lg"></i> World Map</strong></div>
+	<div class="panel-heading text-left"><strong><i class="fa fa-globe fa-lg"></i> User Locations</strong></div>
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-lg-8">
@@ -8,7 +8,7 @@
       <div class="col-lg-4 text-left">
         <h3 class="text-thin">Total Users - {{total_users}}</h3>
         <div class="divider divider-dashed"></div>
-        <p>Visitors {{visitors}} (this {{as_of}})</p>
+        <p>{{visitors}} Visitors (this {{as_of}})</p>
         <div class="progress">
           <div class="progress-bar" role="progressbar" aria-valuenow="{{new_users}}" aria-valuemin="0" aria-valuemax="{{visitors}}" style="width: {{new_users/visitors * 100}}%;">
             {{new_users}} new

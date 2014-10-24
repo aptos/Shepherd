@@ -26,6 +26,10 @@ shepherdModule.config(['$stateProvider', '$urlRouterProvider', '$locationProvide
         'worldMap@dashboard': {
           templateUrl: 'dashboard/user_map.html',
           controller: 'UsersCtrl'
+        },
+        'taskStats@dashboard': {
+          templateUrl: 'dashboard/task_stats.html',
+          controller: 'TasksCtrl'
         }
       }
     });
