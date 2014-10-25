@@ -1,5 +1,22 @@
 <% if current_user %>
-<div ng-include="'navbar.html'"></div>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Shepherd</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li ui-sref-active="active"><a ui-sref="dashboard">Dashboard</a></li>
+    </ul>
+    <ul class="nav navbar-nav">
+      <li ui-sref-active="active"><a ui-sref="users">Users</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li ui-sref-active="active"><a ui-sref="signout">Sign Out</a></li>
+    </ul>
+
+  </div>
+</nav>
 <div class="main-view-container" ui-view></div>
 <% else %>
 <div class="dark-page full-height">

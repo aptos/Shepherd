@@ -3,12 +3,12 @@ angular.module('shepherd.dashboard',['restangular'])
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     .state('dashboard', {
-      url: '/dashboard',
+      url: '/',
       views: {
         '': { templateUrl: 'dashboard/layout.html' },
         'worldMap@dashboard': {
           templateUrl: 'dashboard/user_map.html',
-          controller: 'UsersCtrl'
+          controller: 'UsersMapCtrl'
         },
         'taskStats@dashboard': {
           templateUrl: 'dashboard/task_stats.html',
@@ -17,7 +17,7 @@ angular.module('shepherd.dashboard',['restangular'])
       }
     });
   }])
-.controller('UsersCtrl',['$scope','Restangular', function ($scope, Restangular) {
+.controller('UsersMapCtrl',['$scope','Restangular', function ($scope, Restangular) {
 
   $scope.as_of = "month";
 

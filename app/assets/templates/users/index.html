@@ -1,0 +1,40 @@
+<div class="container">
+  <section class="panel panel-default center-block">
+    <div class="panel-heading text-left">
+      <strong><i class="fa fa-user fa-lg"></i> Users Report</strong>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <form class="form-search">
+            <input type="text" class="form-control" placeholder="Search" ng-model="query" />
+          </form>
+        </div>
+        <div class="col-sm-3">
+          <h4>
+            <a>{{(users | filter:query).length}} users</a>
+          </h4>
+        </div>
+      </div>
+      <div class="row">
+        <table class="table table-hover table-responsive-rows sortable">
+          <thead>
+            <tr>
+              <th ng-repeat="th in head" ng-click="changeSorting(th.column)" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls(th.column)]">{{th.head}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending">
+              <td name="Name" >{{user.name}}</td>
+              <td name="Email" >{{user.id}}</td>
+              <td name="Visits" >{{user.visits}}</td>
+              <td name="Company" ><a ng-href="{{user.company['website']}}">{{user.company['name']}}</a></td>
+              <td name="Last Visit" >{{user.updated_at | moment:dateformat}}</td>
+              <td name="Created" >{{user.created_at | moment:dateformat}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

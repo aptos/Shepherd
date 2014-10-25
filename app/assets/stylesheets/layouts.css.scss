@@ -71,9 +71,52 @@ body {
 
 .text-muted { color: #999; }
 
+.table-hover tbody tr td {
+  cursor:pointer;
+}
+
+.table-hover tbody tr:hover td {
+  background-color:#eeeeee;
+}
+
+table.sortable th {
+  cursor: pointer;
+}
+table.sortable th.sort-desc { color: #2A6496; }
+table.sortable th.sort-asc { color: #2A6496; }
+
 @media all and (max-width: 640px) {
   .layout-single-column {
     width: auto;
     .row { margin-right: 0px !important;}
+  }
+  .table-responsive-rows {
+    thead, tbody, th, td, tr {
+      display: block;
+    }
+    thead { display: none; }
+    tr {
+      margin-bottom: 15px;
+      border-top: 1px solid #ccc;
+    }
+    td {
+      border: none;
+      padding: 0;
+    }
+    td:not(:first-child):before {
+      content: attr(name);
+      padding-right: 10px;
+      color: $label;
+      width: 95%;
+    }
+
+    tr td:first-child {
+      text-align: center;
+      background: #eee;
+      line-height: 1.6;
+      font-size: 1.3em;
+      color: $label;
+      margin-bottom: 5px;
+    }
   }
 }
