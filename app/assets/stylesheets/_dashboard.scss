@@ -4,3 +4,15 @@
 .dashboard-ui-view{
 	@extend .main-view-container;
 }
+
+.fa.users_dot {
+  font-size: 14px;
+  padding: 4px;
+  color: #428bca;
+}
+
+.fa.companies_dot {
+  font-size: 14px;
+  padding: 4px;
+  color: #78AA63;
+}

@@ -1,11 +1,17 @@
-//= require header
 //= require_tree ./controllers
 //= require_tree ./directives
 //= require_self
 
-var shepherdModule = angular.module('shepherd', [ 'ngAnimate', 'ui.router','templates','restangular','ui.bootstrap','Directives' ]);
-
-shepherdModule.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
+var app = angular.module('shepherd', [
+  'ngAnimate',
+  'ui.router',
+  'templates',
+  'restangular',
+  'ui.bootstrap',
+  'shepherd.dashboard',
+  'shepherd.maps'
+])
+.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     $stateProvider
@@ -18,20 +24,6 @@ shepherdModule.config(['$stateProvider', '$urlRouterProvider', '$locationProvide
       url: '/signout',
       templateUrl: 'signin.html',
       controller: 'AdiosCtrl'
-    })
-    .state('dashboard', {
-      url: '/dashboard',
-      views: {
-        '': { templateUrl: 'dashboard/layout.html' },
-        'worldMap@dashboard': {
-          templateUrl: 'dashboard/user_map.html',
-          controller: 'UsersCtrl'
-        },
-        'taskStats@dashboard': {
-          templateUrl: 'dashboard/task_stats.html',
-          controller: 'TasksCtrl'
-        }
-      }
     });
 
     // default fallback route
@@ -40,4 +32,12 @@ shepherdModule.config(['$stateProvider', '$urlRouterProvider', '$locationProvide
     // enable HTML5 mode for SEO
     $locationProvider.html5Mode(true);
 
-  }]);
+  }])
+.controller('HomeCtrl',[function () {
+  console.info("Welcome Home!");
+}])
+.controller('AdiosCtrl',['Restangular', '$window', function ( Restangular, $window) {
+  console.info("Adios!");
+  Restangular.one('signout').get();
+  $window.location.reload();
+}]);

@@ -1,6 +1,5 @@
-var directives = angular.module('Directives');
-
-directives.directive('uiJvectormap', function () {
+angular.module('shepherd.maps',[])
+.directive('uiJvectormap', function () {
   return {
     restrict: 'AE',
     scope: {

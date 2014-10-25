@@ -23,6 +23,11 @@ Shepherd::Application.routes.draw do
   get '/api/tasks/stats' => 'tasks#stats'
   get '/api/tasks/:id' => 'tasks#summary', :constraints => { :id => /[^\/]*/ }
 
+  # Companies
+  get '/api/companies' => 'companies#index'
+  get '/api/companies/locations' => 'companies#locations'
+  get '/api/companies/:id' => 'companies#show', :constraints => { :id => /[^\/]*/ }
+
   # SEO enabled paths for angular routes
 	get "*path.html" => "pages#index", :layout => 0
   get "*path", :to => 'pages#index'

@@ -6,7 +6,9 @@
 				<div class="ui-map" ui-jvectormap options="worldMap" markers="markers"></div>
 			</div>
       <div class="col-lg-4 text-left">
-        <h3 class="text-thin">Total Users - {{total_users}}</h3>
+        <h3 class="text-thin"><i class="fa fa-circle users_dot"></i> Total Users - {{total_users}}</h3>
+        <h3 class="text-thin"><i class="fa fa-circle companies_dot"></i> Total Providers - {{companies.length}}</h3>
+        <span class="text-muted" style="margin-left: 2em;">in {{locations_count}} cities</span>
         <div class="divider divider-dashed"></div>
         <p>{{visitors}} Visitors (this {{as_of}})</p>
         <div class="progress">
