@@ -23,7 +23,7 @@ gem 'dalli'
 gem 'memcachier'
 
 # db is couch
-gem 'couchrest_model', '2.0.1'
+gem 'couchrest_model', '2.0.3'
 
 # javascript assets
 gem 'underscore-rails'

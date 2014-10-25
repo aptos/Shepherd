@@ -16,9 +16,15 @@ module ApplicationHelper
   end
 
   def authenticate_user!
-    if !(current_user || auth_with_token)
+    if !current_user
       redirect_to root_url, :alert => 'You need to sign in for access to this page.'
     end
+  end
+
+  def site
+    db_name = cookies[:site] || "taskit"
+    Rails.logger.info "DB: #{db_name}"
+    @site ||= Site.create(slug: "#{db_name}_#{Rails.env}" )
   end
 
 end

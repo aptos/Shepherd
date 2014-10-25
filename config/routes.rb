@@ -8,13 +8,22 @@ Shepherd::Application.routes.draw do
   get '/signout' => 'sessions#destroy'
   get '/auth/failure' => 'pages#home'
 
+
+  # Api Access for our app
+  #
+  # Multi-db site selection
+  match '/api/site' => 'sessions#change_site', via: [:get, :post]
+
+  # Users
   get '/api/users' => 'users#index'
   get '/api/users/:id' => 'users#show', :constraints => { :id => /[^\/]*/ }
 
+  # Tasks
   get '/api/tasks' => 'tasks#index'
   get '/api/tasks/stats' => 'tasks#stats'
   get '/api/tasks/:id' => 'tasks#summary', :constraints => { :id => /[^\/]*/ }
 
+  # SEO enabled paths for angular routes
 	get "*path.html" => "pages#index", :layout => 0
   get "*path", :to => 'pages#index'
 end

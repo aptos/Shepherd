@@ -13,7 +13,8 @@ class Setting < CouchRest::Model::Base
   property :credentials, Hash
   property :referral, String
   property :company_invite_token, String
-  timestamps!
+
+  proxied_by :site
 
   design do
     view :by_uid

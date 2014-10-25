@@ -18,12 +18,19 @@ class SessionsController < ApplicationController
     admin = Admin.from_omniauth(env["omniauth.auth"])
     cookies.permanent[:auth_token] = admin.auth_token
 
-    url = session[:return_to] || '/dashboard'
-    session[:return_to] = nil
+    url = '/dashboard'
     url = root_path if url.eql?('/signout')
 
     session[:user_id] = admin.id
+
     redirect_to url
+  end
+
+  def change_site
+    cookies.permanent[:site] = params[:site]
+    @site = Site.create(slug: "#{params[:site]}_#{Rails.env}")
+
+    render :json => { ok: true, site: site }
   end
 
   def destroy

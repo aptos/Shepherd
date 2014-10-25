@@ -4,11 +4,11 @@ class UsersController < ApplicationController
   respond_to :json
 
   def index
-    @users = User.summary.rows.map{|r| r['value']}
+    @users = site.users.summary.rows.map{|r| r['value']}
 
     # add in values from settings
     settings = Hash.new
-    Setting.summary.rows.map{|r| settings[r['key']] = r['value'] }
+    site.settings.summary.rows.map{|r| settings[r['key']] = r['value'] }
     @users.map do |s|
       ['role', 'entity', 'latLong','email_notifications'].map{|v| s[v] = settings[s['id']][v] if settings[s['id']][v] }
     end
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = User.find(params[:id])
+    user = site.users.find(params[:id])
     render :json => user
   end
 

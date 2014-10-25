@@ -17,6 +17,8 @@ class User < CouchRest::Model::Base
   property :visits, Integer, default: 1
   unique_id :uid
 
+  proxied_by :site
+
   design do
     view :by_uid
   end
