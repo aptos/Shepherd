@@ -1,25 +1,29 @@
 <div class="page page-profile">
 
   <header class="profile-header">
-    <div class="col-sm-6">
+    <div class="col-sm-7">
       <div ng-show="user.s3_img_url" class="profile-img col-sm-3">
         <img alt="" ng-src="{{user.s3_img_url}}" class="img-circle">
       </div>
-      <div class="col-sm-8">
-        <h1 class="text-thin">{{user.name}}</h1>
+      <div class="col-sm-8 profile-userdata">
+        <h1 class="text-thin" style="margin-top:0;">{{user.name}}</h1>
         <h4>{{user.info.headline}}</h4>
-        <div class="profile-company" ng-show="user.company">
-          <img ng-src="{{user.company.logo_url}}" class="company-logo-small">
-          <span>{{user.company.name}}</span>
+        <p>{{user.email}}</p>
+        <div class="profile-company media" ng-show="user.company">
+          <img ng-src="{{user.company.logo_url}}" class="company-logo-small media-object pull-left">
+          <div class="media-body">
+            <h5>{{user.company.name}}</h5>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-5">
       <div class="ui-map-small" ui-jvectormap options="worldMap" markers="markers"></div>
       <span>{{address}}</span>
     </div>
     <div class="profile-info">
       <ul class="list-unstyled list-inline">
+        <li><span class="label label-primary">Role: {{user.role}}</span></li>
         <li><span class="label label-default">Visits: {{user.visits}}</span></li>
         <li><span class="label label-info">Last Visit: {{user.last_visit |  moment:'timeago'}}</span</li>
       </ul>

@@ -28,6 +28,7 @@ class Setting < CouchRest::Model::Base
       "function(doc) {
         if (doc['type'] == 'Setting') {
           var latLong = (!!doc.latLong) ? doc.latLong : '';
+          var email = (!!doc.contact.email) ? doc.contact.email : doc.uid;
           emit(
             doc.uid,
             { uid: doc.uid, name: doc.name, email: doc.contact.email, email_notifications: doc.email_notifications, role: doc.role, entity: doc.entity, company_id: doc.company_id, latLong: latLong  }

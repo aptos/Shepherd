@@ -10,7 +10,8 @@ class UsersController < ApplicationController
     settings = Hash.new
     site.settings.summary.rows.map{|r| settings[r['key']] = r['value'] }
     @users.map do |s|
-      ['role', 'entity', 'latLong','email_notifications'].map{|v| s[v] = settings[s['id']][v] if settings[s['id']][v] }
+      next unless settings[s['id']]
+      ['email','role', 'entity', 'latLong','email_notifications'].map { |v| s[v] = settings[s['id']][v] if settings[s['id']][v] }
     end
 
     render :json => @users
@@ -21,6 +22,8 @@ class UsersController < ApplicationController
     user['last_visit'] = user.updated_at
     settings = site.settings.by_uid.key(params[:id]).first
     user.merge! settings
+
+    Rails.logger.info "user: #{JSON.pretty_generate user}"
 
     render :json => user
   end

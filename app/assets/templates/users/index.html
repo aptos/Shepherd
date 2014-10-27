@@ -26,7 +26,7 @@
           <tbody>
             <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: user.id})">
               <td name="Name" >{{user.name}}</td>
-              <td name="Email" >{{user.id}}</td>
+              <td name="Email" >{{user.email}}</td>
               <td name="Visits" >{{user.visits}}</td>
               <td name="Company" ><a ng-href="{{user.company['website']}}">{{user.company['name']}}</a></td>
               <td name="Last Visit" >{{user.updated_at | moment:dateformat}}</td>

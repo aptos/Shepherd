@@ -14,10 +14,11 @@ var app = angular.module('shepherd', [
   'shepherd.users',
   'shepherd.profile'
   ])
-.run(['$rootScope', '$state', '$stateParams',
-  function ($rootScope, $state, $stateParams) {
+.run(['$rootScope', '$state', '$stateParams', '$cookies',
+  function ($rootScope, $state, $stateParams, $cookies) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
+    $rootScope.site = $cookies.site;
   }])
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -47,14 +48,12 @@ var app = angular.module('shepherd', [
     'taskit': 'TaskIT'
   };
   $scope.setSite = function (site) {
-    console.info("Set Site ",site)
     Restangular.one('api/site').get({site: site}).then( function (resp) {
       $scope.site = resp.site;
-    }, function () { console.error(resp)});
+    }, function () { console.error(resp); });
     $state.go('dashboard');
     $window.location.reload();
   };
-  console.info("Site: ", $scope.siteNames[$scope.site])
 }])
 .filter('moment', function() {
   return function(dateString, format, eob) {

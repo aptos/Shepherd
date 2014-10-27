@@ -18,6 +18,11 @@ angular.module('shepherd.profile',['restangular'])
   Restangular.one('api/users',id).get()
   .then( function(user) {
     $scope.user = user;
+    getLocation(user);
+  });
+
+  var getLocation = function(user) {
+    if (!user) return;
     if (!!user.latLong) {
       $scope.latLong = user.latLong;
       $scope.address = user.contact.address;
@@ -34,7 +39,7 @@ angular.module('shepherd.profile',['restangular'])
         style: { fill: '#428bca'}
       }];
     }
-  });
+  };
 
   // Initialize map
   var marker_data;
