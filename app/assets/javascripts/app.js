@@ -4,16 +4,18 @@
 
 var app = angular.module('shepherd', [
   'ngAnimate',
+  'ngCookies',
   'ui.router',
   'templates',
   'restangular',
   'ui.bootstrap',
   'shepherd.dashboard',
   'shepherd.maps',
-  'shepherd.users'
+  'shepherd.users',
+  'shepherd.profile'
   ])
 .run(['$rootScope', '$state', '$stateParams',
-  function ($rootScope,   $state,   $stateParams) {
+  function ($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
   }])
@@ -37,6 +39,22 @@ var app = angular.module('shepherd', [
   console.info("Adios!");
   Restangular.one('signout').get();
   $window.location.reload();
+}])
+.controller('SiteCtrl',['$scope', '$cookies', 'Restangular', '$window','$state', function ($scope, $cookies, Restangular, $window, $state) {
+  $scope.site = $cookies.site;
+  $scope.siteNames = {
+    'taskit-pro': 'Juniper',
+    'taskit': 'TaskIT'
+  };
+  $scope.setSite = function (site) {
+    console.info("Set Site ",site)
+    Restangular.one('api/site').get({site: site}).then( function (resp) {
+      $scope.site = resp.site;
+    }, function () { console.error(resp)});
+    $state.go('dashboard');
+    $window.location.reload();
+  };
+  console.info("Site: ", $scope.siteNames[$scope.site])
 }])
 .filter('moment', function() {
   return function(dateString, format, eob) {

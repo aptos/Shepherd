@@ -14,6 +14,8 @@ class Setting < CouchRest::Model::Base
   property :referral, String
   property :company_invite_token, String
 
+  timestamps!
+
   proxied_by :site
 
   design do

@@ -3,7 +3,7 @@ angular.module('shepherd.users',['restangular'])
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     .state('users', {
-      url: '/',
+      url: '/users',
       views: {
         '': {
           templateUrl: 'users/index.html',

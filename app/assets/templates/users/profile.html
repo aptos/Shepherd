@@ -1,0 +1,33 @@
+<div class="page page-profile">
+
+  <header class="profile-header">
+    <div class="col-sm-6">
+      <div ng-show="user.s3_img_url" class="profile-img col-sm-3">
+        <img alt="" ng-src="{{user.s3_img_url}}" class="img-circle">
+      </div>
+      <div class="col-sm-8">
+        <h1 class="text-thin">{{user.name}}</h1>
+        <h4>{{user.info.headline}}</h4>
+        <div class="profile-company" ng-show="user.company">
+          <img ng-src="{{user.company.logo_url}}" class="company-logo-small">
+          <span>{{user.company.name}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="ui-map-small" ui-jvectormap options="worldMap" markers="markers"></div>
+      <span>{{address}}</span>
+    </div>
+    <div class="profile-info">
+      <ul class="list-unstyled list-inline">
+        <li><span class="label label-default">Visits: {{user.visits}}</span></li>
+        <li><span class="label label-info">Last Visit: {{user.last_visit |  moment:'timeago'}}</span</li>
+      </ul>
+    </div>
+  </header>
+
+
+  <div class="container">
+    more stuff
+  </div>
+</div>

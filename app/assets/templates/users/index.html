@@ -24,7 +24,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending">
+            <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: user.id})">
               <td name="Name" >{{user.name}}</td>
               <td name="Email" >{{user.id}}</td>
               <td name="Visits" >{{user.visits}}</td>

@@ -12,6 +12,18 @@
       <li ui-sref-active="active"><a ui-sref="users">Users</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown text-normal" ng-controller="SiteCtrl">
+      <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+        <div>{{siteNames[site]}}</div>
+      </a>
+      <ul class="dropdown-menu with-arrow pull-right" role="menu">
+        <li ng-show="site !== 'taskit-pro' ">
+          <a href="javascript:;" ng-click="setSite('taskit-pro')">Juniper</a>
+        </li>
+        <li ng-show="site !== 'taskit' ">
+          <a href="javascript:;" ng-click="setSite('taskit')">TaskIT</a>
+        </li>
+      </ul>
       <li ui-sref-active="active"><a ui-sref="signout">Sign Out</a></li>
     </ul>
 
@@ -20,8 +32,8 @@
 <div class="main-view-container" ui-view></div>
 <% else %>
 <div class="dark-page full-height">
-	<div class="absolute-center text-center">
-		<a class="btn btn-success btn-lg btn-inverted" href="/signin/google_login">hello.</a>
-	</div>
+  <div class="absolute-center text-center">
+    <a class="btn btn-success btn-lg btn-inverted" href="/signin/google_login">hello.</a>
+  </div>
 </div>
 <% end %>

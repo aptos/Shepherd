@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
     cookies.permanent[:site] = params[:site]
     @site = Site.create(slug: "#{params[:site]}_#{Rails.env}")
 
-    render :json => { ok: true, site: site }
+    render :json => { ok: true, site: params[:site] }
   end
 
   def destroy

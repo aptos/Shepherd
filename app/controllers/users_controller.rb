@@ -18,7 +18,17 @@ class UsersController < ApplicationController
 
   def show
     user = site.users.find(params[:id])
+    user['last_visit'] = user.updated_at
+    settings = site.settings.by_uid.key(params[:id]).first
+    user.merge! settings
+
     render :json => user
+  end
+
+  def stats
+    stats = site.tasks.by_owner_and_status.reduce.rows
+
+    render :json => stats
   end
 
 end

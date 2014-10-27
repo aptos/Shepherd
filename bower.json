@@ -8,6 +8,7 @@
       "angular-animate": "~1.2.26",
       "moment": "latest",
       "angular-bootstrap": "latest",
+      "angular-cookies": "latest",
       "restangular": "latest",
       "bootstrap-sass-official": "latest"
     }
