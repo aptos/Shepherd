@@ -69,6 +69,14 @@ body {
   margin-right: auto;
 }
 
+// add font awesome character into element on left
+.fa.overlap-left {
+  z-index: 10;
+  position: relative;
+  left: -1.5em;
+  color: #333;
+}
+
 .text-muted { color: #999; }
 
 .table-hover tbody tr td {

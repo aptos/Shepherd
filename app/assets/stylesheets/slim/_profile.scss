@@ -2,7 +2,7 @@
 
   .profile-header {
     position: relative;
-    height: 285px;
+    height: 320px;
     margin: 0 -15px 15px;
     padding: 20px 30px 90px;
     background: url('hero-blue.jpg') no-repeat center center fixed;
@@ -17,6 +17,7 @@
 
   .profile-img {
     display: inline-block;
+    margin-top: 3em;
     margin-right: 20px;
     img {
       max-width: 120px;

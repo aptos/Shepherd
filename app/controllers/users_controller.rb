@@ -23,8 +23,6 @@ class UsersController < ApplicationController
     settings = site.settings.by_uid.key(params[:id]).first
     user.merge! settings
 
-    Rails.logger.info "user: #{JSON.pretty_generate user}"
-
     render :json => user
   end
 

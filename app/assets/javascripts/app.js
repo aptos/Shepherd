@@ -20,6 +20,12 @@ var app = angular.module('shepherd', [
     $rootScope.$stateParams = $stateParams;
     $rootScope.site = $cookies.site;
   }])
+.config(["$httpProvider", function(provider) {
+  provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+}])
+.config(['RestangularProvider', function(provider) {
+  provider.setRestangularFields({ id: "_id" })
+}])
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider

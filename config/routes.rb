@@ -19,6 +19,10 @@ Shepherd::Application.routes.draw do
   get '/api/users/stats' => 'users#stats'
   get '/api/users/:id' => 'users#show', :constraints => { :id => /[^\/]*/ }
 
+  # Lead, local version of User
+  get '/api/leads/:uid' => 'leads#show', :constraints => { :uid => /[^\/]*/ }
+  post '/api/leads' => 'leads#update', :constraints => { :uid => /[^\/]*/ }
+
   # Tasks
   get '/api/tasks' => 'tasks#index'
   get '/api/tasks/stats' => 'tasks#stats'

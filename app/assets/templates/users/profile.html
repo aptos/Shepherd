@@ -23,15 +23,23 @@
     </div>
     <div class="profile-info">
       <ul class="list-unstyled list-inline">
+        <li>
+          <span class="ui-select">
+            <select ng-model="lead.status" ng-change="updateLead()" style="width:150px;">
+              <option value="" disabled selected>-- Lead Status --</option>
+              <option ng-repeat="item in lead_options" value="{{item}}">{{item}}</option>
+            </select>
+          </span>
+          <!-- <i class="fa fa-angle-down overlap-left"></i> -->
+        </li>
         <li><span class="label label-primary">Role: {{user.role}}</span></li>
         <li><span class="label label-default">Visits: {{user.visits}}</span></li>
         <li><span class="label label-info">Last Visit: {{user.last_visit |  moment:'timeago'}}</span</li>
       </ul>
     </div>
   </header>
-
-
   <div class="container">
-    more stuff
+    <div class="col-md-6" ui-view="notes"></div>
+    <div class="col-md-6" ui-view="activity"></div>
   </div>
 </div>

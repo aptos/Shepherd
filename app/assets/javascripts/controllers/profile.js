@@ -8,6 +8,14 @@ angular.module('shepherd.profile',['restangular'])
         '': {
           templateUrl: 'users/profile.html',
           controller: 'UserCtrl'
+        },
+        'notes@profile': {
+          templateUrl: 'users/notes.html',
+          controller: 'NotesCtrl'
+        },
+        'activity@profile': {
+          templateUrl: 'users/activity.html',
+          controller: 'ActivityCtrl'
         }
       }
     });
@@ -15,11 +23,31 @@ angular.module('shepherd.profile',['restangular'])
 .controller('UserCtrl',['$scope','$stateParams','Restangular', function ($scope, $stateParams, Restangular) {
   var id = $stateParams.id;
 
+  $scope.lead_options = ['New','Cold','Warm','Hot'];
+
   Restangular.one('api/users',id).get()
   .then( function(user) {
     $scope.user = user;
     getLocation(user);
   });
+
+  Restangular.one('api/leads',id).get()
+  .then( function(lead) {
+    if (!!lead.uid) {
+      $scope.lead = lead;
+    } else {
+      $scope.lead = { uid: id};
+    }
+  });
+
+  $scope.updateLead = function () {
+    $scope.update_fail = false;
+    Restangular.all('api/leads').post($scope.lead).then( function (lead) {
+      $scope.lead = lead;
+    }, function () {
+      $scope.update_fail = true;
+    });
+  };
 
   var getLocation = function(user) {
     if (!user) return;
@@ -60,5 +88,14 @@ angular.module('shepherd.profile',['restangular'])
       }
     }
   };
+
+}])
+.controller('NotesCtrl',['$scope','$stateParams','Restangular', function ($scope, $stateParams, Restangular) {
+  var id = $stateParams.id;
+  console.info("Notes!")
+}])
+.controller('ActivityCtrl',['$scope','$stateParams','Restangular', function ($scope, $stateParams, Restangular) {
+  var id = $stateParams.id;
+  console.info("Activity!")
 
 }]);
