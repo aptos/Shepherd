@@ -1,8 +1,110 @@
 <section class="panel panel-default map-panel center-block">
-  <div class="panel-heading text-left"><strong><i class="fa fa-comment fa-lg"></i> Notes</strong></div>
-  <div class="panel-body">
-    <div class="row">
-      notes
-    </div>
-  </div>
+	<div class="panel-heading text-left"><strong><i class="fa fa-comment fa-lg"></i> Notes</strong></div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="page page-tasks">
+				<div class="row">
+					<div class="col-md-12">
+						<section class="task-container">
+
+							<form ng-submit="add()" class="add-task">
+								<input type="text"
+								placeholder="What needs to be done?"
+								class="form-control"
+								ng-model="newTask"
+								autofocus>
+								<a type="submit" class="submit-button" ng-click="add()">
+									<span class="fa fa-plus pointer"></span>
+								</a>
+							</form>
+
+							<section>
+								<ul class="filters list-inline nav nav-tabs">
+									<li ng-class="{active: statusFilter == ''}">
+										<a href="" 
+										data-toggle="tab"
+										ng-click="filter('all')"
+										>All</a>
+									</li>
+									<li ng-class="{active: statusFilter.completed == false }">
+										<a href=""
+										data-toggle="tab"
+										ng-click="filter('active')"
+										>Active</a>
+									</li>
+									<li ng-class="{active: statusFilter.completed == true }">
+										<a href=""
+										data-toggle="tab"
+										ng-click="filter('completed')"
+										>Completed</a>
+									</li>
+								</ul>
+							</section>
+
+							<section  ng-cloak>
+								<ul class="task-list list-unstyled">
+									<li ng-repeat="task in tasks | filter:statusFilter track by $index" 
+									ng-class="{completed: task.completed, editing: task == editedTask}">
+									<span class="view">
+										<input type="checkbox"
+										class="toggle-task"
+										ng-model="task.completed"
+										ng-change="completed(task)">
+										<label ng-dblclick="edit(task)">{{task.title}}</label>
+										<span class="fa fa-pencil edit-action"
+										ng-click="edit(task)"></span>
+										<span class="fa fa-times edit-action"
+										ng-click="remove(task, $index)"
+										></span>
+									</span>
+									<form ng-submit="doneEditing(task, $index)">
+										<input type="text"
+										class="edit form-control"
+										ng-trim="false"
+										ng-model="task.title"
+										ng-blur="doneEditing(task, $index)"
+										data-task-focus="task == editedTask">
+									</form>
+								</li>
+							</ul>
+						</section>
+
+						<footer class="task-footer">
+							<ul class="list-inline clearfix">
+								<li class="first-item">
+									<input type="checkbox"
+									id="toggle-all"
+									ng-model="allChecked"
+									ng-change="markAll(allChecked)">
+									<label for="toggle-all">Mark all as done</label>
+								</li>
+								<li class="text-center">
+									<span>
+										<strong>{{remainingCount}}</strong>
+										<span class="text-muted"
+										ng-pluralize count="remainingCount"
+										when="{one: 'item left', other: 'items left'}"></span>
+									</span>                            
+								</li>
+								<li class="text-right">
+									<span class="clear-completed"
+									ng-click="clearCompleted()"
+									ng-show="remainingCount < tasks.length">Clear completed ({{tasks.length - remainingCount}})</span>                            
+								</li>
+							</ul>
+						</footer>
+
+					</section>
+				</div>
+			</div>
+
+			<div class="callout callout-info">
+				<p>Tips:</p>
+				<p> - Double click the task (or click the edit icon on the right of the task) to edit, then click anywhere else done editing.</p>
+				<p> - Type a something needs to done, then press "return" key (or the plus icon on the left) to add a new task</p>
+				<p> - Click the remove icon on the right of the task to remove</p>
+			</div>
+		</div>
+	</div>
+</div>
 </section>

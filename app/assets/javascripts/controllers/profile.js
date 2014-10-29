@@ -11,7 +11,7 @@ angular.module('shepherd.profile',['restangular'])
         },
         'notes@profile': {
           templateUrl: 'users/notes.html',
-          controller: 'NotesCtrl'
+          controller: 'TaskCtrl'
         },
         'activity@profile': {
           templateUrl: 'users/activity.html',

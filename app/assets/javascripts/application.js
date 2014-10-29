@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require lodash
 //= require moment
+//= require toastr
 //= require angular
 //= require angular-animate
 //= require angular-ui-router

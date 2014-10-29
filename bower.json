@@ -10,7 +10,8 @@
       "angular-bootstrap": "latest",
       "angular-cookies": "latest",
       "restangular": "latest",
-      "bootstrap-sass-official": "latest"
+      "bootstrap-sass-official": "latest",
+      "toastr": "~2.0.1"
     }
   }
 }

@@ -1,5 +1,6 @@
 //= require_tree ./controllers
 //= require_tree ./directives
+//= require_tree ./services
 //= require_self
 
 var app = angular.module('shepherd', [
@@ -9,16 +10,18 @@ var app = angular.module('shepherd', [
   'templates',
   'restangular',
   'ui.bootstrap',
+  'shepherd.services',
   'shepherd.dashboard',
   'shepherd.maps',
   'shepherd.users',
-  'shepherd.profile'
+  'shepherd.profile',
+  'shepherd.task'
   ])
 .run(['$rootScope', '$state', '$stateParams', '$cookies',
   function ($rootScope, $state, $stateParams, $cookies) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-    $rootScope.site = $cookies.site;
+    $rootScope.site = $cookies.site || 'taskit';
   }])
 .config(["$httpProvider", function(provider) {
   provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
@@ -48,7 +51,7 @@ var app = angular.module('shepherd', [
   $window.location.reload();
 }])
 .controller('SiteCtrl',['$scope', '$cookies', 'Restangular', '$window','$state', function ($scope, $cookies, Restangular, $window, $state) {
-  $scope.site = $cookies.site;
+  $scope.site = $cookies.site || 'taskit';
   $scope.siteNames = {
     'taskit-pro': 'Juniper',
     'taskit': 'TaskIT'
