@@ -21,9 +21,16 @@ Shepherd::Application.routes.draw do
 
   # Lead, local version of User
   get '/api/leads/:uid' => 'leads#show', :constraints => { :uid => /[^\/]*/ }
-  post '/api/leads' => 'leads#update', :constraints => { :uid => /[^\/]*/ }
+  post '/api/leads/:uid' => 'leads#update', :constraints => { :uid => /[^\/]*/ }
 
-  # Tasks
+  # Notes
+  get '/api/leads/:uid/notes' => 'leads#notes', :constraints => { :uid => /[^\/]*/ }
+  get '/api/notes/reminders' => 'notes#reminders'
+  post '/api/notes' => 'notes#create', :constraints => { :uid => /[^\/]*/ }
+  post '/api/notes/:id' => 'notes#update'
+  delete '/api/notes/:id' => 'notes#destroy'
+
+  # Tasks aka Projects
   get '/api/tasks' => 'tasks#index'
   get '/api/tasks/stats' => 'tasks#stats'
   get '/api/tasks/:id' => 'tasks#summary', :constraints => { :id => /[^\/]*/ }

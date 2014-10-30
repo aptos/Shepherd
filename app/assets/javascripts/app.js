@@ -10,12 +10,14 @@ var app = angular.module('shepherd', [
   'templates',
   'restangular',
   'ui.bootstrap',
+  'monospaced.elastic',
   'shepherd.services',
+  'shepherd.widgets',
   'shepherd.dashboard',
   'shepherd.maps',
   'shepherd.users',
   'shepherd.profile',
-  'shepherd.task'
+  'shepherd.notes'
   ])
 .run(['$rootScope', '$state', '$stateParams', '$cookies',
   function ($rootScope, $state, $stateParams, $cookies) {

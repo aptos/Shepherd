@@ -25,4 +25,10 @@ class LeadsController < ApplicationController
     render :json => lead
   end
 
+  def notes
+    @notes = Note.by_uid.key(params[:uid])
+
+    render :json => @notes
+  end
+
 end
