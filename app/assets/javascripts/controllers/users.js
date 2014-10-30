@@ -22,9 +22,9 @@ angular.module('shepherd.users',['restangular'])
 
   $scope.head = [
   {head: "Name", column: "name"},
-  {head: "Email", column: "id"},
-  {head: "Visits", column: "visits"},
+  {head: "Segment", column: "lead.segment"},
   {head: "Company", column: "company['name']"},
+  {head: "Visits", column: "visits"},
   {head: "Last Visit", column: "updated_at"},
   {head: "Created", column: "created_at"}
   ];

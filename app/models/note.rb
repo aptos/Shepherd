@@ -4,6 +4,7 @@ class Note < CouchRest::Model::Base
   property :owner, String
   property :details, String
   property :due_date, Date
+  property :completed, TrueClass
 
   timestamps!
 

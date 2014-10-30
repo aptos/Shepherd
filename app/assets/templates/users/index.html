@@ -1,5 +1,5 @@
 <div class="container">
-  <section class="panel panel-default center-block">
+  <section class="panel panel-default center-block users-report">
     <div class="panel-heading text-left">
       <strong><i class="fa fa-user fa-lg"></i> Users Report</strong>
     </div>
@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="row">
-        <table class="table table-hover table-responsive-rows sortable">
+        <table class="table table-hover table-responsive-rows sortable user-table">
           <thead>
             <tr>
               <th ng-repeat="th in head" ng-click="changeSorting(th.column)" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls(th.column)]">{{th.head}}</th>
@@ -25,10 +25,10 @@
           </thead>
           <tbody>
             <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: user.id})">
-              <td name="Name" >{{user.name}}</td>
-              <td name="Email" >{{user.email}}</td>
-              <td name="Visits" >{{user.visits}}</td>
+              <td name="Name">{{user.name}} <span class="user-mailto"><a ng-href="mailto:{{user.email}}" target="_blank"><i class="fa fa-envelope-o"></i><a/></span></td>
+              <td name="Segment" >{{user.lead.segment}}</td>
               <td name="Company" ><a ng-href="{{user.company['website']}}">{{user.company['name']}}</a></td>
+              <td name="Visits" >{{user.visits}}</td>
               <td name="Last Visit" >{{user.updated_at | moment:dateformat}}</td>
               <td name="Created" >{{user.created_at | moment:dateformat}}</td>
             </tr>

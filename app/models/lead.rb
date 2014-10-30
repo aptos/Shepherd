@@ -1,8 +1,7 @@
 class Lead < CouchRest::Model::Base
   property :_id, String
   property :uid, String
-  property :name, String
-  property :status, String, :default => 'New'
+  property :segment, String, :default => 'Onboard'
   property :last_contacted, Date
 
   timestamps!
@@ -10,4 +9,5 @@ class Lead < CouchRest::Model::Base
   design do
     view :by_uid
   end
+
 end

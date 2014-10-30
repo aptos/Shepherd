@@ -13,7 +13,8 @@ angular.module('shepherd.notes', [])
       }
     };
   }])
-.controller('NotesCtrl', ['$scope','$stateParams', 'Restangular', 'filterFilter', '$rootScope', 'logger', function($scope, $stateParams, Restangular, $rootScope, logger) {
+.controller('NotesCtrl', ['$scope','$stateParams', 'Restangular', '$rootScope', 'logger', 
+  function($scope, $stateParams, Restangular, $rootScope, logger) {
   var uid = $stateParams.id;
 
   var refresh = function () {
@@ -27,7 +28,8 @@ angular.module('shepherd.notes', [])
     console.info("Add",$scope.note)
     $scope.note.uid = uid;
     Restangular.all('api/notes').post($scope.note).then( function (note) {
-      logger.logSuccess('New note: "' + $scope.note.title + '" added');
+      var msg = (!!note.due_date) ? 'New Reminder added' : 'New Note added';
+      logger.logSuccess(msg);
       $scope.note = {};
       refresh();
     });
@@ -39,21 +41,25 @@ angular.module('shepherd.notes', [])
 
   $scope.doneEditing = function(note) {
     $scope.editedTask = null;
-    Restangular.one('api/notes', note._id).post(note).then( function (note) {
+    Restangular.one('api/notes').post(note._id, note).then( function (note) {
       logger.logSuccess('Note Updated!');
       refresh();
     });
   };
 
   $scope.remove = function(note) {
-    Restangular.one('api/notes', note.id).delete($scope.note).then( function (resp) {
+    Restangular.one('api/notes',note._id).remove().then( function (resp) {
       refresh();
     });
-    return logger.logError('Note removed!');
+    return logger.logError('Note has been removed!');
   };
 
   $scope.completed = function(note) {
     console.info("completed", note)
+    Restangular.one('api/notes').post(note._id, note).then( function (note) {
+      logger.logSuccess('Reminder Completed!');
+      refresh();
+    });
   };
 
   // return $scope.$watch('remainingCount', function(newVal, oldVal) {

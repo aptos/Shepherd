@@ -25,9 +25,9 @@
       <ul class="list-unstyled list-inline">
         <li>
           <span class="ui-select">
-            <select ng-model="lead.status" ng-change="updateLead()" style="width:150px;">
+            <select ng-model="lead.segment" ng-change="updateLead()" style="width:150px;">
               <option value="" disabled selected>-- Lead Status --</option>
-              <option ng-repeat="item in lead_options" value="{{item}}">{{item}}</option>
+              <option ng-repeat="item in segments" value="{{item}}">{{item}}</option>
             </select>
           </span>
           <!-- <i class="fa fa-angle-down overlap-left"></i> -->

@@ -24,6 +24,24 @@
           }
         }
 
+        .task-created-date, .task-due-date {
+          position: relative;
+          top: 10px;
+          z-index: 9;
+          width: 200px;
+          margin: 0 auto;
+          background: #fff;
+          text-align: center;
+          border: solid 1px rgba(0, 92, 148, 0.2);
+          border-radius: 5px;
+          padding: 2px;
+          color: #999;
+        }
+
+        .task-due-date {
+          border-color: rgba(192, 23, 1, 0.2);
+        }
+
       }
 
     // add-on style
@@ -86,10 +104,13 @@
           padding: 0 12px 0 40px;
           border-radius: $border-radius-base;
           background-color: $reverse;
-          box-shadow: 0 0 1px rgba(0,0,0,.2);
+          box-shadow: 0 0 1px rgba(0, 92, 148, 0.42);
           &:hover {
             .fa.edit-action {
               display: block;
+            }
+            label {
+              margin-top: 30px;
             }
           }
 
@@ -104,6 +125,7 @@
             margin: 0;
             width: 100%;
             padding: 12px 0 12px;
+            @include transition(all .15s ease-in-out);
           }
 
           .fa.edit-action {

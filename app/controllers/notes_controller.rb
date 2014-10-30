@@ -4,7 +4,7 @@ class NotesController < ApplicationController
   respond_to :json
 
   def reminders
-    @notes = Notes.reminders.all
+    @notes = Note.reminders.all
 
     render :json => @notes
   end
@@ -18,7 +18,7 @@ class NotesController < ApplicationController
   end
 
   def update
-    @note = Notes.find(params[:id])
+    @note = Note.find(params[:id])
     unless @note
       render :json => { error: "Note not found: #{params[:id]}" }, :status => 404 and return
     end
@@ -30,13 +30,13 @@ class NotesController < ApplicationController
   end
 
   def destroy
-    @note = Notes.find(params[:id])
+    @note = Note.find(params[:id])
     unless @note
       render :json => { error: "Note not found: #{params[:id]}" }, :status => 404 and return
     end
     @note.destroy
 
-    respond_with(status: 'Deleted')
+    render :json => { ok: true, message: 'note permanently removed'}
   end
 
 end

@@ -1,51 +1,52 @@
 <section class="panel panel-default map-panel center-block">
 	<div class="panel-heading">
-    <strong><i class="fa fa-comment fa-lg"></i> Notes</strong>
-    <span class="pull-right">
-      <strong>{{remainingCount}}</strong>
-      <span
-      ng-pluralize count="remainingCount"
-      when="{one: 'reminder', other: 'reminders'}"></span>
-    </span>
-  </div>
-  <div class="panel-body">
-    <div class="row">
-     <div class="page page-tasks">
-      <div class="row">
-       <div class="col-md-12">
-        <section class="task-container">
+		<strong><i class="fa fa-comment fa-lg"></i> Notes</strong>
+		<span class="pull-right">
+			<strong>{{remainingCount}}</strong>
+			<span
+			ng-pluralize count="remainingCount"
+			when="{one: 'reminder', other: 'reminders'}"></span>
+		</span>
+	</div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="page page-tasks">
+				<div class="row">
+					<div class="col-md-12">
+						<section class="task-container">
 
-          <form ng-submit="add()" class="add-task">
-            <textarea msd-elastic="\n" placeholder="What needs to be done?" class="form-control" ng-model="note.details" autofocus/>
-            <!-- <input placeholder="What needs to be done?" class="form-control" ng-model="note.details" autofocus/> -->
-            <a type="submit" class="submit-button" ng-click="add()">
-              <span class="fa fa-plus pointer"></span>
-            </a>
-            <div select-addtime ng-model="note.due_date"></div>
-          </form>
+							<form ng-submit="add()" class="add-task">
+								<textarea msd-elastic="\n" placeholder="What needs to be done?" class="form-control" ng-model="note.details" autofocus/>
+								<!-- <input placeholder="What needs to be done?" class="form-control" ng-model="note.details" autofocus/> -->
+								<a type="submit" class="submit-button" ng-click="add()">
+									<span class="fa fa-plus pointer"></span>
+								</a>
+								<div select-addtime ng-model="note.due_date"></div>
+							</form>
 
-        <section  ng-cloak>
-          <ul class="task-list list-unstyled">
-           <li ng-repeat="note in notes" ng-class="{reminder: !!note.due_date, editing: note.id == editedNote.id}">
-           <span class="view">
-            <input type="checkbox" class="toggle-task" ng-change="completed(note)" ng-model="note.completed">
-            <label ng-dblclick="edit(note)">{{note.details}}</label>
-            <span class="fa fa-calendar edit-action"
-            ng-click="setDate(note)"></span>
-            <span class="fa fa-pencil edit-action"
-            ng-click="edit(note)"></span>
-            <span class="fa fa-times edit-action"
-            ng-click="remove(note)"
-            ></span>
-          </span>
-          <form ng-submit="doneEditing(note)">
-            <input type="text"
-            class="edit form-control"
-            ng-trim="false"
-            ng-model="note.details"
-            ng-blur="doneEditing(note)"
-            data-task-focus="note == editedNotenote">
-          </form>
-        </li>
-      </ul>
-    </section>
+							<section  ng-cloak>
+								<ul class="task-list list-unstyled">
+									<li ng-repeat="note in notes | orderBy: 'created_at':true" ng-class="{completed: note.completed, editing: note == editedNote}">
+										<div ng-hide="note.due_date" class="task-created-date">{{note.created_at | moment:'timeago'}}</div>
+										<div ng-show="note.due_date" class="task-due-date">
+											<i class="fa fa-calendar"></i> {{note.due_date | moment:'timeago'}}
+										</div>
+										<span class="view">
+											<input ng-show="!!note.due_date" type="checkbox" class="toggle-task" ng-change="completed(note)" ng-model="note.completed">
+											<label ng-dblclick="edit(note)">{{note.details}}</label>
+											<span ng-hide="note.completed">
+												<span class="fa fa-calendar edit-action" ng-click="setDate(note)"></span>
+												<span class="fa fa-pencil edit-action" ng-click="edit(note)"></span>
+											</span>
+											<span class="fa fa-times edit-action" ng-click="remove(note)"></span>
+										</span>
+										<form ng-submit="doneEditing(note)">
+											<textarea msd-elastic="\n"  class="edit form-control" ng-trim="false" ng-model="note.details" ng-blur="doneEditing(note)" data-task-focus="note == editedNotenote"></textarea>
+										</form>
+									</li>
+								</ul>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>

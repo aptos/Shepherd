@@ -13,6 +13,11 @@ class UsersController < ApplicationController
       next unless settings[s['id']]
       ['email','role', 'entity', 'latLong','email_notifications'].map { |v| s[v] = settings[s['id']][v] if settings[s['id']][v] }
     end
+    
+    # add lead
+    leads = Hash.new
+    Lead.by_uid.map{|r| leads[r[:uid]] = r.to_hash.slice('segment','last_contacted')}
+    @users.map{|u| u[:lead] = leads[u['id']]}
 
     render :json => @users
   end

@@ -20,10 +20,10 @@ angular.module('shepherd.profile',['restangular'])
       }
     });
   }])
-.controller('UserCtrl',['$scope','$stateParams','Restangular', function ($scope, $stateParams, Restangular) {
+.controller('UserCtrl',['$scope','$stateParams','Restangular','logger', function ($scope, $stateParams, Restangular, logger) {
   var id = $stateParams.id;
 
-  $scope.lead_options = ['New','Cold','Warm','Hot'];
+  $scope.segments = ['Onboard','Qualify','Educate','Close','Nurture'];
 
   Restangular.one('api/users',id).get()
   .then( function(user) {
@@ -42,8 +42,9 @@ angular.module('shepherd.profile',['restangular'])
 
   $scope.updateLead = function () {
     $scope.update_fail = false;
-    Restangular.all('api/leads').post($scope.lead).then( function (lead) {
+    Restangular.one('api/leads').post(id, $scope.lead).then( function (lead) {
       $scope.lead = lead;
+      logger.logSuccess('Note Updated!');
     }, function () {
       $scope.update_fail = true;
     });
