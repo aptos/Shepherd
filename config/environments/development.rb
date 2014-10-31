@@ -28,4 +28,9 @@ Shepherd::Application.configure do
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
 
+  # Adding supported databases
+  config.sites = [
+    { db: 'taskit', label: 'TaskIT'},
+    { db: 'taskit-pro', label: 'Juniper'}
+  ]
 end

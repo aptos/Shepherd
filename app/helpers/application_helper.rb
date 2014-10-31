@@ -22,7 +22,7 @@ module ApplicationHelper
   end
 
   def site
-    db_name = cookies[:site] || "taskit"
+    db_name = cookies[:site] || Shepherd::Application.config.sites.first[:db]
     Rails.logger.info "DB: #{db_name}"
     @site ||= Site.create(slug: "#{db_name}_#{Rails.env}" )
   end

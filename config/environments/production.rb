@@ -92,4 +92,9 @@ Shepherd::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  # Adding supported databases
+  config.sites = [
+    { db: 'taskitone', label: 'TaskIT'},
+    { db: 'taskit-pro', label: 'Juniper'}
+  ]
 end
