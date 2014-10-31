@@ -17,12 +17,11 @@
         <div>{{siteNames[site]}}</div>
       </a>
       <ul class="dropdown-menu with-arrow pull-right" role="menu">
-        <li ng-show="site !== 'taskit-pro' ">
-          <a href="javascript:;" ng-click="setSite('taskit-pro')">Juniper</a>
+        <% Shepherd::Application.config.sites.each do |site| %>
+        <li ng-hide="site == '<%= site[:db] %>'">
+          <a href="javascript:;" ng-click="setSite('<%= site[:db] %>')"><%= site[:label] %></a>
         </li>
-        <li ng-show="site !== 'taskit' ">
-          <a href="javascript:;" ng-click="setSite('taskit')">TaskIT</a>
-        </li>
+        <% end %>
       </ul>
       <li ui-sref-active="active"><a ui-sref="signout">Sign Out</a></li>
     </ul>
