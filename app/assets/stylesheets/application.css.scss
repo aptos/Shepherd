@@ -10,7 +10,8 @@
  *
  *= require jquery-jvectormap-2.0.0
  */
-
+@import "slim/var";
+@import "slim/bootstrap-variables";
 @import "bootstrap";
 @import "bourbon/bourbon";
 @import "font-awesome";

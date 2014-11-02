@@ -43,7 +43,6 @@ angular.module('shepherd.widgets',[])
       scope.due_in = function (number, of, selected) {
         var dateObj = moment().add(number, of);
         ngModel.$setViewValue(dateObj.format('YYYY-MM-DD'));
-        scope.when = dateObj.fromNow();
       };
     },
     /*jshint multistr: true */
@@ -70,6 +69,6 @@ angular.module('shepherd.widgets',[])
     </ul>\
     </div>\
     </li>\
-    </ul><span class="due-date-label">{{when}}</span>'
+    </ul>'
   };
 });

@@ -1,38 +1,68 @@
 <% if current_user %>
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container">
+<section class="header-container">
+  <header class="top-header clearfix">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
 
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Shepherd</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li ui-sref-active="active"><a ui-sref="dashboard">Dashboard</a></li>
-    </ul>
-    <ul class="nav navbar-nav">
-      <li ui-sref-active="active"><a ui-sref="users">Users</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown text-normal" ng-controller="SiteCtrl">
-      <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-        <div>{{siteNames[site]}}</div>
-      </a>
-      <ul class="dropdown-menu with-arrow pull-right" role="menu">
-        <% Shepherd::Application.config.sites.each do |site| %>
-        <li ng-hide="site == '<%= site[:db] %>'">
-          <a href="javascript:;" ng-click="setSite('<%= site[:db] %>')"><%= site[:label] %></a>
-        </li>
-        <% end %>
-      </ul>
-      <li ui-sref-active="active"><a ui-sref="signout">Sign Out</a></li>
-    </ul>
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Shepherd</a>
+        </div>
+        <ul class="nav navbar-nav nav-left" ng-controller="NavCtrl">
+          <li ui-sref-active="active"><a ui-sref="dashboard">Dashboard</a></li>
+          <li ui-sref-active="active"><a ui-sref="users">Users</a></li>
 
-  </div>
-</nav>
+          <li class="dropdown alerts">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="badge badge-info">{{reminders.length}}</span>
+            </a>
+            <div class="dropdown-menu with-arrow panel panel-default">
+              <div class="panel-heading">
+                You have {{reminders.length}} reminders
+              </div>
+              <ul class="list-group">
+                <li class="list-group-item"  ng-repeat="task in reminders | orderBy: 'due_date'" ng-click="$state.go('profile', {id: task.uid})">
+                  <h5>{{task.name}}</h5>
+                  <div class="media">
+                    <span class="pull-left media-left media-icon">
+                      <span class="btn-icon btn-icon-round" ng-class="{true:'btn-primary', false: 'btn-warning'}[is_due(task.due_date)]">
+                        <i class="fa fa-bell-o"></i>
+                      </span>
+                    </span>
+                    <div class="media-body block">
+                      <span class="block">{{task.details}}</span>
+                      <span class="text-muted block">{{task.due_date | moment:'timeago'}}</span>
+                    </div>
+                  </div>
+                </li>
+              </div>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown text-normal" ng-controller="SiteCtrl">
+              <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                <div>{{siteNames[site]}}</div>
+              </a>
+              <ul class="dropdown-menu with-arrow pull-right" role="menu">
+                <% Shepherd::Application.config.sites.each do |site| %>
+                <li ng-hide="site == '<%= site[:db] %>'">
+                  <a href="javascript:;" ng-click="setSite('<%= site[:db] %>')"><%= site[:label] %></a>
+                </li>
+                <% end %>
+              </ul>
+              <li ui-sref-active="active"><a ui-sref="signout">Sign Out</a></li>
+            </ul>
+
+          </div>
+        </nav>
+    </header>
+  </section>
 <div class="main-view-container" ui-view></div>
-<% else %>
-<div class="dark-page full-height">
-  <div class="absolute-center text-center">
-    <a class="btn btn-success btn-lg btn-inverted" href="/signin/google_login" target="_self" >hello.</a>
+  <% else %>
+  <div class="dark-page full-height">
+    <div class="absolute-center text-center">
+      <a class="btn btn-success btn-lg btn-inverted" href="/signin/google_login" target="_self" >hello.</a>
+    </div>
   </div>
-</div>
-<% end %>
+  <% end %>

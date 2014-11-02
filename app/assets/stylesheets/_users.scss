@@ -1,15 +1,29 @@
 .user-table {
-	td .user-mailto {
-		visibility:hidden;
-		opacity:0;
-		@include transition(all .2s ease-in-out);
-		&:hover {
-			cursor: pointer;
-			color: $gray-dark;
-		}
-	}
-	tr:hover td .user-mailto {
-		visibility:visible;
-		opacity:1;
-	}
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+
+  .row-name { width: 40%; }
+  .row-segment { width: 20%; }
+  .row-visits { width: 20%; }
+  .row-latest { width: 20%; }
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  td .user-mailto {
+    visibility:hidden;
+    opacity:0;
+    @include transition(all .2s ease-in-out);
+    &:hover {
+      cursor: pointer;
+      color: $gray-dark;
+    }
+  }
+  tr:hover td .user-mailto {
+    visibility:visible;
+    opacity:1;
+  }
 }

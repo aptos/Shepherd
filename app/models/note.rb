@@ -1,10 +1,11 @@
 class Note < CouchRest::Model::Base
   property :_id, String
+  property :name, String
   property :uid, String
   property :owner, String
   property :details, String
   property :due_date, Date
-  property :completed, TrueClass
+  property :completed, TrueClass, :default => false
 
   timestamps!
 
@@ -16,7 +17,7 @@ class Note < CouchRest::Model::Base
     view :reminders,
     :map =>
     "function(doc) {
-    if (doc.type == 'Note' && !!doc.due_date) {
+    if (doc.type == 'Note' && !!doc.due_date & !doc.completed) {
       emit(doc.uid, doc);
     }
     };"

@@ -25,7 +25,7 @@ Shepherd::Application.routes.draw do
 
   # Notes
   get '/api/leads/:uid/notes' => 'leads#notes', :constraints => { :uid => /[^\/]*/ }
-  get '/api/notes/reminders' => 'notes#reminders'
+  get '/api/notes' => 'notes#reminders'
   post '/api/notes' => 'notes#create', :constraints => { :uid => /[^\/]*/ }
   post '/api/notes/:id' => 'notes#update'
   delete '/api/notes/:id' => 'notes#destroy'

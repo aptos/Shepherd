@@ -20,17 +20,24 @@
         <table class="table table-hover table-responsive-rows sortable user-table">
           <thead>
             <tr>
-              <th ng-repeat="th in head" ng-click="changeSorting(th.column)" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls(th.column)]">{{th.head}}</th>
+              <th class="row-name" ng-click="changeSorting('name')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('name')]">User</th>
+              <th class="row-name" ng-click="changeSorting('lead.segment')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('lead.segment')]">Segment</th>
+              <th class="row-name" ng-click="changeSorting('visits')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('visits')]">Visits</th>
+              <th class="row-name" ng-click="changeSorting('updated_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('updated_at')]">Last Visit</th>
+              <th class="row-name" ng-click="changeSorting('created_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('created_at')]">Joined</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: user.id})">
-              <td name="Name">{{user.name}} <span class="user-mailto"><a ng-href="mailto:{{user.email}}" target="_blank"><i class="fa fa-envelope-o"></i><a/></span></td>
+              <td name="Name">
+                {{user.name}} <span class="user-mailto"><a ng-href="mailto:{{user.email}}" target="_blank"><i class="fa fa-envelope-o"></i><a/></span>
+                <br />
+                <a ng-href="{{user.company['website']}}">{{user.company['name']}}</a>
+              </td>
               <td name="Segment" >{{user.lead.segment}}</td>
-              <td name="Company" ><a ng-href="{{user.company['website']}}">{{user.company['name']}}</a></td>
               <td name="Visits" >{{user.visits}}</td>
               <td name="Last Visit" >{{user.updated_at | moment:dateformat}}</td>
-              <td name="Created" >{{user.created_at | moment:dateformat}}</td>
+              <td name="Joined" >{{user.created_at | moment:dateformat}}</td>
             </tr>
           </tbody>
         </table>

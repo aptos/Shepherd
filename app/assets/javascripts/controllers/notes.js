@@ -13,56 +13,62 @@ angular.module('shepherd.notes', [])
       }
     };
   }])
-.controller('NotesCtrl', ['$scope','$stateParams', 'Restangular', '$rootScope', 'logger', 
+.controller('NotesCtrl', ['$scope','$stateParams', 'Restangular', '$rootScope', 'logger',
   function($scope, $stateParams, Restangular, $rootScope, logger) {
-  var uid = $stateParams.id;
+    var uid = $stateParams.id;
 
-  var refresh = function () {
-    Restangular.all('api/leads/' + uid + '/notes' ).getList().then( function(notes) {
-      $scope.notes = notes;
+    Restangular.one('api/users',uid).get()
+    .then( function(user) {
+      $scope.user = user;
     });
-  };
-  refresh();
 
-  $scope.add = function() {
-    console.info("Add",$scope.note)
-    $scope.note.uid = uid;
-    Restangular.all('api/notes').post($scope.note).then( function (note) {
-      var msg = (!!note.due_date) ? 'New Reminder added' : 'New Note added';
-      logger.logSuccess(msg);
-      $scope.note = {};
-      refresh();
-    });
-  };
+    var refresh = function (broadcast) {
+      Restangular.all('api/leads/' + uid + '/notes' ).getList().then( function(notes) {
+        $scope.notes = notes;
+        $scope.remainingCount = _.filter(notes, function (note) { return !!note.due_date && !note.completed; }).length;
+        console.info("refresh notes", broadcast)
+        if (!!broadcast) $rootScope.$broadcast('taskRemaining:changed');
+      });
+    };
+    refresh();
 
-  $scope.edit = function(note) {
-    return $scope.editedNote = note;
-  };
+    $scope.add = function() {
+      console.info("Add",$scope.note)
+      $scope.note.uid = uid;
+      $scope.note.name = $scope.user.name;
 
-  $scope.doneEditing = function(note) {
-    $scope.editedTask = null;
-    Restangular.one('api/notes').post(note._id, note).then( function (note) {
-      logger.logSuccess('Note Updated!');
-      refresh();
-    });
-  };
+      Restangular.all('api/notes').post($scope.note).then( function (note) {
+        var msg = (!!note.due_date) ? 'New Reminder added' : 'New Note added';
+        logger.logSuccess(msg);
+        $scope.note = {};
+        refresh(true);
+      });
+    };
 
-  $scope.remove = function(note) {
-    Restangular.one('api/notes',note._id).remove().then( function (resp) {
-      refresh();
-    });
-    return logger.logError('Note has been removed!');
-  };
+    $scope.edit = function(note) {
+      return $scope.editedNote = note;
+    };
 
-  $scope.completed = function(note) {
-    console.info("completed", note)
-    Restangular.one('api/notes').post(note._id, note).then( function (note) {
-      logger.logSuccess('Reminder Completed!');
-      refresh();
-    });
-  };
+    $scope.doneEditing = function(note) {
+      $scope.editedTask = null;
+      Restangular.one('api/notes').post(note._id, note).then( function (note) {
+        logger.logSuccess('Note Updated!');
+        refresh();
+      });
+    };
 
-  // return $scope.$watch('remainingCount', function(newVal, oldVal) {
-  //   return $rootScope.$broadcast('noteRemaining:changed', newVal);
-  // });
-}]);
+    $scope.remove = function(note) {
+      Restangular.one('api/notes',note._id).remove().then( function (resp) {
+        refresh(true);
+      });
+      return logger.logError('Note has been removed!');
+    };
+
+    $scope.completed = function(note) {
+      console.info("completed", note)
+      Restangular.one('api/notes').post(note._id, note).then( function (note) {
+        logger.logSuccess('Reminder Completed!');
+        refresh(true);
+      });
+    };
+  }]);

@@ -30,19 +30,26 @@
           z-index: 9;
           width: 200px;
           margin: 0 auto;
+          font-weight: 700;
+          color: #999;
           background: #fff;
           text-align: center;
           border: solid 1px rgba(0, 92, 148, 0.2);
           border-radius: 5px;
           padding: 2px;
-          color: #999;
         }
 
         .task-due-date {
-          border-color: rgba(192, 23, 1, 0.2);
+          color: #fff;
+          background-color: #428BCA;
         }
-
+        .task-due-date.primary { background-color: $brand-primary; border: none; }
+        .task-due-date.success { background-color: $brand-success; border: none; }
+        .task-due-date.info { background-color: $brand-info; border: none; }
+        .task-due-date.warning { background-color: $brand-warning; border: none; }
+        .task-due-date.danger { background-color: $brand-danger; border: none; }
       }
+
 
     // add-on style
 
@@ -139,9 +146,6 @@
               color: $gray-dark;
               @include transform(scale(1.3));
             }
-          }
-          .fa-calendar  {
-            right: 64px;
           }
           .fa-pencil  {
             right: 40px;

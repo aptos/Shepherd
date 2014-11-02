@@ -13,6 +13,7 @@ var app = angular.module('shepherd', [
   'monospaced.elastic',
   'shepherd.services',
   'shepherd.widgets',
+  'shepherd.header',
   'shepherd.dashboard',
   'shepherd.maps',
   'shepherd.users',
@@ -24,12 +25,16 @@ var app = angular.module('shepherd', [
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.site = $cookies.site || 'taskit';
+
+    $rootScope.is_due = function (due_date) {
+      return moment(due_date).diff(moment(),'d') > 2;
+    };
   }])
 .config(["$httpProvider", function(provider) {
-  provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+  provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
 }])
 .config(['RestangularProvider', function(provider) {
-  provider.setRestangularFields({ id: "_id" })
+  provider.setRestangularFields({ id: "_id" });
 }])
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -47,25 +52,6 @@ var app = angular.module('shepherd', [
     $locationProvider.html5Mode(true);
 
   }])
-.controller('AdiosCtrl',['Restangular', '$window', function ( Restangular, $window) {
-  console.info("Adios!");
-  Restangular.one('signout').get();
-  $window.location.reload();
-}])
-.controller('SiteCtrl',['$scope', '$cookies', 'Restangular', '$window','$state', function ($scope, $cookies, Restangular, $window, $state) {
-  $scope.site = $cookies.site || 'taskit';
-  $scope.siteNames = {
-    'taskit-pro': 'Juniper',
-    'taskit': 'TaskIT'
-  };
-  $scope.setSite = function (site) {
-    Restangular.one('api/site').get({site: site}).then( function (resp) {
-      $scope.site = resp.site;
-    }, function () { console.error(resp); });
-    $state.go('dashboard');
-    $window.location.reload();
-  };
-}])
 .filter('moment', function() {
   return function(dateString, format, eob) {
     if (!dateString) { return "-"; }

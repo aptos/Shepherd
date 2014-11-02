@@ -20,14 +20,6 @@ angular.module('shepherd.users',['restangular'])
 
   $scope.dateformat = 'timeago';
 
-  $scope.head = [
-  {head: "Name", column: "name"},
-  {head: "Segment", column: "lead.segment"},
-  {head: "Company", column: "company['name']"},
-  {head: "Visits", column: "visits"},
-  {head: "Last Visit", column: "updated_at"},
-  {head: "Created", column: "created_at"}
-  ];
   $scope.sort = {
     column: 'updated_at',
     descending: true
