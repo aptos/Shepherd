@@ -18,14 +18,15 @@ angular.module('shepherd.header', [])
     $window.location.reload();
   };
 }])
-.controller('NavCtrl', [ '$scope','$rootScope','$state','Restangular',
-  function($scope, $rootScope, $state, Restangular) {
-    var refresh = function () {
-      Restangular.all('api/notes' ).getList().then( function(notes) {
-        $scope.reminders = notes;
-      });
-    };
-    refresh();
+.controller('NavCtrl', [ '$scope','$rootScope','$state','Restangular', function($scope, $rootScope, $state, Restangular) {
+  $scope.navbarCollapsed = true;
+
+  var refresh = function () {
+    Restangular.all('api/notes' ).getList().then( function(notes) {
+      $scope.reminders = notes;
+    });
+  };
+  refresh();
 
   return $scope.$on('taskRemaining:changed', function(event) {
     refresh();
