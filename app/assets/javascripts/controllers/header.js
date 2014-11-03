@@ -5,10 +5,9 @@ angular.module('shepherd.header', [])
   $window.location.reload();
 }])
 .controller('SiteCtrl',['$scope', '$cookies', 'Restangular', '$window','$state', function ($scope, $cookies, Restangular, $window, $state) {
-  $scope.site = $cookies.site || 'taskit';
+  $scope.site = $cookies.site || 'taskitone';
   $scope.siteNames = {
     'taskit-pro': 'Juniper',
-    'taskit': 'TaskIT',
     'taskitone': 'TaskIT'
   };
   $scope.setSite = function (site) {
