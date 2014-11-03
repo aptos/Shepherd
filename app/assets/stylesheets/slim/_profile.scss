@@ -25,6 +25,15 @@
     }
   }
 
+  .user-mailto > a {
+    color: #fff;
+    .fa:hover {
+      cursor: pointer;
+      color: $bright;
+      @include transform(scale(1.3));
+    }
+  }
+
   .profile-social {
     display: inline-block;
     > a {

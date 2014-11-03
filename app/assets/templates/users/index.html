@@ -29,8 +29,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: user.id})">
-              <td name="Name">
-                {{user.name}} <span class="user-mailto"><a ng-href="mailto:{{user.email}}" target="_blank"><i class="fa fa-envelope-o"></i><a/></span>
+              <td name="Name">{{user.name}} 
                 <br />
                 <a ng-href="{{user.company['website']}}">{{user.company['name']}}</a>
               </td>

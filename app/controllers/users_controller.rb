@@ -31,10 +31,12 @@ class UsersController < ApplicationController
     render :json => user
   end
 
-  def stats
-    stats = site.tasks.by_owner_and_status.reduce.rows
-
-    render :json => stats
+  def activity
+    key = params[:id]
+    @activities = site.users.activity.startkey([key]).endkey([key,{},{},{}]).rows
+    @activities = [] unless @activities
+    
+    render :json => @activities
   end
 
 end

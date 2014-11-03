@@ -41,4 +41,22 @@ class User < CouchRest::Model::Base
     };"
   end
 
+  design do
+    view :activity,
+    :map =>
+    "function(doc) {
+    if (doc.type == 'Task') {
+      emit([doc.owner, doc.created_at, 'Project', 'posted'], {id: doc._id, type: 'tasks', title: doc.title, task_owner: doc.owner_name, status: doc.status})
+    } else if (doc.type == 'Bid') {
+      emit([doc.owner, doc.created_at, doc.type, 'posted'], {id: doc._id, type: 'bids', title: doc.task_title, task_owner: doc.task_owner_name, status: doc.status })
+    } else if (doc.type == 'WorkOrder') {
+      if (doc.work_accepted_date) {
+        emit([doc.task_owner, doc.work_accepted_date, doc.type, 'work accepted'], {id: doc._id, type: 'work_orders',title: doc.task_title, task_owner: doc.task_owner_name, bid_owner: doc.bid_owner_name} )
+        emit([doc.bid_owner, doc.work_accepted_date, doc.type, 'work accepted'], {id: doc._id, type: 'work_orders',title: doc.task_title, task_owner: doc.task_owner_name, bid_owner: doc.bid_owner_name} )
+      }
+    }
+    };"
+  end
+
+
 end

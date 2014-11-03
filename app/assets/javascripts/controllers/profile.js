@@ -90,13 +90,4 @@ angular.module('shepherd.profile',['restangular'])
     }
   };
 
-}])
-.controller('NotesCtrl',['$scope','$stateParams','Restangular', function ($scope, $stateParams, Restangular) {
-  var id = $stateParams.id;
-  console.info("Notes!")
-}])
-.controller('ActivityCtrl',['$scope','$stateParams','Restangular', function ($scope, $stateParams, Restangular) {
-  var id = $stateParams.id;
-  console.info("Activity!")
-
 }]);

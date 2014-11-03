@@ -2,13 +2,18 @@
 
   <header class="profile-header row">
     <div class="col-sm-7">
-      <div ng-show="user.s3_img_url" class="profile-img col-sm-3">
+      <div ng-show="!!user.s3_img_url || !!user.info.urls.public_profile" class="profile-img col-sm-3">
         <img alt="" ng-src="{{user.s3_img_url}}" class="img-circle">
+        <div ng-show="!!user.info.urls.public_profile" class="profile-social pull-right">
+          <a ng-href="{{user.info.urls.public_profile}}" target="_blank" class="btn-icon btn-icon-round btn-linkedin">
+            <i class="fa fa-linkedin"></i>
+          </a>
+        </div>
       </div>
       <div class="col-sm-8 profile-userdata">
         <h1 class="text-thin" style="margin-top:0;">{{user.name}}</h1>
         <h4>{{user.info.headline}}</h4>
-        <p>{{user.email}}</p>
+        <p>{{user.email}} <span class="user-mailto"><a ng-href="mailto:{{user.email}}" target="_blank"><i class="fa fa-envelope-o"></i><a/></span></p>
         <div class="profile-company media" ng-show="user.company">
           <img ng-src="{{user.company.logo_url}}" class="company-logo-small media-object pull-left">
           <div class="media-body">

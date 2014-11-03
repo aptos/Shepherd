@@ -18,7 +18,8 @@ var app = angular.module('shepherd', [
   'shepherd.maps',
   'shepherd.users',
   'shepherd.profile',
-  'shepherd.notes'
+  'shepherd.notes',
+  'shepherd.activity'
   ])
 .run(['$rootScope', '$state', '$stateParams', '$cookies',
   function ($rootScope, $state, $stateParams, $cookies) {

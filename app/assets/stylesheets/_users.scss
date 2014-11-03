@@ -13,17 +13,4 @@
     text-overflow: ellipsis;
   }
 
-  td .user-mailto {
-    visibility:hidden;
-    opacity:0;
-    @include transition(all .2s ease-in-out);
-    &:hover {
-      cursor: pointer;
-      color: $gray-dark;
-    }
-  }
-  tr:hover td .user-mailto {
-    visibility:visible;
-    opacity:1;
-  }
 }
