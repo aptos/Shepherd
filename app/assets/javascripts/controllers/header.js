@@ -8,7 +8,8 @@ angular.module('shepherd.header', [])
   $scope.site = $cookies.site || 'taskit';
   $scope.siteNames = {
     'taskit-pro': 'Juniper',
-    'taskit': 'TaskIT'
+    'taskit': 'TaskIT',
+    'taskitone': 'TaskIT'
   };
   $scope.setSite = function (site) {
     Restangular.one('api/site').get({site: site}).then( function (resp) {
