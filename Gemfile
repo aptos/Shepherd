@@ -22,6 +22,11 @@ gem 'rack-cache'
 gem 'dalli'
 gem 'memcachier'
 
+# Serve up precompiled compressed assets.
+group :production do
+  gem 'rails_12factor'
+end
+
 # db is couch
 gem 'couchrest_model', '2.0.3'
 
