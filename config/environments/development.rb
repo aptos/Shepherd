@@ -30,7 +30,7 @@ Shepherd::Application.configure do
 
   # Adding supported databases
   config.sites = [
-    { db: 'taskit', label: 'TaskIT'},
+    { db: 'taskitone', label: 'TaskIT'},
     { db: 'taskit-pro', label: 'Juniper'}
   ]
 end

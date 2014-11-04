@@ -25,7 +25,7 @@ var app = angular.module('shepherd', [
   function ($rootScope, $state, $stateParams, $cookies) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-    $rootScope.site = $cookies.site || 'taskit';
+    // $rootScope.site = $cookies.site || 'taskitone';
 
     $rootScope.is_due = function (due_date) {
       return moment(due_date).diff(moment(),'d') > 2;

@@ -36,6 +36,7 @@ angular.module('shepherd.notes', [])
       console.info("Add",$scope.note)
       $scope.note.uid = uid;
       $scope.note.name = $scope.user.name;
+      $scope.note.site = $rootScope.site;
 
       Restangular.all('api/notes').post($scope.note).then( function (note) {
         var msg = (!!note.due_date) ? 'New Reminder added' : 'New Note added';

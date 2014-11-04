@@ -2,6 +2,7 @@ class Note < CouchRest::Model::Base
   property :_id, String
   property :name, String
   property :uid, String
+  property :site, String
   property :owner, String
   property :details, String
   property :due_date, Date

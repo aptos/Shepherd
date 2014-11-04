@@ -3,7 +3,7 @@ angular.module('shepherd.profile',['restangular'])
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     .state('profile', {
-      url: '/users/:id',
+      url: '/users/:id?site',
       views: {
         '': {
           templateUrl: 'users/profile.html',
@@ -20,8 +20,16 @@ angular.module('shepherd.profile',['restangular'])
       }
     });
   }])
-.controller('UserCtrl',['$scope','$stateParams','Restangular','logger', function ($scope, $stateParams, Restangular, logger) {
+.controller('UserCtrl',['$scope','$rootScope','$stateParams','Restangular','logger', function ($scope, $rootScope, $stateParams, Restangular, logger) {
   var id = $stateParams.id;
+
+  if (!!$stateParams.site && $stateParams.site != $rootScope.site) {
+    console.info("Changing site to: ",$stateParams.site)
+    Restangular.one('api/site').get({site: $stateParams.site}).then( function (resp) {
+      $rootScope.site = resp.site;
+      $rootScope.$broadcast('site:changed');
+    }, function () { console.error(resp); });
+  }
 
   $scope.segments = ['Onboard','Qualify','Educate','Close','Nurture'];
 
