@@ -30,6 +30,9 @@ end
 # db is couch
 gem 'couchrest_model', '2.0.3'
 
+# hipchat integration
+gem 'hipchat'
+
 # javascript assets
 gem 'underscore-rails'
 

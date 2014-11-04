@@ -27,4 +27,8 @@ module ApplicationHelper
     @site ||= Site.create(slug: "#{db_name}_#{Rails.env}" )
   end
 
+  def hipchat
+    @hipchat ||= HipChat::Client.new(Shepherd::Application.config.hipchat[:token])[Shepherd::Application.config.hipchat[:room]]
+  end
+
 end

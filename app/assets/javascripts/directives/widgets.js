@@ -55,6 +55,9 @@ angular.module('shepherd.widgets',[])
     <div class="panel-heading">Remind me</div>\
     <ul class="list-group" role="menu">\
     <li class="list-group-item">\
+    <a href="javascript:;" ng-click="due_in(0,\'d\',\'now\')">now!</a>\
+    </li>\
+    <li class="list-group-item">\
     <a href="javascript:;" ng-click="due_in(1,\'d\',\'tomorrow\')">tomorrow</a>\
     </li>\
     <li class="list-group-item">\

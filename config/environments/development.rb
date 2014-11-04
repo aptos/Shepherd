@@ -33,4 +33,10 @@ Shepherd::Application.configure do
     { db: 'taskitone', label: 'TaskIT'},
     { db: 'taskit-pro', label: 'Juniper'}
   ]
+
+  # Hipchat API - move to initializer at some point
+  config.hipchat = {
+    room: 855995,
+    token: '1d688676778d81d4f467a37effa029'
+  }
 end
