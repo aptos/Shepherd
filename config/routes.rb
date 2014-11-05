@@ -6,11 +6,12 @@ Shepherd::Application.routes.draw do
   get '/signin' => 'sessions#new'
   get '/signin/:provider' => 'sessions#new'
   get '/signout' => 'sessions#destroy'
-  get '/auth/failure' => 'pages#home'
+  get '/auth/failure' => 'pages#index'
 
 
   # Api Access for our app
   #
+  get '/api/signout' => 'sessions#destroy'
   # Multi-db site selection
   match '/api/site' => 'sessions#change_site', via: [:get, :post]
 
@@ -29,6 +30,9 @@ Shepherd::Application.routes.draw do
   post '/api/notes' => 'notes#create', :constraints => { :uid => /[^\/]*/ }
   post '/api/notes/:id' => 'notes#update'
   delete '/api/notes/:id' => 'notes#destroy'
+
+  # Gmail
+  get '/api/gmail/inbox' => 'gmail#inbox'
 
   # Tasks aka Projects
   get '/api/tasks' => 'tasks#index'

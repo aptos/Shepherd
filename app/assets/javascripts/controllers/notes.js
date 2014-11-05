@@ -17,13 +17,13 @@ angular.module('shepherd.notes', [])
   function($scope, $stateParams, Restangular, $rootScope, logger) {
     var uid = $stateParams.id;
 
-    Restangular.one('api/users',uid).get()
+    Restangular.one('users',uid).get()
     .then( function(user) {
       $scope.user = user;
     });
 
     var refresh = function (broadcast) {
-      Restangular.all('api/leads/' + uid + '/notes' ).getList().then( function(notes) {
+      Restangular.all('leads/' + uid + '/notes' ).getList().then( function(notes) {
         $scope.notes = notes;
         $scope.remainingCount = _.filter(notes, function (note) { return !!note.due_date && !note.completed; }).length;
         console.info("refresh notes", broadcast)
@@ -38,7 +38,7 @@ angular.module('shepherd.notes', [])
       $scope.note.name = $scope.user.name;
       $scope.note.site = $rootScope.site;
 
-      Restangular.all('api/notes').post($scope.note).then( function (note) {
+      Restangular.all('notes').post($scope.note).then( function (note) {
         var msg = (!!note.due_date) ? 'New Reminder added' : 'New Note added';
         logger.logSuccess(msg);
         $scope.note = {};
@@ -52,14 +52,14 @@ angular.module('shepherd.notes', [])
 
     $scope.doneEditing = function(note) {
       $scope.editedTask = null;
-      Restangular.one('api/notes').post(note._id, note).then( function (note) {
+      Restangular.one('notes').post(note._id, note).then( function (note) {
         logger.logSuccess('Note Updated!');
         refresh();
       });
     };
 
     $scope.remove = function(note) {
-      Restangular.one('api/notes',note._id).remove().then( function (resp) {
+      Restangular.one('notes',note._id).remove().then( function (resp) {
         refresh(true);
       });
       return logger.logError('Note has been removed!');
@@ -67,7 +67,7 @@ angular.module('shepherd.notes', [])
 
     $scope.completed = function(note) {
       console.info("completed", note)
-      Restangular.one('api/notes').post(note._id, note).then( function (note) {
+      Restangular.one('notes').post(note._id, note).then( function (note) {
         logger.logSuccess('Reminder Completed!');
         refresh(true);
       });

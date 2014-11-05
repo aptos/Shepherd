@@ -13,6 +13,10 @@ angular.module('shepherd.profile',['restangular'])
           templateUrl: 'users/notes.html',
           controller: 'NotesCtrl'
         },
+        'gmail@profile': {
+          templateUrl: 'users/gmail.html',
+          controller: 'GmailCtrl'
+        },
         'activity@profile': {
           templateUrl: 'users/activity.html',
           controller: 'ActivityCtrl'
@@ -25,7 +29,7 @@ angular.module('shepherd.profile',['restangular'])
 
   if (!!$stateParams.site && $stateParams.site != $rootScope.site) {
     console.info("Changing site to: ",$stateParams.site)
-    Restangular.one('api/site').get({site: $stateParams.site}).then( function (resp) {
+    Restangular.one('site').get({site: $stateParams.site}).then( function (resp) {
       $rootScope.site = resp.site;
       $rootScope.$broadcast('site:changed');
     }, function () { console.error(resp); });
@@ -33,13 +37,13 @@ angular.module('shepherd.profile',['restangular'])
 
   $scope.segments = ['Onboard','Qualify','Educate','Close','Nurture'];
 
-  Restangular.one('api/users',id).get()
+  Restangular.one('users',id).get()
   .then( function(user) {
     $scope.user = user;
     getLocation(user);
   });
 
-  Restangular.one('api/leads',id).get()
+  Restangular.one('leads',id).get()
   .then( function(lead) {
     if (!!lead.uid) {
       $scope.lead = lead;
@@ -50,7 +54,7 @@ angular.module('shepherd.profile',['restangular'])
 
   $scope.updateLead = function () {
     $scope.update_fail = false;
-    Restangular.one('api/leads').post(id, $scope.lead).then( function (lead) {
+    Restangular.one('leads').post(id, $scope.lead).then( function (lead) {
       $scope.lead = lead;
       logger.logSuccess('Note Updated!');
     }, function () {

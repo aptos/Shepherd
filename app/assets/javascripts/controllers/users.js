@@ -13,7 +13,7 @@ angular.module('shepherd.users',['restangular'])
     });
   }])
 .controller('UsersCtrl',['$scope','Restangular', function ($scope, Restangular) {
-  Restangular.all('api/users').getList()
+  Restangular.all('users').getList()
   .then( function(users) {
     $scope.users = users;
   });

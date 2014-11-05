@@ -11,7 +11,7 @@ angular.module('shepherd.header', [])
     'taskitone': 'TaskIT'
   };
   $scope.setSite = function (site) {
-    Restangular.one('api/site').get({site: site}).then( function (resp) {
+    Restangular.one('site').get({site: site}).then( function (resp) {
       $scope.site = resp.site;
     }, function () { console.error(resp); });
     $state.go('dashboard');
@@ -26,7 +26,7 @@ angular.module('shepherd.header', [])
   $scope.navbarCollapsed = true;
 
   var refresh = function () {
-    Restangular.all('api/notes' ).getList().then( function(notes) {
+    Restangular.all('notes' ).getList().then( function(notes) {
       $scope.reminders = notes;
     });
   };

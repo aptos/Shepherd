@@ -21,7 +21,7 @@ angular.module('shepherd.dashboard',['restangular'])
 
   $scope.as_of = "month";
 
-  Restangular.all('api/users').getList()
+  Restangular.all('users').getList()
   .then( function(users) {
     $scope.users = users;
     updateUsersMap();
@@ -30,7 +30,7 @@ angular.module('shepherd.dashboard',['restangular'])
     $scope.visitors = users.reduce(function(u, user) { return (moment(user.updated_at).isSame(moment(),$scope.as_of)) ? u + 1 : u; }, 0);
   });
 
-  Restangular.all('api/companies/locations').getList()
+  Restangular.all('companies/locations').getList()
   .then( function(companies) {
     $scope.companies = companies;
     updateCompanyMap();
@@ -93,7 +93,7 @@ angular.module('shepherd.dashboard',['restangular'])
 .controller('TasksCtrl',['$scope','Restangular', function ($scope, Restangular) {
   $scope.as_of = "month";
 
-  Restangular.one('api/tasks/stats').get()
+  Restangular.one('tasks/stats').get()
   .then( function(stats) {
     console.info("stats", stats)
     $scope.stats = stats;

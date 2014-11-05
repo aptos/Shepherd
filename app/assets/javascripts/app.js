@@ -19,7 +19,8 @@ var app = angular.module('shepherd', [
   'shepherd.users',
   'shepherd.profile',
   'shepherd.notes',
-  'shepherd.activity'
+  'shepherd.activity',
+  'shepherd.gmail'
   ])
 .run(['$rootScope', '$state', '$stateParams', '$cookies',
   function ($rootScope, $state, $stateParams, $cookies) {
@@ -35,6 +36,7 @@ var app = angular.module('shepherd', [
 }])
 .config(['RestangularProvider', function(provider) {
   provider.setRestangularFields({ id: "_id" });
+  provider.setBaseUrl('/api');
 }])
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider) {

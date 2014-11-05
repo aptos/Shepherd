@@ -7,7 +7,7 @@ angular.module('shepherd.activity', [])
 		'work_orders': {fa:'fa-tasks', style: 'btn-success'}
 	};
 
-	Restangular.all('api/users/' + id + '/activity' ).getList().then( function(activities) {
+	Restangular.all('users/' + id + '/activity' ).getList().then( function(activities) {
 		$scope.activities = activities;
 	});
 }]);
