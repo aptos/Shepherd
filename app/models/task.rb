@@ -29,10 +29,8 @@ class Task < CouchRest::Model::Base
 
   timestamps!
 
-  design do
-    view :by_status
-  end
-
+  ##
+  # Shepherd App
   design do
     view :summary,
     :map =>
@@ -43,6 +41,44 @@ class Task < CouchRest::Model::Base
       emit(doc.owner, { id: doc._id, title: doc.title, location: location, status: doc.status, accepted_bid: doc.accepted_bid, views: doc.views, created_at: doc.created_at });
     }
     };"
+  end
+
+  ##
+  # Taskit App
+
+  design do
+    view :by_owner
+    view :by_status
+  end
+
+  design do
+    view :tags,
+    :map =>
+    "function(doc) {
+    if (doc['type'] === 'Task') {
+      if (doc['tags'] && doc['status'] === 'Open') {
+        doc.tags.forEach(function(tag) {
+          if (tag.length) emit(tag, 1);
+            });
+  }
+  }
+  }",
+  :reduce =>
+  "_sum"
+  end
+
+  design do
+    view :preview,
+    :map =>
+    "function(doc) {
+    if (doc['type'] === 'Task' && doc['status'] === 'Open' && doc.company) {
+      var b = doc.bounty || 0;
+      var bids_due = (doc.bids_due) ? doc.bids_due : doc.start_date;
+      emit({due_date: bids_due, company: doc.company, summary: doc.title, bounty: b}, 1);
+    }
+    }",
+    :reduce =>
+    "_sum"
   end
 
 end
