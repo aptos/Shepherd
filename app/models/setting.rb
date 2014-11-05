@@ -31,11 +31,21 @@ class Setting < CouchRest::Model::Base
           var email = (!!doc.contact.email) ? doc.contact.email : doc.uid;
           emit(
             doc.uid,
-            { uid: doc.uid, name: doc.name, email: doc.contact.email, email_notifications: doc.email_notifications, role: doc.role, entity: doc.entity, company_id: doc.company_id, latLong: latLong  }
+            { uid: doc.uid, name: doc.name, email: doc.contact.email, email_notifications: doc.email_notifications, role: doc.role, entity: doc.entity, company_id: doc.company_id, latLong: latLong, company_list_admin: doc.company_list_admin  }
             );
         }
       };"
 
+    view :by_email,
+      :map =>
+      "function(doc) {
+        if (doc['type'] == 'Setting' && doc.contact.email) {
+          emit(
+            doc.contact.email,
+            { uid: doc.uid, name: doc.name, email: doc.contact.email, latLong: doc.latLong }
+            );
+        }
+      };"
   end
 
 end
