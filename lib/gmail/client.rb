@@ -17,7 +17,7 @@ module Gmail
     end
 
     def expired?
-       Time.now.to_i - @credentials['expires_at'] > -10
+      Time.now.to_i - @credentials['expires_at'] > -10
     end
 
     def refresh!
