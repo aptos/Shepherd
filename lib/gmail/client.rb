@@ -14,10 +14,15 @@ module Gmail
         faraday.headers = { 'Authorization' => "Bearer #{@credentials['access_token']}" }
         # faraday.use Faraday::Response::RaiseError
       end
+
+      if expired?
+        user.credentials = refresh!
+        user.save!
+      end
     end
 
     def expired?
-      Time.now.to_i - @credentials['expires_at'] > -10
+      Time.now.to_i - @credentials['expires_at'] > -10 rescue true
     end
 
     def refresh!
@@ -33,9 +38,10 @@ module Gmail
       end
       resp = accounts.post 'o/oauth2/token', params
 
-      if access_token = (JSON resp.body)['access_token']
-        @credentials['access_token'] = access_token
-        @conn.headers = { 'Authorization' => "Bearer #{@credentials['access_token']}" }
+      if auth = (JSON resp.body)
+        @credentials['token'] = auth['access_token']
+        @credentials['expires_at'] = auth['expires_in'] + Time.now.to_i
+        @conn.headers = { 'Authorization' => "Bearer #{@credentials['token']}" }
         @credentials
       else
         return false
@@ -43,13 +49,13 @@ module Gmail
     end
 
     def get endpoint, params={}
-      resp = @conn.get "#{base_url}/#{endpoint}", params
+      resp = @conn.get endpoint, params
       return JSON resp.body
     end
 
     def post endpoint, params
       resp = @conn.post do |req|
-        req.url "#{base_url}/#{endpoint}"
+        req.url endpoint
         req.headers['Content-Type'] = 'application/json'
         req.body = params.to_json
       end
@@ -58,7 +64,7 @@ module Gmail
 
     def put endpoint, params
       resp = @conn.put do |req|
-        req.url "#{base_url}/#{endpoint}"
+        req.url endpoint
         req.headers['Content-Type'] = 'application/json'
         req.body = params.to_json
       end
@@ -66,7 +72,7 @@ module Gmail
     end
 
     def delete endpoint
-      resp = @conn.delete "#{base_url}/#{endpoint}"
+      resp = @conn.delete endpoint
       return JSON resp.body
     end
 

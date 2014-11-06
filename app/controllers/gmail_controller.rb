@@ -4,7 +4,7 @@ class GmailController < ApplicationController
 	respond_to :json
 
 	def inbox
-    client = gmail_client
+    client = Gmail::Client.new current_user
 
 		messages = client.get 'messages'
 
