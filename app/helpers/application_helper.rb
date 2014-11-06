@@ -31,4 +31,15 @@ module ApplicationHelper
     @hipchat ||= HipChat::Client.new(Shepherd::Application.config.hipchat[:token])[Shepherd::Application.config.hipchat[:room]]
   end
 
+
+  def gmail_client
+    gmail = Gmail()
+    if gmail.expired?
+      self.credentials = gmail.refresh!
+      self.save
+    end
+
+    gmail
+  end
+
 end

@@ -9,7 +9,7 @@ class Admin < CouchRest::Model::Base
   before_create { generate_auth_token }
 
   def self.from_omniauth(auth)
-    admin = Admin.find(auth['info']['email']) 
+    admin = Admin.find(auth['info']['email'])
     admin ||= create_with_omniauth(auth)
     if auth['credentials'] && auth['credentials']['token']
       admin.credentials = auth['credentials']
