@@ -3,12 +3,15 @@
 		.view {
 			position: relative;
 			margin-bottom: 10px;
-			padding: 0 12px 0 10px;
+			padding: 5px 12px 0 10px;
 			background-color: $reverse;
 			border-top: 1px solid rgba(0, 92, 148, 0.24);
-			.media, .snippet {
+			.media {
 				padding-top: 20px;
 			}
+      .snippet {
+        padding-left: 30px;
+      }
 		}
 
 		.activity-date {

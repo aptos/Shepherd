@@ -73,6 +73,12 @@ body {
   font-weight: 700;
 }
 
+.viewport-full {
+  max-height: 97vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 // add font awesome character into element on left
 .fa.overlap-left {
   z-index: 10;

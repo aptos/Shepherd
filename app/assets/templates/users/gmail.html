@@ -8,12 +8,16 @@
 							<ul class="activity-list list-unstyled">
 								<li ng-repeat="item in messages" >
 									<div class="activity-date">{{item.date | moment:'timeago'}}</div>
-									<div class="view">
-										<span ng-show="hasLabel(item,'IMPORTANT')"><i class="fa fa-star"></i></span>
-										<p class="snippet" ng-bind-html="item.snippet" ng-class="{true:'strong', false:''}[hasLabel(item,'UNREAD')]"></p>
+									<div class="view" ng-class="{true:'text-primary', false:''}[hasLabel(item,'INBOX')]">
+                    <h5 ng-class="{true:'strong', false:''}[hasLabel(item,'UNREAD')]">
+  										<span ng-show="hasLabel(item,'IMPORTANT')"><i class="fa fa-star"></i></span>
+                      {{item.subject}}
+                    </h5>
+										<div class="snippet" ng-bind-html="item.snippet" ng-class="{true:'strong', false:''}[hasLabel(item,'UNREAD')]"></div>
 									</div>
 								</li>
 							</ul>
+              <a ng-show="nextPageToken" ng-click="more(nextPageToken)" class="pointer">more...</a>
 						</section>
 					</div>
 				</div>

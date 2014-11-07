@@ -34,7 +34,7 @@ gem 'couchrest_model', '2.0.3'
 gem 'hipchat'
 
 # gmail integration
-gem 'faraday'
+gem 'faraday', '>= 0.9.0'
 
 # javascript assets
 gem 'underscore-rails'
