@@ -5,6 +5,7 @@
 
 var app = angular.module('shepherd', [
   'ngAnimate',
+  'ngSanitize',
   'ngCookies',
   'ui.router',
   'templates',

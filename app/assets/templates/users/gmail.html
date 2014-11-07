@@ -1,5 +1,4 @@
 <section class="panel panel-default map-panel center-block">
-	<div class="panel-heading text-left"><strong><i class="fa fa-rocket fa-lg"></i> Activity</strong></div>
 	<div class="panel-body">
 		<div class="row">
 			<div class="page page-activity">
@@ -7,29 +6,13 @@
 					<div class="col-md-12">
 						<section class="activity-container">
 							<ul class="activity-list list-unstyled">
-								{{messages}}
-<!-- 								<li ng-repeat="activity in activities | orderBy: 'key[1]':true" >
-									<div class="activity-date">{{activity.key[1] | moment:'timeago'}}</div>
+								<li ng-repeat="item in messages" >
+									<div class="activity-date">{{item.date | moment:'timeago'}}</div>
 									<div class="view">
-
-										<div class="media">
-											<span class="pull-left media-left media-icon">
-												<span class="btn-icon btn-icon-round" ng-class="icons['{{activity.value.type}}'].style">
-													<i class="fa" ng-class="icons['{{activity.value.type}}'].fa"></i>
-												</span>
-											</span>
-											<div class="media-body block">
-												<span class="block ng-binding">
-													{{activity.key[2]}} {{activity.key[3]}}
-													<p>
-														<i>{{activity.value.title}}</i>
-													</p>
-												</span>
-												<span class="text-muted block ng-binding">{{activity.value.status}}</span>
-											</div>
-										</div>
+										<span ng-show="hasLabel(item,'IMPORTANT')"><i class="fa fa-star"></i></span>
+										<p class="snippet" ng-bind-html="item.snippet" ng-class="{true:'strong', false:''}[hasLabel(item,'UNREAD')]"></p>
 									</div>
-								</li> -->
+								</li>
 							</ul>
 						</section>
 					</div>

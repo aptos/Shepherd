@@ -36,6 +36,16 @@ OmniAuth.config.mock_auth[:linkedin] = OmniAuth::AuthHash.new({
   }
   })
 
+OmniAuth.config.mock_auth[:google] = OmniAuth::AuthHash.new({
+  :provider => 'google',
+  :email => 'brian@taskit.io',
+  :credentials => {
+    "token" => "ya29.tgBWkugGIHHikdLmiyUSvpPB3r8wYwe_05FOwVUKyJ7szLpKI-UlaubMXneofG7TmDyT6yDi4SeYdQ",
+    "expires_at" => 1415304668,
+    "expires" => true
+  }
+})
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

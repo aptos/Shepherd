@@ -1,11 +1,13 @@
-angular.module('shepherd.gmail', [])
-.controller('GmailCtrl',['$scope','$stateParams','$http', function ($scope, $stateParams, $http) {
+angular.module('shepherd.gmail', ['ngSanitize'])
+.controller('GmailCtrl',['$scope','$stateParams','Restangular', function ($scope, $stateParams, Restangular) {
 	var id = $stateParams.id;
 
-	console.info("gmail loaded!")
+	Restangular.one('gmail/inbox').get({q: id}).then( function(inbox) {
+		$scope.messages = inbox.messages;
+	});
 
-	// GapiRestangular.all('users/' + id + '/messages' ).getList({},{Authorization: "Bearer " + token}).then( function(messages) {
-	// 	$scope.messages = messages;
-	// });
+	$scope.hasLabel = function (item, label) {
+		return item.labelIds.indexOf(label) > -1;
+	};
 
 }]);

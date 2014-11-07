@@ -17,6 +17,7 @@
 //= require toastr
 //= require angular
 //= require angular-animate
+//= require angular-sanitize
 //= require angular-ui-router
 //= require restangular
 //= require angular-rails-templates

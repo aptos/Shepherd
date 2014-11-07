@@ -32,7 +32,7 @@ Shepherd::Application.routes.draw do
   delete '/api/notes/:id' => 'notes#destroy'
 
   # Gmail
-  get '/api/gmail/inbox' => 'gmail#inbox'
+  get '/api/gmail/inbox' => 'gmail#inbox', :constraints => { :uid => /[^\/]*/ }
 
   # Tasks aka Projects
   get '/api/tasks' => 'tasks#index'

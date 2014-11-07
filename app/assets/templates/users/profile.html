@@ -45,7 +45,23 @@
   </header>
   <div class="container">
     <div class="col-md-6" ui-view="notes"></div>
-    <div class="col-md-6" ui-view="activity"></div>
-    <div class="col-md-6" ui-view="gmail"></div>
+
+    <div class="col-md-6">
+      <tabset>
+        <tab class="pointer">
+          <tab-heading>
+          <i class="fa fa-envelope"></i> Gmail
+          </tab-heading>
+          <div ui-view="gmail"></div>
+        </tab>
+        <tab class="pointer">
+          <tab-heading>
+          <i class="fa fa-rocket"></i> Activity
+          </tab-heading>
+          <div ui-view="activity"></div>
+        </tab>
+      </tabset>
+    </div>
+
   </div>
 </div>

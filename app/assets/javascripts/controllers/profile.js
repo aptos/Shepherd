@@ -1,4 +1,4 @@
-angular.module('shepherd.profile',['restangular'])
+angular.module('shepherd.profile',['restangular','ui.bootstrap'])
 .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider

@@ -6,6 +6,7 @@
       "angular": "~1.2.26",
       "angular-ui-router": "latest",
       "angular-animate": "~1.2.26",
+      "angular-sanitize": "latest",
       "moment": "latest",
       "angular-bootstrap": "latest",
       "angular-cookies": "latest",

@@ -28,7 +28,7 @@
                   You have {{reminders.length}} reminders
                 </div>
                 <ul class="list-group">
-                  <li class="list-group-item"  ng-repeat="task in reminders | orderBy: 'due_date'" ng-click="$state.go('profile', {id: task.uid, site: task.site})">
+                  <li class="list-group-item"  ng-repeat="task in reminders | orderBy: ['due_date','updated_at']" ng-click="$state.go('profile', {id: task.uid, site: task.site})">
                     <h5>{{task.name}}</h5>
                     <div class="media">
                       <span class="pull-left media-left media-icon">

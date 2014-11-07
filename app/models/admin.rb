@@ -11,6 +11,7 @@ class Admin < CouchRest::Model::Base
   def self.from_omniauth(auth)
     admin = Admin.find(auth['info']['email'])
     admin ||= create_with_omniauth(auth)
+    Rails.logger.info "$$$$$ auth #{auth.inspect}"
     if auth['credentials'] && auth['credentials']['token']
       admin.credentials = auth['credentials']
       admin.save!

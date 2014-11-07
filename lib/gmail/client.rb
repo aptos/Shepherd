@@ -4,6 +4,8 @@ module Gmail
 
   class Client
 
+    attr_accessor :conn
+
     def initialize(user)
       @email = user.email
       @credentials = user.credentials
@@ -11,8 +13,8 @@ module Gmail
       @conn = Faraday.new(:url => "https://www.googleapis.com/gmail/v1/users/#{@email}" ) do |faraday|
         faraday.request  :url_encoded
         faraday.adapter  Faraday.default_adapter
-        faraday.headers = { 'Authorization' => "Bearer #{@credentials['access_token']}" }
-        # faraday.use Faraday::Response::RaiseError
+        faraday.headers = { 'Authorization' => "Bearer #{@credentials['token']}" }
+        faraday.use Faraday::Response::RaiseError
       end
 
       if expired?
@@ -74,6 +76,25 @@ module Gmail
     def delete endpoint
       resp = @conn.delete endpoint
       return JSON resp.body
+    end
+
+    def messages params
+      query = { maxResults: 8 }
+      ['labelIds','maxResults','pageToken','q'].each {|k| query[k.to_sym] = params[k] if params.has_key? k}
+Rails.logger.info "***************    params: #{query.inspect}"
+      list = get 'messages', query
+
+      if list['messages']
+        list['messages'].map do |m|
+          if message = get("messages/#{m['id']}", { format: 'metadata', metadataHeaders: 'Date'})
+            message['date'] = message['payload']['headers'][0]['value'] rescue nil
+            message.delete 'payload'
+            m.merge! message
+          end
+        end
+      end
+
+      list
     end
 
   end
