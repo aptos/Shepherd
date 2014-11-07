@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
   def create
     email = env['omniauth.auth']['info']['email'] rescue nil
     unless email =~ /.*@(.*)/ && $1 == "taskit.io"
+      Rails.logger.error "!!! Rejecting Signin attempt from #{email} !!!"
       redirect_to "/" and return
     end
     admin = Admin.from_omniauth(env["omniauth.auth"])

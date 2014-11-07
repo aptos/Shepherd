@@ -5,7 +5,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   {
     name: "google_login",
 		scope: "email, https://mail.google.com/, gmail.compose, gmail.modify",
-    approval_prompt: ''
+    approval_prompt: '',
+    access_type: "offline",
+    include_granted_scopes: true
   }
 end
 
