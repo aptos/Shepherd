@@ -49,7 +49,7 @@ angular.module('shepherd.widgets',[])
     template: '<ul class="due-date nav nav-pills pull-right" role="tablist">\
     <li role="presentation" class="dropdown">\
     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">\
-    <i class="fa fa-calendar"></i>\
+    <i class="fa fa-thumb-tack"></i>\
     </a>\
     <div class="dropdown-menu with-arrow pull-right panel panel-default">\
     <div class="panel-heading">Remind me</div>\

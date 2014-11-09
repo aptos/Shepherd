@@ -1,14 +1,29 @@
-<section class="panel panel-default map-panel center-block">
+<section class="panel panel-default map-panel center-block gmail">
 	<div class="panel-body">
 		<div class="row">
-			<div class="page page-activity">
-				<div class="row">
-					<div class="col-md-12">
-						<section class="activity-container">
-							<ul class="activity-list list-unstyled">
-								<li ng-repeat="item in messages" >
-									<div class="activity-date">{{item.date | moment:'timeago'}}</div>
-									<div class="view" ng-class="{true:'text-primary', false:''}[hasLabel(item,'INBOX')]">
+      <div class="page page-activity">
+        <div class="row">
+          <div class="col-md-12">
+            <section class="activity-container">
+              <div class="panel message-body viewport-full" ng-class="{'message-body-open': show_message}">
+                <div class="panel-heading">
+                  <p class="headers">
+                    {{message.headers.From}} -> {{message.headers.To}} {{message.headers.Date | moment:'MMM D'}}
+                  </p>
+                  <a ng-href="{{message_link}}" target="_blank">
+                    <strong>{{message.headers.Subject}}</strong>
+                  </a>
+                  <span class="pull-right close-message" ng-click="closeMessage()"><i class='fa fa-level-up fa-rotate-270'></i></span>
+                </div>
+                <div class="panel-body">
+                  <div ng-bind-html="message.body"></div>
+                </div>
+              </div>
+              <div class="messages-container">
+                <ul class="activity-list list-unstyled">
+                  <li ng-repeat="item in messages" >
+                   <div class="activity-date">{{item.date | moment:'timeago'}}</div>
+                   <div class="view pointer" ng-class="{true:'text-primary', false:''}[hasLabel(item,'INBOX')]" ng-click="read(item.id)">
                     <h5 ng-class="{true:'strong', false:''}[hasLabel(item,'UNREAD')]">
                       <span ng-show="hasLabel(item,'IMPORTANT')"><i class="fa fa-star"></i></span>
                       {{item.subject}}
@@ -17,15 +32,16 @@
                   </div>
                 </li>
               </ul>
-              <div class="text-center">
-                <span ng-show="!!email_update"><i class="fa fa-spinner fa-spin"></i></span>
-                <a ng-show="nextPageToken" ng-click="more(nextPageToken)" class="pointer">more...</a>
-                <div class="margin-top-30" ng-show="!email_update && !messages.length"> - no messages here - </div>
-              </div>
-            </section>
-          </div>
+            </div>
+            <div class="text-center">
+              <span ng-show="!!email_update"><i class="fa fa-spinner fa-spin"></i></span>
+              <a ng-show="nextPageToken" ng-click="more(nextPageToken)" class="pointer">more...</a>
+              <div class="margin-top-30" ng-show="!email_update && !messages.length"> - no messages here - </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
   </div>
+</div>
 </section>

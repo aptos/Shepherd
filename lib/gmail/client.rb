@@ -99,6 +99,20 @@ module Gmail
       list
     end
 
+    def get_message id
+      gmail_message = get "messages/#{id}"
+
+      headers = Hash.new
+      gmail_message['payload']['headers'].map{|h| headers[h['name']] = h['value'] }
+      body = Base64.urlsafe_decode64(gmail_message['payload']['parts'].last['body']['data']).mb_chars
+      message = {
+        id: id,
+        headers: headers,
+        body: body
+      }
+      message
+    end
+
   end
 
 

@@ -16,7 +16,19 @@ angular.module('shepherd.gmail', ['ngSanitize'])
       $scope.nextPageToken = inbox.nextPageToken;
       $scope.email_update = false;
     }, function () { $scope.email_update = false; });
-  }
+  };
+
+  $scope.read = function (id) {
+    $scope.email_update = true;
+    Restangular.one('gmail/message', id).get().then( function(message) {
+      $scope.message = message;
+      $scope.email_update = false;
+      $scope.show_message = true;
+      $scope.message_link = 'https://mail.google.com/mail/u/0/#inbox/' + id;
+    }, function () { $scope.email_update = false; });
+  };
+
+  $scope.closeMessage = function () { $scope.show_message = false; }
 
   $scope.hasLabel = function (item, label) {
     return item.labelIds.indexOf(label) > -1;

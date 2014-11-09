@@ -9,4 +9,12 @@ class GmailController < ApplicationController
 
 		render :json => list
 	end
+
+  def message
+    id = params[:id]
+    client = Gmail::Client.new current_user
+    message = client.get_message id
+
+    render :json => message
+  end
 end
