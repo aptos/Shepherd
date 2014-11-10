@@ -4,11 +4,15 @@ class GmailController < ApplicationController
 	respond_to :json
 
 	def inbox
-		client = Gmail::Client.new current_user
-		list = client.messages params
+    begin
+      client = Gmail::Client.new current_user
+      list = client.messages params
+    rescue
+      render :json => { error: 'Gmail client error' }, :status => 400 and return
+    end
 
-		render :json => list
-	end
+    render :json => list
+  end
 
   def message
     id = params[:id]

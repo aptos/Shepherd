@@ -43,6 +43,9 @@ module Gmail
       resp = accounts.post 'o/oauth2/token', params
 
       if auth = (JSON resp.body)
+        if auth['error']
+          raise "Gmail Authorization Error: #{auth.inspect}"
+        end
         @credentials['token'] = auth['access_token']
         @credentials['expires_at'] = auth['expires_in'] + Time.now.to_i
         @conn.headers = { 'Authorization' => "Bearer #{@credentials['token']}" }

@@ -36,7 +36,8 @@
             <div class="text-center">
               <span ng-show="!!email_update"><i class="fa fa-spinner fa-spin"></i></span>
               <a ng-show="nextPageToken" ng-click="more(nextPageToken)" class="pointer">more...</a>
-              <div class="margin-top-30" ng-show="!email_update && !messages.length"> - no messages here - </div>
+              <div class="margin-top-30" ng-show="!email_update && !messages.length && !error"> - no messages here - </div>
+              <div class="margin-top-30 text-danger" ng-show="!!error"> - Gmail complaining, try to sign in again - </div>
             </div>
           </section>
         </div>

@@ -7,7 +7,7 @@ angular.module('shepherd.gmail', ['ngSanitize'])
     $scope.messages = inbox.messages;
     $scope.nextPageToken = inbox.nextPageToken;
     $scope.email_update = false;
-  }, function () { $scope.email_update = false; });
+  }, function () { $scope.email_update = false; $scope.error = true; });
 
   $scope.more = function (nextPageToken) {
     $scope.email_update = true;
