@@ -45,7 +45,7 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
 
   Restangular.one('leads',id).get()
   .then( function(lead) {
-    if (!!lead.uid) {
+    if (!!lead && !!lead.uid) {
       $scope.lead = lead;
     } else {
       $scope.lead = { uid: id};

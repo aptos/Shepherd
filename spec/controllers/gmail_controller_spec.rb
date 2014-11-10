@@ -24,7 +24,7 @@ describe GmailController, :type => :controller do
     end
   end
 
-  describe "message" do
+  describe "get_message" do
     it "returns decoded message" do
       get :message, { id: '13db6d6dcc831885' }
       resp = JSON response.body
@@ -32,11 +32,25 @@ describe GmailController, :type => :controller do
       resp['body'].should_not be_empty
     end
 
-    it "returns decoded message by checking mime types" do
+    it "returns decoded message with special chars" do
       get :message, { id: '1498760c93aec913' }
       resp = JSON response.body
       resp['headers'].should_not be_empty
       resp['body'].should_not be_empty
+    end
+  end
+
+  describe "send_message" do
+    before do
+      @message = {
+        subject: 'testing 1,2,3',
+        body: "Text message body"
+      }
+    end
+    it "sends a message" do
+      post :send_message, { uid:'bswilkerson@gmail.com', message: @message}
+      resp = JSON response.body
+      resp['id'].should_not be_nil
     end
   end
 

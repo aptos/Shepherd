@@ -17,8 +17,22 @@ class GmailController < ApplicationController
   def message
     id = params[:id]
     client = Gmail::Client.new current_user
-    message = client.get_message id
+    @message = client.get_message id
 
-    render :json => message
+    render :json => @message
+  end
+
+  def send_message
+    @message = params[:gmail]
+    @message['to'] = params[:uid]
+    @message['from'] = current_user.email
+    @message['from_name'] = current_user.name
+    client = Gmail::Client.new current_user
+    begin
+      response = client.send_message @message
+    rescue
+      render :json => { error: 'Gmail client error', message: response }, :status => 400 and return
+    end
+    render :json => response
   end
 end

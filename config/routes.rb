@@ -34,6 +34,7 @@ Shepherd::Application.routes.draw do
   # Gmail
   get '/api/gmail/inbox' => 'gmail#inbox'
   get '/api/gmail/message/:id' => 'gmail#message'
+  post '/api/gmail/message/:uid' => 'gmail#send_message', :constraints => { :uid => /[^\/]*/ }
 
   # Tasks aka Projects
   get '/api/tasks' => 'tasks#index'

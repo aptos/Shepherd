@@ -8,6 +8,7 @@ module Gmail
 
     def initialize(user)
       @email = user.email
+      @name = user.name
       @credentials = user.credentials
 
       Faraday::Utils.default_params_encoder = Faraday::FlatParamsEncoder
@@ -16,7 +17,7 @@ module Gmail
         faraday.request  :url_encoded
         faraday.adapter  Faraday.default_adapter
         faraday.headers = { 'Authorization' => "Bearer #{@credentials['token']}" }
-        faraday.use Faraday::Response::RaiseError
+        # faraday.use Faraday::Response::RaiseError
       end
 
       if expired?
@@ -116,6 +117,13 @@ module Gmail
       message
     end
 
+    def send_message message
+      payload = Gmailer.standard_email(message).to_s
+      Rails.logger.info "*** Sent Email\n\n #{payload}"
+      encoded = Base64.urlsafe_encode64 payload
+      resp = post 'messages/send',{ raw: encoded }
+      resp
+    end
   end
 
 
