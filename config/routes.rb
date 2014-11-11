@@ -49,4 +49,5 @@ Shepherd::Application.routes.draw do
   # SEO enabled paths for angular routes
 	get "*path.html" => "pages#index", :layout => 0
   get "*path", :to => 'pages#index'
+
 end

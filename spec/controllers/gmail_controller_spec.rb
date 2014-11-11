@@ -48,7 +48,7 @@ describe GmailController, :type => :controller do
       }
     end
     it "sends a message" do
-      post :send_message, { uid:'bswilkerson@gmail.com', message: @message}
+      post :send_message, { uid:'bswilkerson@gmail.com', gmail: @message}
       resp = JSON response.body
       resp['id'].should_not be_nil
     end

@@ -28,8 +28,13 @@ class GmailController < ApplicationController
     @message['from'] = current_user.email
     @message['from_name'] = current_user.name
     client = Gmail::Client.new current_user
+
+    binding.pry
+    payload = Gmailer.standard_email(@message).to_s
+    Rails.logger.info "*** Sending Email\n\n #{payload}"
     begin
-      response = client.send_message @message
+      encoded_payload = Base64.urlsafe_encode64 payload
+      response = client.send_message encoded_payload
     rescue
       render :json => { error: 'Gmail client error', message: response }, :status => 400 and return
     end

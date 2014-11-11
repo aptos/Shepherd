@@ -117,11 +117,8 @@ module Gmail
       message
     end
 
-    def send_message message
-      payload = Gmailer.standard_email(message).to_s
-      Rails.logger.info "*** Sent Email\n\n #{payload}"
-      encoded = Base64.urlsafe_encode64 payload
-      resp = post 'messages/send',{ raw: encoded }
+    def send_message encoded_payload
+      resp = post 'messages/send',{ raw: encoded_payload }
       resp
     end
   end
