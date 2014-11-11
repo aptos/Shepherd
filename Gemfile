@@ -36,6 +36,9 @@ gem 'hipchat'
 # gmail integration
 gem 'faraday', '>= 0.9.0'
 
+# email tracking
+gem 'ahoy_email', path: 'lib/ahoy_email'
+
 # javascript assets
 gem 'underscore-rails'
 

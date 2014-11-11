@@ -103,4 +103,7 @@ Shepherd::Application.configure do
     room: 855995,
     token: '1d688676778d81d4f467a37effa029'
   }
+
+  # ahoy application tracking
+  config.action_mailer.default_url_options = { host: "taskit-crm.herokuapp.com" }
 end

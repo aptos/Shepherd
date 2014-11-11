@@ -34,5 +34,6 @@ Shepherd::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-
+  # ahoy application tracking
+  config.action_mailer.default_url_options = { host: "localhost:5000" }
 end

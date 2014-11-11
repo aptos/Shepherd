@@ -29,7 +29,6 @@ class GmailController < ApplicationController
     @message['from_name'] = current_user.name
     client = Gmail::Client.new current_user
 
-    binding.pry
     payload = Gmailer.standard_email(@message).to_s
     Rails.logger.info "*** Sending Email\n\n #{payload}"
     begin

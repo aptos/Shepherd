@@ -46,6 +46,9 @@ Shepherd::Application.routes.draw do
   get '/api/companies/locations' => 'companies#locations'
   get '/api/companies/:id' => 'companies#show', :constraints => { :id => /[^\/]*/ }
 
+  # Ahoy email tracking routes
+  mount AhoyEmail::Engine => "/ahoy"
+
   # SEO enabled paths for angular routes
 	get "*path.html" => "pages#index", :layout => 0
   get "*path", :to => 'pages#index'
