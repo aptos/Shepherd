@@ -29,14 +29,19 @@ class GmailController < ApplicationController
     @message['from_name'] = current_user.name
     client = Gmail::Client.new current_user
 
-    payload = Gmailer.standard_email(@message).to_s
+    payload = Gmailer.standard_email(@message)
     Rails.logger.info "*** Sending Email\n\n #{payload}"
     begin
-      encoded_payload = Base64.urlsafe_encode64 payload
+      encoded_payload = Base64.urlsafe_encode64 payload.to_s
       response = client.send_message encoded_payload
     rescue
       render :json => { error: 'Gmail client error', message: response }, :status => 400 and return
     end
+
+    # Update message with gmail id
+    message = Ahoy::Message.find payload["Ahoy-Message-Id"].to_s
+    message.update_attributes(mailservice_id: response['id'])
+
     render :json => response
   end
 end

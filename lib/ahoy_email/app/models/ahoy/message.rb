@@ -14,6 +14,9 @@ module Ahoy
     property :subject, String
     property :content, String
 
+    # Gmail id, or from other service
+    property :mailservice_id, String
+
     # timestamps
     property :sent_at, Time
     property :opened_at, Time
