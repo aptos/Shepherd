@@ -79,6 +79,8 @@ body {
   overflow-x: hidden;
 }
 
+.overflow-hidden { overflow: hidden;}
+
 // add font awesome character into element on left
 .fa.overlap-left {
   z-index: 10;

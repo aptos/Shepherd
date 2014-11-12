@@ -10,6 +10,7 @@ module Ahoy
 
     # optional
     # feel free to remove
+    property :from, String
     property :mailer, String
     property :subject, String
     property :content, String
@@ -27,6 +28,7 @@ module Ahoy
     design do
       view :by_token
       view :by_user_id
+      view :by_mailservice_id
     end
 
     design do

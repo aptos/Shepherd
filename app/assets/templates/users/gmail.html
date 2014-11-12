@@ -3,13 +3,14 @@
 		<div class="row">
       <div class="page page-activity">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 overflow-hidden">
             <section class="activity-container">
 
-              <section class="panel message-body viewport-full" ng-class="{'message-body-open': show_message}">
+              <section class="panel panel-overlay message-body" ng-class="{'open': show_message}">
                 <div class="panel-heading">
                   <p class="headers">
-                    {{message.headers.From}} -> {{message.headers.To}} {{message.headers.Date | moment:'MMM D'}}
+                    {{message.headers.From}} -> {{message.headers.To}} {{message.headers.Date | moment:'MMM D'}}<br/>
+                    <span ng-show="message.labelIds.length">{{message.labelIds}}</span>
                   </p>
                   <a ng-href="{{message_link}}" target="_blank">
                     <strong>{{message.headers.Subject}}</strong>
@@ -21,7 +22,7 @@
                 </div>
               </section>
 
-              <section class="panel panel-default mail-container mail-compose viewport-full" ng-class="{'mail-compose-open': !!compose}">
+              <section class="panel panel-default panel-overlay mail-container mail-compose" ng-class="{'open': !!compose}">
                 <div class="panel-heading">Compose Mail</div>
                 <div class="panel-body">
                   <form class="form-horizontal">
@@ -81,11 +82,11 @@
                     </li>
                   </ul>
                 </div>
-                <div class="text-center">
+                <div class="messages-info">
                   <a ng-show="nextPageToken" ng-click="inbox(nextPageToken)" class="pointer">more...</a>
                   <span ng-show="!!email_update && messages.length"><i class="fa fa-spinner fa-spin"></i></span>
-                  <div class="margin-top-30" ng-show="!email_update && !messages.length && !error"> - no messages here - </div>
-                  <div class="margin-top-30 text-danger" ng-show="!!error"> - Gmail complaining, try to sign in again - </div>
+                  <span ng-show="!email_update && !messages.length && !error"> - no messages here - </span>
+                  <span class="margin-top-30 text-danger" ng-show="!!error"> - Gmail complaining, try to sign in again - </span>
                 </div>
               </section>
             </div>

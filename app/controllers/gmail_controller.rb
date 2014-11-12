@@ -17,6 +17,7 @@ class GmailController < ApplicationController
       timestamps = Ahoy::Message.timestamps_hash params['q']
       list['messages'].map do |m|
         if values = timestamps[m['id']]
+          m['labelIds'] ||= []
           m['labelIds'] << 'UNREAD' unless values['opened_at']
           m['timestamps'] = values
         end
@@ -30,6 +31,15 @@ class GmailController < ApplicationController
     id = params[:id]
     client = Gmail::Client.new current_user
     @message = client.get_message id
+
+    # remove all images - especially our tracer that will trigger opened_at when rendered!
+    @message[:body].gsub!(/<img .*?>/,'')
+
+    # add ahoy data
+    if @message['metadata'] = Ahoy::Message.by_mailservice_id.key(id).first
+      @message['labelIds'] ||= []
+      @message['labelIds'] << 'UNREAD' unless @message['metadata']['opened_at']
+    end
 
     render :json => @message
   end
