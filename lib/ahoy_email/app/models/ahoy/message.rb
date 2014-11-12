@@ -29,5 +29,23 @@ module Ahoy
       view :by_user_id
     end
 
+    design do
+      view :timestamps,
+      :map =>
+      "function(doc) {
+      if (doc.type == 'Ahoy::Message') {
+        var opened_at = (!!doc.opened_at) ? doc.opened_at : false;
+        var clicked_at = (!!doc.clicked_at) ? doc.clicked_at : false;
+        emit(doc.to, { mailservice_id: doc.mailservice_id, opened_at: opened_at, clicked_at: clicked_at });
+      }
+      };"
+    end
+
+    def self.timestamps_hash email
+      h = Hash.new
+      Ahoy::Message.timestamps.key(email).rows.map{|r| h[r['value']['mailservice_id']] = r['value']}
+      h
+    end
+
   end
 end

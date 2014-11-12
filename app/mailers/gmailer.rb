@@ -2,7 +2,6 @@ class Gmailer < ActionMailer::Base
 
   def standard_email message
     @message = message
-    @site_name = 'TaskIT'
     @from = "#{@message['from_name']} <#{@message['from']}>"
 
     to = ( @message['to'].is_a? Array ) ? @message['to'].first : @message['to']

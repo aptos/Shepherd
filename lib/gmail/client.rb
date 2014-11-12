@@ -84,7 +84,7 @@ module Gmail
       return JSON resp.body
     end
 
-    def messages params
+    def messages params={}
       query = { maxResults: 8 }
       ['labelIds','maxResults','pageToken','q'].each {|k| query[k.to_sym] = params[k] if params.has_key? k}
       list = get 'messages', query
@@ -105,10 +105,11 @@ module Gmail
 
     def get_message id
       gmail_message = get "messages/#{id}"
-
       headers = Hash.new
       gmail_message['payload']['headers'].map{|h| headers[h['name']] = h['value'] }
-      body = Base64.urlsafe_decode64(gmail_message['payload']['parts'].last['body']['data']).mb_chars
+
+      payload = (gmail_message['payload'].has_key? 'parts') ? gmail_message['payload']['parts'].last : gmail_message['payload']
+      body = Base64.urlsafe_decode64(payload['body']['data']).mb_chars
       message = {
         id: id,
         headers: headers,

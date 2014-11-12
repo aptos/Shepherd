@@ -9,7 +9,7 @@ angular.module('shepherd.gmail', ['ngSanitize'])
     if (!!nextPageToken) { query.pageToken = nextPageToken };
 
     Restangular.one('gmail/inbox').get(query).then( function(inbox) {
-      if (!!$scope.messages && !!nextPageToken) {      
+      if (!!$scope.messages && !!nextPageToken) {
         $scope.messages = $scope.messages.concat(inbox.messages);
       } else {
         $scope.messages = inbox.messages;
@@ -36,7 +36,7 @@ angular.module('shepherd.gmail', ['ngSanitize'])
   $scope.send = function () {
     $scope.sending = true;
     Restangular.one('gmail/message').post(id, $scope.new_message).then( function(status) {
-      console.info("Sent!", status);
+      $scope.inbox();
       logger.logSuccess("Message Sent!");
       $scope.closeCompose();
     }, function () { $scope.sending = false; logger.logError("Bummer, something went wrong...") });

@@ -4,11 +4,23 @@ class GmailController < ApplicationController
 	respond_to :json
 
 	def inbox
+    # params['labelIds'] ||= ['INBOX']
     begin
       client = Gmail::Client.new current_user
       list = client.messages params
     rescue
       render :json => { error: 'Gmail client error' }, :status => 400 and return
+    end
+
+    # Fold in timestamps from Ahoy::Messages
+    if list['messages'].length && params['q']
+      timestamps = Ahoy::Message.timestamps_hash params['q']
+      list['messages'].map do |m|
+        if values = timestamps[m['id']]
+          m['labelIds'] << 'UNREAD' unless values['opened_at']
+          m['timestamps'] = values
+        end
+      end
     end
 
     render :json => list
