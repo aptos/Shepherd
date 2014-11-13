@@ -32,19 +32,25 @@ angular.module('shepherd.gmail', ['ngSanitize'])
     }, function () { $scope.email_update = false; });
   };
 
-  $scope.compose = false;
-  $scope.send = function () {
+  $scope.send = function (new_message) {
     $scope.sending = true;
-    Restangular.one('gmail/message').post(id, $scope.new_message).then( function(status) {
+    Restangular.one('gmail/message').post(id, new_message).then( function(status) {
       $scope.inbox();
       logger.logSuccess("Message Sent!");
       $scope.closeCompose();
     }, function () { $scope.sending = false; logger.logError("Bummer, something went wrong...") });
   };
 
+  $scope.gmail = {new_message: ''};
+  $scope.compose = function () {
+    console.info("Compose");
+    $scope.composing = true;
+    $scope.gmail.new_message = false;
+  };
+
   $scope.closeCompose = function () {
-    $scope.new_message = false;
-    $scope.compose = false;
+    $scope.gmail.new_message = false;
+    $scope.composing = false;
   };
 
   $scope.closeMessage = function () { $scope.show_message = false; };

@@ -1,0 +1,15 @@
+<section class="panel panel-overlay message-body" ng-class="{'open': show_message}">
+  <div class="panel-heading">
+    <p class="headers">
+      {{message.headers.From}} -> {{message.headers.To}} {{message.headers.Date | moment:'MMM D'}}<br/>
+      <span ng-show="message.labelIds.length">{{message.labelIds}}</span>
+    </p>
+    <a ng-href="{{message_link}}" target="_blank">
+      <strong>{{message.headers.Subject}}</strong>
+    </a>
+    <span class="pull-right close-message" ng-click="closeMessage()"><i class='fa fa-level-up fa-rotate-270'></i></span>
+  </div>
+  <div class="panel-body">
+    <div ng-bind-html="message.body"></div>
+  </div>
+</section>

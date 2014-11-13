@@ -5,93 +5,13 @@
         <div class="row">
           <div class="col-md-12 overflow-hidden">
             <section class="activity-container">
-
-              <section class="panel panel-overlay message-body" ng-class="{'open': show_message}">
-                <div class="panel-heading">
-                  <p class="headers">
-                    {{message.headers.From}} -> {{message.headers.To}} {{message.headers.Date | moment:'MMM D'}}<br/>
-                    <span ng-show="message.labelIds.length">{{message.labelIds}}</span>
-                  </p>
-                  <a ng-href="{{message_link}}" target="_blank">
-                    <strong>{{message.headers.Subject}}</strong>
-                  </a>
-                  <span class="pull-right close-message" ng-click="closeMessage()"><i class='fa fa-level-up fa-rotate-270'></i></span>
-                </div>
-                <div class="panel-body">
-                  <div ng-bind-html="message.body"></div>
-                </div>
-              </section>
-
-              <section class="panel panel-default panel-overlay mail-container mail-compose" ng-class="{'open': !!compose}">
-                <div class="panel-heading">Compose Mail</div>
-                <div class="panel-body">
-                  <form class="form-horizontal">
-                    <div class="recipients" ng-show="!!recipients">
-                      <div class="form-group">
-                        <label for="mail_to" class="col-xs-2">To:</label>
-                        <div class="col-xs-10">
-                          <input type="text" id="mail_to" class="form-control" ng-model="new_message.to">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="mail_cc" class="col-xs-2">CC:</label>
-                        <div class="col-xs-10">
-                          <input type="text" id="mail_cc" class="form-control" ng-model="new_message.cc">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="mail_bcc" class="col-xs-2">BCC:</label>
-                        <div class="col-xs-10">
-                          <input type="text" id="mail_bcc" class="form-control" ng-model="new_message.bcc">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-xs-10">
-                        <input type="text" id="mail_subject" class="form-control" ng-model="new_message.subject" placeholder="Subject">
-                      </div>
-                    </div>
-                    <textarea class="form-control" rows="10" ng-model="new_message.body"></textarea>
-                  </form>
-                  <div class="mail-actions">
-                    <div class="btn btn-sm btn-primary" ng-click="send()">Send</div>
-                    <div class="btn btn-sm btn-default" ng-click="closeCompose()">Discard</div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="panel panel-default messages-container">
-                <div class="panel-heading">
-                  <input type="text" class="form-control search" placeholder="Search..." ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" ng-model="query">
-                  <span class="btn-icon btn-icon-round btn-info compose" ng-click="compose=1">
-                    <i class="fa fa-pencil"></i>
-                  </span>
-                </div>
-                <div class="panel-body">
-                  <div class="text-center"><span ng-show="!!email_update"><i class="fa fa-spinner fa-spin"></i></span></div>
-                  <ul class="activity-list list-unstyled">
-                    <li ng-repeat="item in messages" >
-                      <div class="activity-date">{{item.date | moment:'timeago'}}</div>
-                      <div class="view pointer" ng-class="{true:'text-primary', false:''}[hasLabel(item,'INBOX')]" ng-click="read(item.id)">
-                        <h5 ng-class="{true:'strong', false:''}[hasLabel(item,'UNREAD')]">
-                          <span ng-show="hasLabel(item,'IMPORTANT')"><i class="fa fa-star"></i></span>
-                          {{item.subject}}
-                        </h5>
-                        <div class="snippet" ng-bind-html="item.snippet" ng-class="{true:'strong', false:''}[hasLabel(item,'UNREAD')]"></div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="messages-info">
-                  <a ng-show="nextPageToken" ng-click="inbox(nextPageToken)" class="pointer">more...</a>
-                  <span ng-show="!!email_update && messages.length"><i class="fa fa-spinner fa-spin"></i></span>
-                  <span ng-show="!email_update && !messages.length && !error"> - no messages here - </span>
-                  <span class="margin-top-30 text-danger" ng-show="!!error"> - Gmail complaining, try to sign in again - </span>
-                </div>
-              </section>
-            </div>
+              <div ui-view="gmail.list"></div>
+              <div ui-view="gmail.compose"></div>
+              <div ui-view="gmail.message"></div>
+            </section>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>

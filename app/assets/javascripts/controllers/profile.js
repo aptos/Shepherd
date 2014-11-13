@@ -17,6 +17,15 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
           templateUrl: 'users/gmail.html',
           controller: 'GmailCtrl'
         },
+        'gmail.list@profile': {
+          templateUrl: 'users/gmail.list.html'
+        },
+        'gmail.message@profile': {
+          templateUrl: 'users/gmail.message.html'
+        },
+        'gmail.compose@profile': {
+          templateUrl: 'users/gmail.compose.html'
+        },
         'activity@profile': {
           templateUrl: 'users/activity.html',
           controller: 'ActivityCtrl'

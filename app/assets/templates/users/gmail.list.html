@@ -1,0 +1,29 @@
+<section class="panel panel-default messages-container">
+  <div class="panel-heading">
+    <input type="text" class="form-control search" placeholder="Search..." ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" ng-model="query">
+    <a class="btn-icon btn-icon-round btn-info compose" ng-click="compose()">
+      <i class="fa fa-pencil"></i>
+    </a>
+  </div>
+  <div class="panel-body">
+    <div class="text-center"><span ng-show="!!email_update"><i class="fa fa-spinner fa-spin"></i></span></div>
+    <ul class="activity-list list-unstyled">
+      <li ng-repeat="item in messages" >
+        <div class="activity-date">{{item.date | moment:'timeago'}}</div>
+        <div class="view pointer" ng-class="{true:'text-primary', false:''}[hasLabel(item,'INBOX')]" ng-click="read(item.id)">
+          <h5 ng-class="{true:'strong', false:''}[hasLabel(item,'UNREAD')]">
+            <span ng-show="hasLabel(item,'IMPORTANT')"><i class="fa fa-star"></i></span>
+            {{item.subject}}
+          </h5>
+          <div class="snippet" ng-bind-html="item.snippet" ng-class="{true:'strong', false:''}[hasLabel(item,'UNREAD')]"></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="messages-info">
+    <a ng-show="nextPageToken" ng-click="inbox(nextPageToken)" class="pointer">more...</a>
+    <span ng-show="!!email_update && messages.length"><i class="fa fa-spinner fa-spin"></i></span>
+    <span ng-show="!email_update && !messages.length && !error"> - no messages here - </span>
+    <span class="margin-top-30 text-danger" ng-show="!!error"> - Gmail complaining, try to sign in again - </span>
+  </div>
+</section>
