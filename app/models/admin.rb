@@ -10,7 +10,7 @@ class Admin < CouchRest::Model::Base
 
   def self.from_omniauth(auth)
     admin = Admin.find(auth['info']['email'])
-    admin ||= create_with_omniauth(auth)
+    admin ||= Admin.create_with_omniauth(auth)
     Rails.logger.info "$$$$$ auth #{auth.inspect}"
     if auth['credentials'] && auth['credentials']['token']
       admin.credentials = auth['credentials']
@@ -20,9 +20,9 @@ class Admin < CouchRest::Model::Base
   end
 
   def self.create_with_omniauth(auth)
-    create! do |user|
-      user.email = auth['info']['email']
-      user.name = auth['info']['name']
+    create! do |admin|
+      admin.email = auth['info']['email']
+      admin.name = auth['info']['name']
     end
   end
 

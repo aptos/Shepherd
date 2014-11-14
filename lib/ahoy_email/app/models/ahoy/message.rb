@@ -23,6 +23,8 @@ module Ahoy
     property :opened_at, Time
     property :clicked_at, Time
 
+    timestamps!
+
     belongs_to :lead, polymorphic: true
 
     design do
@@ -32,21 +34,15 @@ module Ahoy
     end
 
     design do
-      view :timestamps,
+      view :summary,
       :map =>
       "function(doc) {
       if (doc.type == 'Ahoy::Message') {
         var opened_at = (!!doc.opened_at) ? doc.opened_at : false;
         var clicked_at = (!!doc.clicked_at) ? doc.clicked_at : false;
-        emit(doc.to, { mailservice_id: doc.mailservice_id, opened_at: opened_at, clicked_at: clicked_at });
+        emit(doc.to, { mailservice_id: doc.mailservice_id, from: doc.from, subject: doc.subject, sent_at: doc.sent_at, opened_at: opened_at, clicked_at: clicked_at });
       }
       };"
-    end
-
-    def self.timestamps_hash email
-      h = Hash.new
-      Ahoy::Message.timestamps.key(email).rows.map{|r| h[r['value']['mailservice_id']] = r['value']}
-      h
     end
 
   end

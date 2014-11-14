@@ -4,27 +4,45 @@ class GmailController < ApplicationController
 	respond_to :json
 
 	def inbox
-    # params['labelIds'] ||= ['INBOX']
     begin
       client = Gmail::Client.new current_user
-      list = client.messages params
+      @list = client.messages params
     rescue
       render :json => { error: 'Gmail client error' }, :status => 400 and return
     end
 
     # Fold in timestamps from Ahoy::Messages
-    if list['messages'] && params['q']
-      timestamps = Ahoy::Message.timestamps_hash params['q']
-      list['messages'].map do |m|
-        if values = timestamps[m['id']]
+    if @list['messages'] && params['q']
+      summary = Ahoy::Message.summary.key(params['q']).as_hash('mailservice_id')
+      @list['messages'].map do |m|
+        if values = summary[m['id']]
           m['labelIds'] ||= []
           m['labelIds'] << 'UNREAD' unless values['opened_at']
-          m['timestamps'] = values
+          m['timestamps'] = [values['opened_at'], values['clicked_at']]
+
+          summary.delete m['id']
+        end
+      end
+
+      # Add ahoy message summaries from other Admins
+      if summary.length
+        summary.values.each do |message|
+          m = {
+            id: message['mailservice_id'],
+            labelIds: ["SENT"],
+            date: message["sent_at"],
+            subject: message['subject'],
+            from: message['from']
+          }
+          m[:labelIds] << 'UNREAD' unless message['opened_at']
+          m[:labelIds] << 'CLICKED' if message['clicked_at']
+
+          @list['messages'] << m
         end
       end
     end
 
-    render :json => list
+    render :json => @list
   end
 
   def message
@@ -66,9 +84,8 @@ class GmailController < ApplicationController
     end
 
     # Update message with gmail id
-    message = Ahoy::Message.find payload["Ahoy-Message-Id"].to_s
-    message.update_attributes(mailservice_id: response['id'])
-
+    ahoy_message = Ahoy::Message.find payload["Ahoy-Message-Id"].to_s
+    ahoy_message.update_attributes(mailservice_id: response['id'], sent_at: Time.now)
     render :json => response
   end
 

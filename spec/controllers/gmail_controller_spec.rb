@@ -19,8 +19,19 @@ describe GmailController, :type => :controller do
 
   describe "inbox with query" do
     it "returns messages from the query" do
-      get :inbox, { q: 'james@taskit.io' }
+      get :inbox, { q: 'bswilkerson@gmail.com' }
       (JSON response.body).count.should > 0
+    end
+  end
+
+  describe "when other admins contact the user" do
+    before do
+      @message = FactoryGirl.create(:ahoy_message, { sent_at: Time.now })
+    end
+    it "returns summary messages from the query" do
+      get :inbox, { q: 'bswilkerson@gmail.com' }
+      assigns(:list)['messages'].last[:labelIds].should eq ["SENT", "UNREAD"]
+      assigns(:list)['messages'].last[:subject].should eq @message[:subject]
     end
   end
 
@@ -48,7 +59,7 @@ describe GmailController, :type => :controller do
       }
     end
     it "sends a message" do
-      post :send_message, { uid:'bswilkerson@gmail.com', gmail: @message}
+      post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message}}
       resp = JSON response.body
       resp['id'].should_not be_nil
     end

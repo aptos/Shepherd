@@ -43,6 +43,20 @@
   left: 16px;
 }
 
+.panel.mail-compose {
+  .fa.fa-trash-o {
+    float: right;
+    margin-top: 10px;
+    color: $gray-light;
+    @include transition(all .2s ease-in-out);
+    &:hover {
+      cursor: pointer;
+      color: $gray-dark;
+      @include transform(scale(1.3));
+    }
+  }
+}
+
 .panel.messages-container {
   margin-bottom: 0;
   h5 {

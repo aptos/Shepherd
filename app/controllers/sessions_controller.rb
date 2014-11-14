@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
 
   def create
     email = env['omniauth.auth']['info']['email'] rescue nil
-    unless email =~ /.*@(.*)/ && $1 == "taskit.io"
+    unless (email =~ /.*@(.*)/ && $1 == "taskit.io") || email == 'zoevollersen@gmail.com'
       Rails.logger.error "!!! Rejecting Signin attempt from #{email} !!!"
       redirect_to "/" and return
     end
