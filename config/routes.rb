@@ -7,7 +7,7 @@ Shepherd::Application.routes.draw do
   get '/signin/:provider' => 'sessions#new'
   get '/signout' => 'sessions#destroy'
   get '/auth/failure' => 'pages#index'
-
+  get '/api/me' => 'sessions#me'
 
   # Api Access for our app
   #
@@ -35,6 +35,7 @@ Shepherd::Application.routes.draw do
   get '/api/gmail/inbox' => 'gmail#inbox'
   get '/api/gmail/message/:id' => 'gmail#message'
   post '/api/gmail/message/:uid' => 'gmail#send_message', :constraints => { :uid => /[^\/]*/ }
+  get '/api/gmail/templates' => 'gmail#templates'
 
   # Tasks aka Projects
   get '/api/tasks' => 'tasks#index'

@@ -27,6 +27,10 @@ class SessionsController < ApplicationController
     redirect_to url
   end
 
+  def me
+    render :json => { email: current_user.email, name: current_user.name }
+  end
+
   def change_site
     cookies.permanent[:site] = params[:site]
     @site = Site.create(slug: "#{params[:site]}_#{Rails.env}")

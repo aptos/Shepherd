@@ -13,7 +13,7 @@ class GmailController < ApplicationController
     end
 
     # Fold in timestamps from Ahoy::Messages
-    if list['messages'].length && params['q']
+    if list['messages'] && params['q']
       timestamps = Ahoy::Message.timestamps_hash params['q']
       list['messages'].map do |m|
         if values = timestamps[m['id']]
@@ -45,7 +45,12 @@ class GmailController < ApplicationController
   end
 
   def send_message
-    @message = params[:gmail]
+    @message = params[:gmail][:new_message]
+
+    if template = params[:gmail]['template']
+      EmailTemplate.update template, @message
+    end
+
     @message['to'] = params[:uid]
     @message['from'] = current_user.email
     @message['from_name'] = current_user.name
@@ -66,4 +71,9 @@ class GmailController < ApplicationController
 
     render :json => response
   end
+
+  def templates
+    render :json => EmailTemplate.by_name.all
+  end
+
 end

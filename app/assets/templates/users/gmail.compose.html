@@ -1,5 +1,13 @@
 <section class="panel panel-default panel-overlay mail-container mail-compose" ng-class="{'open': !!composing}">
-  <div class="panel-heading">Compose Mail</div>
+  <div class="panel-heading">
+    <span>Compose Mail</span>
+    <span class="ui-select" style="margin-left: 30px;">
+      <select ng-model="gmail.template" ng-change="chooseTemplate(gmail.template)">
+        <option value="" disabled selected>-- Templates --</option>
+        <option ng-repeat="item in template_names" value="{{item}}">{{item}}</option>
+      </select>
+    </span>
+  </div>
   <div class="panel-body">
     <form class="form-horizontal">
       <div class="recipients" ng-show="!!recipients">
@@ -27,11 +35,16 @@
           <input type="text" id="mail_subject" class="form-control" ng-model="gmail.new_message.subject" placeholder="Subject">
         </div>
       </div>
-      <textarea class="form-control" rows="10" ng-model="gmail.new_message.body"></textarea>
+      <textarea class="form-control" rows="15" ng-model="gmail.new_message.body"></textarea>
     </form>
     <div class="mail-actions">
-      <div class="btn btn-sm btn-primary" ng-click="send(gmail.new_message)">Send</div>
+      <div class="btn btn-sm btn-primary" ng-click="send(gmail)">Send</div>
       <div class="btn btn-sm btn-default" ng-click="closeCompose()">Discard</div>
+      <div class="checkbox" ng-show="gmail.template">
+        <label>
+          <input type="checkbox" ng-model="gmail.save_template"> Update <span class="text-info"><strong>{{gmail.template}}</strong></span> Template
+        </label>
+      </div>
     </div>
   </div>
 </section>

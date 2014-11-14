@@ -1,11 +1,15 @@
 angular.module('shepherd.gmail', ['ngSanitize'])
-.controller('GmailCtrl',['$scope','$stateParams','Restangular','logger', function ($scope, $stateParams, Restangular, logger) {
+.controller('GmailCtrl',['$scope','$rootScope', '$stateParams','Restangular','logger', function ($scope,$rootScope, $stateParams, Restangular, logger) {
 	var id = $stateParams.id;
+
+  $scope.gmail = { 
+    new_message: {}
+  };
 
   $scope.inbox = function (nextPageToken) {
     $scope.email_update = true;
     var query = { q: id };
-    if (!!$scope.query) query.q += ' ' + $scope.query;
+    if (!!$scope.gmail.query) query.q += ' ' + $scope.gmail.query;
     if (!!nextPageToken) { query.pageToken = nextPageToken };
 
     Restangular.one('gmail/inbox').get(query).then( function(inbox) {
@@ -18,9 +22,9 @@ angular.module('shepherd.gmail', ['ngSanitize'])
       $scope.email_update = false;
     }, function () { $scope.email_update = false; });
   };
-  $scope.inbox();
+  // $scope.inbox(); no needed, with query watch
 
-  $scope.$watch('query', function () { $scope.inbox(); });
+  $scope.$watch('gmail.query', function () { $scope.inbox(); });
 
   $scope.read = function (id) {
     $scope.email_update = true;
@@ -32,20 +36,51 @@ angular.module('shepherd.gmail', ['ngSanitize'])
     }, function () { $scope.email_update = false; });
   };
 
-  $scope.send = function (new_message) {
+  $scope.send = function (gmail) {
     $scope.sending = true;
-    Restangular.one('gmail/message').post(id, new_message).then( function(status) {
+    if (!$scope.gmail.save_template) gmail.template = null;
+    Restangular.one('gmail/message').post(id, gmail).then( function(status) {
       $scope.inbox();
       logger.logSuccess("Message Sent!");
       $scope.closeCompose();
+      if (!!$scope.gmail.save_template) updateTemplates();
     }, function () { $scope.sending = false; logger.logError("Bummer, something went wrong...") });
   };
 
-  $scope.gmail = {new_message: ''};
+  $scope.template_names = [
+  'CEO Welcome',
+  'Concierge Welcome',
+  'First Followup - Onboard',
+  'First Followup - Educate',
+  'Pimp Your Profile',
+  'Thanks - Client',
+  'Thanks - Provider'
+  ];
+
+  var updateTemplates = function () {
+    Restangular.one('gmail/templates').get().then( function (templates) {
+      $scope.templates = templates;
+    }, function () { console.error('Oops!'); })
+  };
+  updateTemplates();
+
   $scope.compose = function () {
     console.info("Compose");
     $scope.composing = true;
-    $scope.gmail.new_message = false;
+    $scope.gmail.template = "";
+    $scope.gmail.new_message = {};
+  };
+
+  $scope.chooseTemplate = function (name) {
+    var template = _.find( $scope.templates, {name: name} );
+    if (angular.isDefined(template)) {
+      var first_name = $scope.$parent.user.name.split(' ')[0];  
+      $scope.gmail.new_message = {
+        subject: template.subject,
+        body: 'Hi ' + first_name + ',\n\n' + template.body + '\n\nBest Regards,\n\n' + $rootScope.me.name
+      };
+      console.info("Template set", $scope.gmail );
+    }
   };
 
   $scope.closeCompose = function () {
