@@ -40,9 +40,9 @@
     <div class="mail-actions">
       <div class="btn btn-sm btn-primary" ng-click="send(gmail)">Send</div>
       <div class="btn btn-sm btn-default" ng-click="closeCompose()">Discard</div>
-      <div class="checkbox" ng-show="gmail.template">
-        <label>
-          <input type="checkbox" ng-model="gmail.save_template"> Update <span class="text-info"><strong>{{gmail.template}}</strong></span> Template
+      <div class="margin-top-10" ng-show="gmail.template">
+        <label class="ui-checkbox">
+          <input type="checkbox" ng-model="gmail.save_template"><span>Update <span class="text-info"><strong>{{gmail.template}}</strong></span> Template</span>
         </label>
       </div>
     </div>
