@@ -105,6 +105,7 @@ module Gmail
 
     def get_message id
       gmail_message = get "messages/#{id}"
+      return nil unless gmail_message['payload']
       labelIds = gmail_message['labelIds']
       headers = Hash.new
       gmail_message['payload']['headers'].map{|h| headers[h['name']] = h['value'] }

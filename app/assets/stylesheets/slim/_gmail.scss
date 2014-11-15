@@ -64,6 +64,10 @@
     font-weight: normal;
   }
   h5.strong { font-weight: 700; }
+  .label-info {
+    display: inline-block;
+    margin-top: 10px;
+  }
   .panel-body {
     max-height: 600px;
     overflow-y: scroll;

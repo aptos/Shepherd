@@ -29,7 +29,7 @@ class GmailController < ApplicationController
         summary.values.each do |message|
           m = {
             id: message['mailservice_id'],
-            labelIds: ["SENT"],
+            labelIds: ["SENT","SUMMARY"],
             date: message["sent_at"],
             subject: message['subject'],
             from: message['from']
@@ -49,6 +49,8 @@ class GmailController < ApplicationController
     id = params[:id]
     client = Gmail::Client.new current_user
     @message = client.get_message id
+
+    render :json => { error: 'message not found' }, :status => 404 and return unless @message
 
     # remove all images - especially our tracer that will trigger opened_at when rendered!
     @message[:body].gsub!(/<img .*?>/,'')

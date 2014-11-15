@@ -2,7 +2,7 @@ angular.module('shepherd.gmail', ['ngSanitize'])
 .controller('GmailCtrl',['$scope','$rootScope', '$stateParams','Restangular','logger', function ($scope,$rootScope, $stateParams, Restangular, logger) {
 	var id = $stateParams.id;
 
-  $scope.gmail = { 
+  $scope.gmail = {
     new_message: {}
   };
 
@@ -74,7 +74,7 @@ angular.module('shepherd.gmail', ['ngSanitize'])
   $scope.chooseTemplate = function (name) {
     var template = _.find( $scope.templates, {name: name} );
     if (angular.isDefined(template)) {
-      var first_name = $scope.$parent.user.name.split(' ')[0];  
+      var first_name = $scope.$parent.user.name.split(' ')[0];
       $scope.gmail.new_message = {
         subject: template.subject,
         body: 'Hi ' + first_name + ',\n\n' + template.body + '\n\nBest Regards,\n\n' + $rootScope.me.name
