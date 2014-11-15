@@ -26,6 +26,7 @@ module ApplicationHelper
     Rails.logger.info "DB: #{db_name}"
     unless @site
       @site = Site.by_slug.key("#{db_name}_#{Rails.env}").first
+      Rails.logger.info "@site? #{@site.inspect}"
       @site ||= Site.create(slug: "#{db_name}_#{Rails.env}" )
     end
     @site

@@ -14,7 +14,7 @@ def save_or_create(doc)
 end
 
 # @db = CouchRest.database("https://admin:admin@localhost:5984/shepherd_development")
-# @db = CouchRest.database("https://#{ENV['DBCREDENTIALS']}@taskit.cloudant.com/shepherd_production")
+@db = CouchRest.database("https://#{ENV['DBCREDENTIALS']}@taskit.cloudant.com/shepherd_production")
 
 desc "remove sites"
 task :remove_sites do
