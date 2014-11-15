@@ -7,6 +7,10 @@ class Site < CouchRest::Model::Base
   proxy_for :tasks
   proxy_for :companies
 
+  design do
+    view :by_slug
+  end
+
   # Databased are on same server
   def proxy_database
     @db ||= self.server.database!(slug)

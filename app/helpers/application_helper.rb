@@ -24,7 +24,11 @@ module ApplicationHelper
   def site
     db_name = cookies[:site] || Shepherd::Application.config.sites.first[:db]
     Rails.logger.info "DB: #{db_name}"
-    @site ||= Site.create(slug: "#{db_name}_#{Rails.env}" )
+    unless @site
+      @site = Site.by_slug.key("#{db_name}_#{Rails.env}").first
+      @site ||= Site.create(slug: "#{db_name}_#{Rails.env}" )
+    end
+    @site
   end
 
   def hipchat

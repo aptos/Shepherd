@@ -33,7 +33,6 @@ class SessionsController < ApplicationController
 
   def change_site
     cookies.permanent[:site] = params[:site]
-    @site = Site.create(slug: "#{params[:site]}_#{Rails.env}")
     Rails.logger.info "SITE CHANGED: db is #{@site.inspect}"
     render :json => { ok: true, site: params[:site] }
   end
