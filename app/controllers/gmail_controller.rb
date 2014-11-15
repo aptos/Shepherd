@@ -11,8 +11,10 @@ class GmailController < ApplicationController
       render :json => { error: 'Gmail client error' }, :status => 400 and return
     end
 
+    @list['messages'] ||= []
+
     # Fold in timestamps from Ahoy::Messages
-    if @list['messages'] && params['q']
+    if params['q']
       summary = Ahoy::Message.summary.key(params['q']).as_hash('mailservice_id')
       @list['messages'].map do |m|
         if values = summary[m['id']]
