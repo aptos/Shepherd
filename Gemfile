@@ -33,6 +33,9 @@ gem 'couchrest_model', '2.0.3'
 # hipchat integration
 gem 'hipchat'
 
+# exception tracking
+gem 'rollbar', '~> 1.2.6'
+
 # gmail integration
 gem 'faraday', '>= 0.9.0'
 

@@ -95,7 +95,6 @@ angular.module('shepherd.dashboard',['restangular'])
 
   Restangular.one('tasks/stats').get()
   .then( function(stats) {
-    console.info("stats", stats)
     $scope.stats = stats;
   });
 }]);
