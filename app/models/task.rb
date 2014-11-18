@@ -38,7 +38,7 @@ class Task < CouchRest::Model::Base
     if (doc['type'] == 'Task') {
       var company = (!!doc.company) ? doc.company : '';
       var location = (!!doc.location) ? doc.location : '';
-      emit(doc.owner, { id: doc._id, title: doc.title, location: location, status: doc.status, accepted_bid: doc.accepted_bid, views: doc.views, created_at: doc.created_at });
+      emit(doc.owner, { id: doc._id, title: doc.title, location: location, owner_name: doc.owner_name, company: doc.company, status: doc.status, accepted_bid: doc.accepted_bid, views: doc.views, created_at: doc.created_at });
     }
     };"
   end

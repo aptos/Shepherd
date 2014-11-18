@@ -1,0 +1,22 @@
+<div class="row">
+  <h4>Current Projects</h4>
+  <% if @projects.empty? %>No projects... really?<% end %>
+  <% @projects.each do |project| %>
+  <div class="col-sm-4" style="width:300px">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= project['title'] %></h3>
+        <p class="text-muted">
+          <%= Date.parse project['created_at']  %>
+          <span class="pull-right"><%= project['views'] %> views</span>
+        </p>
+      </div>
+      <div class="panel-body">
+        <h4><%= project['company'] %></h4>
+        <p>
+          <%= project['owner_name'] %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>

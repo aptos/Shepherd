@@ -51,26 +51,4 @@ class UsersController < ApplicationController
     render :json => @activities
   end
 
-  def report
-    last_week = Date.today - 7
-    @recent = Hash.new
-    Shepherd::Application.config.sites.each do |s|
-      site = Site.by_slug.key("#{s[:db]}_#{Rails.env}").first
-      users = site.users.by_created_at.descending().limit(100).rows.keep_if {|u| last_week < Date.parse(u['key']) }
-      users.map do |user|
-        user[:profile] = site.users.find(user['id'])
-      end
-      @recent[s[:label]] = users
-    end
-
-
-
-    respond_to do |format|
-      format.html
-      format.json{
-        render :json => { recent: @recent }
-      }
-    end
-  end
-
 end
