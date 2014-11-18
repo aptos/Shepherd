@@ -22,6 +22,10 @@
             <tr>
               <th class="row-name" ng-click="changeSorting('name')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('name')]">User</th>
               <th class="row-name" ng-click="changeSorting('lead.segment')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('lead.segment')]">Segment</th>
+              <th class="row-name">
+                <span ng-click="changeSorting('stats.tasks')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('stats.tasks')]">Projects</span>/
+                <span ng-click="changeSorting('stats.bids')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('stats.bids')]">Bids</span>
+              </th>
               <th class="row-name" ng-click="changeSorting('visits')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('visits')]">Visits</th>
               <th class="row-name" ng-click="changeSorting('updated_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('updated_at')]">Last Visit</th>
               <th class="row-name" ng-click="changeSorting('created_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('created_at')]">Joined</th>
@@ -34,6 +38,10 @@
                 <a ng-href="{{user.company['website']}}">{{user.company['name']}}</a>
               </td>
               <td name="Segment" >{{user.lead.segment}}</td>
+              <td name="Projects/Bids" >
+                <span ng-show="user.stats.tasks || user.stats.bids">{{user.stats.tasks || 0}}/{{user.stats.bids || 0}}</span>
+                <span ng-hide="user.stats.tasks || user.stats.bids"> - </span>
+              </td>
               <td name="Visits" >{{user.visits}}</td>
               <td name="Last Visit" >{{user.updated_at | moment:dateformat}}</td>
               <td name="Joined" >{{user.created_at | moment:dateformat}}</td>

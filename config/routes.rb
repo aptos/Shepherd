@@ -16,6 +16,8 @@ Shepherd::Application.routes.draw do
   match '/api/site' => 'sessions#change_site', via: [:get, :post]
 
   # Users
+  get '/users/report' => 'users#report'
+  
   get '/api/users' => 'users#index'
   get '/api/users/:id' => 'users#show', :constraints => { :id => /[^\/]*/ }
   get '/api/users/:id/activity' => 'users#activity', :constraints => { :id => /[^\/]*/ }

@@ -102,8 +102,8 @@ body {
 table.sortable th {
   cursor: pointer;
 }
-table.sortable th.sort-desc { color: #2A6496; }
-table.sortable th.sort-asc { color: #2A6496; }
+table.sortable th.sort-desc, th > span.sort-desc { color: #2A6496; }
+table.sortable th.sort-asc, th > span.sort-asc { color: #2A6496; }
 
 @media all and (max-width: 640px) {
   .layout-single-column {
