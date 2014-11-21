@@ -14,3 +14,15 @@
   }
 
 }
+
+.users-report .add-user {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+  .submit { margin-top: -5px; }
+  .submit:disabled { background-color: #ccc; }
+}
+.users-report .add-user.ng-hide {
+  opacity:0;
+}
+
+.add-user-submit:disabled { background-color: #ccc; }

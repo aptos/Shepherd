@@ -39,4 +39,8 @@ angular.module('shepherd.users',['restangular'])
     }
   };
 
+  $scope.addLead = function () {
+    console.info("Add Lead", $scope.new_lead)
+  };
+
 }]);

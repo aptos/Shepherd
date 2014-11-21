@@ -5,10 +5,43 @@
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-sm-3">
-          <form class="form-search">
-            <input type="text" class="form-control" placeholder="Search" ng-model="query" />
+        <div class="col-sm-5">
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" ng-model="query" />
+            </div>
           </form>
+          <div class="form-group dropdown add-user" ng-show="(users | filter:query).length == 0">
+            <a href="javascript:;" class="btn-icon btn-icon-round bg-success dropdown-toggle" data-toggle="dropdown">
+              <span class="fa fa-plus" style="padding-left: 1px;"></span>
+            </a>
+            <div class="dropdown-menu with-arrow panel panel-default" ui-not-close-on-click>
+              <form name="newLead" class="form-validation">
+                <div class="panel-heading">
+                  <span>Add Lead</span>
+                  <span class="pull-right">
+                    <input type="button" href="javascript:;" class="btn-icon btn-icon-round btn-icon-sm bg-success add-user-submit" ng-click="addLead()" ng-disabled="newLead.$invalid">
+                      <span class="fa fa-plus"></span>
+                    </input>
+                  </span>
+                </div>
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <input ng-model="new_lead.name" type="text" class="form-control" placeholder="Buddy Gonzo" required>
+                  </li>
+                  <li class="list-group-item">
+                    <input ng-model="new_lead.email" type="email" class="form-control" placeholder="buddy@big.new" required>
+                  </li>
+                  <li class="list-group-item">
+                    <input ng-model="new_lead.company" type="text" class="form-control" placeholder="Gonzo Inc.">
+                  </li>
+                  <li class="list-group-item">
+                    <input ng-model="new_lead.phone" type="text" class="form-control" placeholder="(415) 555-1212">
+                  </li>
+                </ul>
+              </form>
+            </div>
+          </div>
         </div>
         <div class="col-sm-3">
           <h4>
@@ -29,7 +62,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: user.id})">
-              <td name="Name">{{user.name}} 
+              <td name="Name">{{user.name}}
                 <br />
                 <a ng-href="{{user.company['website']}}">{{user.company['name']}}</a>
               </td>

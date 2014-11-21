@@ -109,9 +109,12 @@ module Gmail
       labelIds = gmail_message['labelIds']
       headers = Hash.new
       gmail_message['payload']['headers'].map{|h| headers[h['name']] = h['value'] }
-
-      payload = (gmail_message['payload'].has_key? 'parts') ? gmail_message['payload']['parts'].last : gmail_message['payload']
-      body = Base64.urlsafe_decode64(payload['body']['data']).mb_chars
+      begin
+        parser = ParseMail.new gmail_message['payload']
+        body = parser.parsed.join
+      rescue
+        Rails.logger.error "Error decoding payload: #{payload.inspect}"
+      end
       message = {
         id: id,
         labelIds: labelIds,
@@ -125,7 +128,32 @@ module Gmail
       resp = post 'messages/send',{ raw: encoded_payload }
       resp
     end
+
   end
 
+  class ParseMail
+    attr_accessor :parsed
+
+    def initialize payload=nil
+      @parsed = []
+      if payload
+        parse payload
+      end
+    end
+
+    def parse payload
+      if payload['parts'] && payload['parts'].is_a?(Array)
+        payload['parts'].each do |p|
+          if p['mimeType'] == 'text/plain'
+            @parsed << Base64.urlsafe_decode64(p['body']['data']).mb_chars
+          else
+            parse p
+          end
+        end
+      elsif payload['mimeType'] && ['text/plain','text/html'].include?(payload['mimeType'])
+        @parsed << Base64.urlsafe_decode64(payload['body']['data']).mb_chars
+      end
+    end
+  end
 
 end

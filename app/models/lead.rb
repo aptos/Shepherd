@@ -3,7 +3,7 @@ class Lead < CouchRest::Model::Base
   property :uid, String
   property :site, String
   property :segment, String, :default => 'Onboard'
-  property :last_contacted, Date
+  property :info, Hash
 
   timestamps!
 

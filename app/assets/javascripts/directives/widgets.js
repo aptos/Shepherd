@@ -31,7 +31,16 @@ angular.module('shepherd.widgets',[])
     }
   };
 })
-
+.directive("uiNotCloseOnClick",[function() {
+  return {
+    restrict:"A",
+    compile: function(ele) {
+      return ele.on("click",function(event) {
+        return event.stopPropagation();
+      });
+    }
+  };
+}])
 .directive('selectAddtime', function () {
   return {
     restrict:'EA',
