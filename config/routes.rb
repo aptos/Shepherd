@@ -15,6 +15,9 @@ Shepherd::Application.routes.draw do
   # Multi-db site selection
   match '/api/site' => 'sessions#change_site', via: [:get, :post]
 
+  # Top level reports
+  get '/reports/recent' => 'reports#recent'
+
   # Users
   get '/api/users' => 'users#index'
   get '/api/users/:id' => 'users#show', :constraints => { :id => /[^\/]*/ }

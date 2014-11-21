@@ -17,13 +17,25 @@ class UsersController < ApplicationController
     # add lead
     leads = Hash.new
     Lead.by_uid.map{|r| leads[r[:uid]] = r.to_hash.slice('segment','last_contacted')}
-    @users.map{|u| u[:lead] = leads[u['id']]}
+
+    # add stats
+    stats = Hash.new{ |h,k| h[k] = Hash.new(&h.default_proc) }
+    site.users.stats.reduce.group_level(2).rows.map{|r| stats[r['key'][0]][r['key'][1]] = r['value'] }
+
+    # merge in values
+    @users.map do |u| 
+      u[:lead] = leads[u['id']]
+      u[:stats] = stats[u['id']]
+    end
 
     render :json => @users
   end
 
   def show
     user = site.users.find(params[:id])
+    unless user
+      render :json => { error: "user not found #{params[:id]}"}, status: 404 and return
+    end
     user['last_visit'] = user.updated_at
     settings = site.settings.by_uid.key(params[:id]).first
     user.merge! settings

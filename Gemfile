@@ -33,8 +33,15 @@ gem 'couchrest_model', '2.0.3'
 # hipchat integration
 gem 'hipchat'
 
+# exception tracking
+gem 'rollbar', '~> 1.2.8'
+
 # gmail integration
 gem 'faraday', '>= 0.9.0'
+
+# support for styles in html mail
+gem 'premailer-rails'
+gem 'nokogiri'
 
 # email tracking
 gem 'ahoy_email', path: 'lib/ahoy_email'

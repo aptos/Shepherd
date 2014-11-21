@@ -46,4 +46,22 @@ module ApplicationHelper
     gmail
   end
 
+  def recent_users days, db_name
+    site = Site.by_slug.key("#{db_name}_#{Rails.env}").first
+    last_week = Date.today - days.to_i
+
+    users = site.users.by_created_at.descending().limit(100).rows.keep_if {|u| last_week < Date.parse(u['key']) }
+    users.map do |user|
+      user[:profile] = site.users.find(user['id'])
+    end
+
+    users
+  end
+
+  def current_projects db_name
+    site = Site.by_slug.key("#{db_name}_#{Rails.env}").first
+    projects = site.tasks.summary.rows.select{|r| ['Open','Invitation'].include? r['value']['status'] }
+    projects.map{|p| p['value'] }
+  end
+
 end

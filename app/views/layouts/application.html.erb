@@ -11,6 +11,9 @@
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
   <%= csrf_meta_tags %>
   <%= yield(:head) %>
+  <% unless Rails.env.test? %>
+    <%= render 'layouts/rollbar' %>
+  <% end %>
 </head>
 <body>
 

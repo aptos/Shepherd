@@ -48,8 +48,10 @@ angular.module('shepherd.gmail', ['ngSanitize'])
   };
 
   $scope.template_names = [
-  'CEO Welcome',
-  'Concierge Welcome',
+  'CEO Welcome - A',
+  'CEO Welcome - B',
+  'Concierge Welcome - A',
+  'Concierge Welcome - B',
   'First Followup - Onboard',
   'First Followup - Educate',
   'Pimp Your Profile',

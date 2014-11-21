@@ -42,47 +42,47 @@ class User < CouchRest::Model::Base
     "function(doc) {
     if (doc.type == 'Task') {
       emit([doc.owner, doc.created_at, 'Project', 'posted'], {id: doc._id, type: 'tasks', title: doc.title, task_owner: doc.owner_name, status: doc.status})
-    } else if (doc.type == 'Bid') {
-      emit([doc.owner, doc.created_at, doc.type, 'posted'], {id: doc._id, type: 'bids', title: doc.task_title, task_owner: doc.task_owner_name, status: doc.status })
-    } else if (doc.type == 'WorkOrder') {
-      if (doc.work_accepted_date) {
-        emit([doc.task_owner, doc.work_accepted_date, doc.type, 'work accepted'], {id: doc._id, type: 'work_orders',title: doc.task_title, task_owner: doc.task_owner_name, bid_owner: doc.bid_owner_name} )
-        emit([doc.bid_owner, doc.work_accepted_date, doc.type, 'work accepted'], {id: doc._id, type: 'work_orders',title: doc.task_title, task_owner: doc.task_owner_name, bid_owner: doc.bid_owner_name} )
-      }
-    }
-    };"
-  end
+      } else if (doc.type == 'Bid') {
+        emit([doc.owner, doc.created_at, doc.type, 'posted'], {id: doc._id, type: 'bids', title: doc.task_title, task_owner: doc.task_owner_name, status: doc.status })
+        } else if (doc.type == 'WorkOrder') {
+          if (doc.work_accepted_date) {
+            emit([doc.task_owner, doc.work_accepted_date, doc.type, 'work accepted'], {id: doc._id, type: 'work_orders',title: doc.task_title, task_owner: doc.task_owner_name, bid_owner: doc.bid_owner_name} )
+            emit([doc.bid_owner, doc.work_accepted_date, doc.type, 'work accepted'], {id: doc._id, type: 'work_orders',title: doc.task_title, task_owner: doc.task_owner_name, bid_owner: doc.bid_owner_name} )
+          }
+        }
+        };"
+      end
 
 #####
 # Views from TaskIT app
 
-  design do
-    view :by_email
-  end
+design do
+  view :by_email
+end
 
-  design do
-    view :by_company,
-    :map =>
-    "function(doc) {
-    if (doc['type'] == 'User' && doc.company) {
-      emit(doc.company.id, { id: doc.uid, text: doc.name });
-    }
-    };"
-  end
+design do
+  view :by_company,
+  :map =>
+  "function(doc) {
+  if (doc['type'] == 'User' && doc.company) {
+    emit(doc.company.id, { id: doc.uid, text: doc.name });
+  }
+  };"
+end
 
-  design do
-    view :by_created_at
-  end
+design do
+  view :by_created_at
+end
 
-  design do
-    view :skills_and_certifications,
-    :map =>
-    "function(doc) {
-    if (doc['type'] == 'User') {
-      if (doc['skills']) {
-        doc.skills.forEach(function(skill) {
-          emit(skill, 1);
-          });
+design do
+  view :skills_and_certifications,
+  :map =>
+  "function(doc) {
+  if (doc['type'] == 'User') {
+    if (doc['skills']) {
+      doc.skills.forEach(function(skill) {
+        emit(skill, 1);
+        });
 }
 if (doc['certifications']) {
   doc.certifications.forEach(function(certification) {
@@ -172,4 +172,4 @@ design do
 
 
 
-end
+    end
