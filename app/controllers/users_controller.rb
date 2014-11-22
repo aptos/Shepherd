@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     leads.keys.each do |uid|
       user = { id: uid, name: leads[uid]['info']['name'], visits: 0, info: leads[uid]['info'] } rescue nil
       if user.nil?
-        logger.warn "**** Skipping Lead with incomplete information #{user.inspect}"
+        logger.warn "**** Skipping Lead with incomplete information #{leads[uid].inspect}"
       else
         @users.push(user)
       end
