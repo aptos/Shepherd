@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
     # add lead
     leads = Hash.new
-    Lead.by_uid.map{|r| leads[r[:uid]] = r.to_hash.slice('segment','info')}
+    Lead.by_uid.map{|r| leads[r[:uid]] = r.to_hash.slice('site','segment','info')}
 
     # add stats
     stats = Hash.new{ |h,k| h[k] = Hash.new(&h.default_proc) }
@@ -30,9 +30,9 @@ class UsersController < ApplicationController
 
     # add in leads who are not yet in users
     leads.keys.each do |uid|
+      next unless leads[uid]['site']
       user = { id: uid, name: leads[uid]['info']['name'], visits: 0, info: leads[uid]['info'] } rescue nil
       if user.nil?
-        logger.warn "**** Skipping Lead with incomplete information #{leads[uid].inspect}"
       else
         @users.push(user)
       end
