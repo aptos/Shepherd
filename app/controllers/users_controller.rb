@@ -31,7 +31,11 @@ class UsersController < ApplicationController
     # add in leads who are not yet in users
     leads.keys.each do |uid|
       user = { id: uid, name: leads[uid]['info']['name'], visits: 0, info: leads[uid]['info'] } rescue nil
-      user && @users.push(user)
+      if user.nil?
+        logger.warn "**** Skipping Lead with incomplete information #{user.inspect}"
+      else
+        @users.push(user)
+      end
     end
 
     render :json => @users
