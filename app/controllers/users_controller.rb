@@ -30,8 +30,8 @@ class UsersController < ApplicationController
 
     # add in leads who are not yet in users
     leads.keys.each do |uid|
-      user = { id: uid, name: leads[uid]['info']['name'], visits: 0, info: leads[uid]['info'] }
-      @users.push(user)
+      user = { id: uid, name: leads[uid]['info']['name'], visits: 0, info: leads[uid]['info'] } rescue nil
+      user && @users.push(user)
     end
 
     render :json => @users
