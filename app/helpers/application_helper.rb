@@ -31,6 +31,11 @@ module ApplicationHelper
     @site
   end
 
+  def site_name
+    db_name = site.slug.split("_").first
+    Shepherd::Application.config.sites.find{|s| s[:db] == db_name}[:label]
+  end
+
   def hipchat
     @hipchat ||= HipChat::Client.new(Shepherd::Application.config.hipchat[:token])[Shepherd::Application.config.hipchat[:room]]
   end

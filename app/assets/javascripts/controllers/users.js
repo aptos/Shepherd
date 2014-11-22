@@ -13,10 +13,13 @@ angular.module('shepherd.users',['restangular'])
     });
   }])
 .controller('UsersCtrl',['$scope','Restangular', function ($scope, Restangular) {
-  Restangular.all('users').getList()
-  .then( function(users) {
-    $scope.users = users;
-  });
+  var refresh = function () {
+    Restangular.all('users').getList()
+    .then( function(users) {
+      $scope.users = users;
+    });
+  };
+  refresh();
 
   $scope.dateformat = 'timeago';
 
@@ -40,7 +43,14 @@ angular.module('shepherd.users',['restangular'])
   };
 
   $scope.addLead = function () {
-    console.info("Add Lead", $scope.new_lead)
+    console.info("Add Lead", $scope.new_lead);
+    $scope.saving = true;
+    Restangular.all('leads').post($scope.new_lead).then( function () {
+      logger.logSuccess($scope.new_lead.name + " has been added");
+      $scope.new_lead = {};
+      refresh();
+      $scope.saving = false;
+    }, function () { $scope.saving = false; logger.logError("Bummer, something went wrong...") });
   };
 
 }]);

@@ -13,19 +13,25 @@ class UsersController < ApplicationController
       next unless settings[s['id']]
       ['email','role', 'entity', 'latLong','email_notifications'].map { |v| s[v] = settings[s['id']][v] if settings[s['id']][v] }
     end
-    
+
     # add lead
     leads = Hash.new
-    Lead.by_uid.map{|r| leads[r[:uid]] = r.to_hash.slice('segment','last_contacted')}
+    Lead.by_uid.map{|r| leads[r[:uid]] = r.to_hash.slice('segment','info')}
 
     # add stats
     stats = Hash.new{ |h,k| h[k] = Hash.new(&h.default_proc) }
     site.users.stats.reduce.group_level(2).rows.map{|r| stats[r['key'][0]][r['key'][1]] = r['value'] }
 
     # merge in values
-    @users.map do |u| 
-      u[:lead] = leads[u['id']]
+    @users.map do |u|
+      u[:lead] = leads.delete u['id'] # remove found leads from hash
       u[:stats] = stats[u['id']]
+    end
+
+    # add in leads who are not yet in users
+    leads.keys.each do |uid|
+      user = { id: uid, name: leads[uid]['info']['name'], visits: 0, info: leads[uid]['info'] }
+      @users.push(user)
     end
 
     render :json => @users
@@ -47,7 +53,7 @@ class UsersController < ApplicationController
     key = params[:id]
     @activities = site.users.activity.startkey([key]).endkey([key,{},{},{}]).rows
     @activities = [] unless @activities
-    
+
     render :json => @activities
   end
 

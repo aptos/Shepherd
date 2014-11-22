@@ -25,6 +25,7 @@ Shepherd::Application.routes.draw do
 
   # Lead, local version of User
   get '/api/leads/:uid' => 'leads#show', :constraints => { :uid => /[^\/]*/ }
+  post '/api/leads' => 'leads#create'
   post '/api/leads/:uid' => 'leads#update', :constraints => { :uid => /[^\/]*/ }
 
   # Notes

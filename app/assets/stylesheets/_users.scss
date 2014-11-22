@@ -16,6 +16,9 @@
 }
 
 .users-report .add-user {
+  position: absolute;
+  top: 0;
+  left: 220px;
   -webkit-transition:all linear 0.5s;
   transition:all linear 0.5s;
   .submit { margin-top: -5px; }
@@ -25,3 +28,6 @@
   opacity:0;
 }
 
+.add-user-form {
+  width: 300px;
+}
