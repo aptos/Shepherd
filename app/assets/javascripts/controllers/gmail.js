@@ -30,9 +30,17 @@ angular.module('shepherd.gmail', ['ngSanitize'])
     $scope.email_update = true;
     Restangular.one('gmail/message', id).get().then( function(message) {
       $scope.message = message;
+      if (!!message.headers['Content-Type'].match('text/plain')) {
+        $scope.text_content = message.body;
+      } else if (!!message.headers['Content-Type'].match('text/html')) {
+        $scope.html_content = message.body;
+      } else {
+        $scope.text_content = "Sorry, don't know how to display " + message.headers['Content-Type'];
+      }
       $scope.email_update = false;
       $scope.show_message = true;
       $scope.message_link = 'https://mail.google.com/mail/u/0/#inbox/' + id;
+
     }, function () { $scope.email_update = false; });
   };
 

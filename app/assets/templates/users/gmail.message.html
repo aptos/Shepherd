@@ -10,6 +10,7 @@
     <span class="pull-right close-message" ng-click="closeMessage()"><i class='fa fa-level-up fa-rotate-270'></i></span>
   </div>
   <div class="panel-body">
-    <div ng-bind-html="message.body"></div>
+    <div ng-show="text_content">{{text_content}}</div>
+    <div ng-show="html_content" ng-bind-html="html_content"></div>
   </div>
 </section>

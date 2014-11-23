@@ -2,7 +2,7 @@
 
 .gmail .activity-container { min-height: 500px; }
 .panel.message-body {
-
+  overflow-x: scroll;
   .panel-heading {
     background: #f6f6f6;
     text-transform: none;
