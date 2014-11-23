@@ -36,7 +36,7 @@ angular.module('shepherd.notes', [])
       if (!$scope.note) return;
       console.info("Add",$scope.note)
       $scope.note.uid = uid;
-      $scope.note.name = $scope.user.name;
+      $scope.note.name = (!!$scope.user) ? $scope.user.name : $scope.lead.name;
       $scope.note.site = $rootScope.site;
 
       Restangular.all('notes').post($scope.note).then( function (note) {

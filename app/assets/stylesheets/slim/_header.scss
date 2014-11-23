@@ -102,7 +102,8 @@
         .dropdown-menu.panel {
           padding: 0;
           white-space: nowrap;
-
+          max-height: 80vh;
+          overflow-x: scroll;
           .panel-heading,
           .panel-footer {
             padding: 10px 15px;

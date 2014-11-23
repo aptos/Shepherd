@@ -76,7 +76,7 @@ angular.module('shepherd.gmail', ['ngSanitize'])
   $scope.chooseTemplate = function (name) {
     var template = _.find( $scope.templates, {name: name} );
     if (angular.isDefined(template)) {
-      var first_name = $scope.$parent.user.name.split(' ')[0];
+      var first_name = (!!$scope.$parent.user) ? $scope.$parent.user.name.split(' ')[0] : $scope.$parent.lead.info.name.split(' ')[0];
       $scope.gmail.new_message = {
         subject: template.subject,
         body: 'Hi ' + first_name + ',\n\n' + template.body + '\n\nBest Regards,\n\n' + $rootScope.me.name
