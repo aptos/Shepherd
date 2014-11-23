@@ -18,7 +18,7 @@
 							<form ng-submit="add()" class="add-task">
 								<textarea msd-elastic="\n" placeholder="What needs to be done?" class="form-control" ng-model="note.details" autofocus/>
 								<!-- <input placeholder="What needs to be done?" class="form-control" ng-model="note.details" autofocus/> -->
-								<a type="submit" class="submit-button" ng-click="add()">
+								<a type="submit" class="submit-button" ng-click="add()" ng-show="!!note">
 									<span class="fa fa-plus pointer"></span>
 								</a>
 								<div select-addtime ng-model="note.due_date"></div>

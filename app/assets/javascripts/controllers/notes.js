@@ -33,6 +33,7 @@ angular.module('shepherd.notes', [])
     refresh();
 
     $scope.add = function() {
+      if (!$scope.note) return;
       console.info("Add",$scope.note)
       $scope.note.uid = uid;
       $scope.note.name = $scope.user.name;
