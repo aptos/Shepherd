@@ -15,7 +15,7 @@
         opacity: 0;
         @include transform( translateY(20px) );
     }
-    
+
     100% {
         opacity: 1;
         @include transform( translateY(0) );
@@ -26,7 +26,7 @@
         opacity: 1;
         @include transform( translateY(0) );
     }
-    
+
     100% {
         opacity: 0;
         @include transform( translateY(-20px) );
@@ -95,6 +95,29 @@
         @include transform( translateY(-2000px) );
     }
 }
+
+// vertical slide
+@include keyframes(slideInLeft) {
+    0% {
+        opacity: 0;
+        @include transform( translateX(-200px) );
+    }
+
+    100% {
+        @include transform( translateX(0) );
+    }
+}
+@include keyframes (slideOutLeft) {
+    0% {
+        @include transform( translateX(0) );
+    }
+
+    100% {
+        opacity: 0;
+        @include transform( translateX(-200px) );
+    }
+}
+
 .animate-vertical-slide.ng-hide-add {
     @include animation(.35s slideOutUp ease-in-out);
 }
@@ -117,22 +140,31 @@
         @include transform( scale(1) );
     }
 }
-.ainmate-scale-up.ng-enter {
+.animate-scale-up.ng-enter {
     @include animation(0.35s slideOutUp ease-in-out);
 }
 
-// 
+//
 @include keyframes(slideInRight) {
     0% {
         opacity: 0;
         @include transform( translateX(25px) );
     }
-    
+
     100% {
         opacity: 1;
         @include transform( translateX(0) );
     }
 }
-.ainmate-slide-in-right.ng-enter {
+.animate-slide-in-right.ng-enter {
     @include animation(0.35s slideInRight ease-in-out);
 }
+
+.animate-slide-in-left.ng-hide-add {
+    @include animation(0.35s slideOutLeft ease-in-out);
+}
+
+.animate-slide-in-left.ng-hide-remove {
+    @include animation(0.35s slideInLeft ease-in-out);
+}
+

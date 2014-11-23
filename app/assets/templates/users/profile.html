@@ -14,6 +14,14 @@
         <h1 class="text-thin" style="margin-top:0;">{{user.name || lead.info.name}}</h1>
         <h4>{{user.info.headline}}</h4>
         <p>{{user.email || lead.uid}} <span class="user-mailto"><a ng-href="mailto:{{user.email || lead.uid}}" target="_blank"><i class="fa fa-envelope-o"></i><a/></span></p>
+        <p ng-show="lead.info.phone && !edit_phone">
+          <a ng-click="edit_phone=!edit_phone">{{lead.info.phone}}</a> <span class="user-phone"><a ng-href="tel:{{lead.info.phone}}"><i class="fa fa-phone"></i><a/></span></p>
+        <p ng-show="!!edit_phone || !lead.info.phone">
+          <a href="javascript:;" class="btn-icon-lined btn-icon-round btn-icon-sm" ng-class="{true:'btn-success',false:'btn-transparent-light'}[!!edit_phone]" ng-click="edit_phone=!edit_phone;">
+            <span class="fa fa-phone"></span>
+          </a>
+          <input ng-model="phone" type="tel" placeholder="(800) 555-1234" class="form-control animate-slide-in-left inline-input" ng-show="!!edit_phone">
+        </p>
         <div class="profile-company media" ng-show="user.company || lead.info.company">
           <img ng-src="{{user.company.logo_url}}" class="company-logo-small media-object pull-left">
           <div class="media-body">
@@ -50,17 +58,17 @@
         <tab class="pointer">
           <tab-heading>
           <i class="fa fa-envelope"></i> Gmail
-          </tab-heading>
-          <div ui-view="gmail"></div>
-        </tab>
-        <tab class="pointer">
-          <tab-heading>
-          <i class="fa fa-rocket"></i> Activity
-          </tab-heading>
-          <div ui-view="activity"></div>
-        </tab>
-      </tabset>
-    </div>
+        </tab-heading>
+        <div ui-view="gmail"></div>
+      </tab>
+      <tab class="pointer">
+        <tab-heading>
+        <i class="fa fa-rocket"></i> Activity
+      </tab-heading>
+      <div ui-view="activity"></div>
+    </tab>
+  </tabset>
+</div>
 
-  </div>
+</div>
 </div>

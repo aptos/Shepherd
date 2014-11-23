@@ -10,8 +10,20 @@
     background-size: cover;
     color: $bright;
     h3, h4 { color: $gray-lighter; }
-
+    p { font-size: 1.2em; }
+    a:not(.btn-icon-round) {
+      color: $bright;
+      cursor: pointer;
+    }
     .ui-map-small { margin-top: -10px; }
+  }
+
+  .profile-userdata {
+    input.inline-input {
+      max-width: 220px;
+      display: inline-block;
+      margin-left: 10px
+    }
   }
 
   .profile-img {
@@ -25,7 +37,7 @@
     }
   }
 
-  .user-mailto > a {
+  .user-mailto > a, .user-phone > a {
     color: #fff;
     .fa:hover {
       cursor: pointer;

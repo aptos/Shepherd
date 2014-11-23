@@ -59,17 +59,30 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
     } else {
       $scope.lead = { uid: id};
     }
+    if (!lead.info) $scope.lead.info = { phone: null };
+    if (!!lead.info && !!lead.info.phone) $scope.phone = $scope.lead.info.phone;
   });
 
-  $scope.updateLead = function () {
+  $scope.updateLead = function (msg) {
+    var msg = msg || 'Note Updated!'
     $scope.update_fail = false;
     Restangular.one('leads').post(id, $scope.lead).then( function (lead) {
       $scope.lead = lead;
-      logger.logSuccess('Note Updated!');
+      logger.logSuccess(msg);
     }, function () {
       $scope.update_fail = true;
     });
   };
+
+  $scope.edit_phone = false;
+  $scope.$watch('edit_phone', function () {
+    if (!!$scope.edit_phone) return;
+    if ($scope.phone && $scope.phone != $scope.lead.info.phone) {
+      console.info("Phone updated!", $scope.phone);
+      $scope.lead.info.phone = $scope.phone;
+      $scope.updateLead('Phone number updated!');
+    }
+  });
 
   var getLocation = function(user) {
     if (!user) return;

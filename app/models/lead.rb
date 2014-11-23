@@ -9,6 +9,7 @@ class Lead < CouchRest::Model::Base
 
   design do
     view :by_uid
+    view :by_site
   end
 
   def self.from_uid(uid)
