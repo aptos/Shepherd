@@ -15,6 +15,8 @@ module Ahoy
     property :subject, String
     property :content, String
 
+    property :template, String
+
     # Gmail id, or from other service
     property :mailservice_id, String
 
@@ -31,6 +33,7 @@ module Ahoy
       view :by_token
       view :by_user_id
       view :by_mailservice_id
+      view :by_template
     end
 
     design do

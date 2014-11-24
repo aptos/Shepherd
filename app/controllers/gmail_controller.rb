@@ -89,7 +89,7 @@ class GmailController < ApplicationController
 
     # Update message with gmail id
     ahoy_message = Ahoy::Message.find payload["Ahoy-Message-Id"].to_s
-    ahoy_message.update_attributes(mailservice_id: response['id'], sent_at: Time.now)
+    ahoy_message.update_attributes(mailservice_id: response['id'], sent_at: Time.now, template: template)
     render :json => response
   end
 
