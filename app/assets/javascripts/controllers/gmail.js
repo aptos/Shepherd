@@ -46,7 +46,7 @@ angular.module('shepherd.gmail', ['ngSanitize'])
 
   $scope.send = function (gmail) {
     $scope.sending = true;
-    if (!$scope.gmail.save_template) gmail.template = null;
+    if ($scope.gmail.save_template) gmail.update_template = true;
     Restangular.one('gmail/message').post(id, gmail).then( function(status) {
       $scope.inbox();
       logger.logSuccess("Message Sent!");

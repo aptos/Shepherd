@@ -69,7 +69,7 @@ class GmailController < ApplicationController
   def send_message
     @message = params[:gmail][:new_message]
 
-    if template = params[:gmail]['template']
+    if params[:gmail]['update_template'] && template = params[:gmail]['template']
       EmailTemplate.update template, @message
     end
 
