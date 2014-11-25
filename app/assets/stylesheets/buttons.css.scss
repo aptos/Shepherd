@@ -36,6 +36,15 @@
   }
 }
 
+.fa-btn {
+  @include transition(all .2s ease-in-out);
+  &:hover {
+    cursor: pointer;
+    color: $gray-dark;
+    @include transform(scale(1.3));
+  }
+}
+
 //select {
 //  -webkit-appearance: button;
 //  -webkit-border-radius: 5px;

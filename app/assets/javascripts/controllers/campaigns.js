@@ -16,10 +16,17 @@ angular.module('shepherd.campaigns',['restangular'])
     });
   }])
 .controller('CampaignsCtrl',['$scope','Restangular', function ($scope, Restangular) {
-  Restangular.one('campaigns').get()
-  .then( function(campaigns) {
-    $scope.campaigns = campaigns;
-  });
+
+
+  $scope.refresh = function () {
+    $scope.refreshing = true;
+    Restangular.one('campaigns').get()
+    .then( function(campaigns) {
+      $scope.campaigns = campaigns;
+      $scope.refreshing = false;
+    }, function () { $scope.refreshing = false });
+  };
+  $scope.refresh();
 
   $scope.head = [
   {head: "Template", column: "template"},

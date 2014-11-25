@@ -1,7 +1,10 @@
 <div class="container">
 
   <section class="panel panel-default">
-    <div class="panel-heading"><strong><span class="fa fa-signal"></span> Templates Success</strong></div>
+    <div class="panel-heading">
+      <strong><span class="fa fa-signal"></span> Templates Success</strong>
+      <span class="refresh pull-right" ng-click="refresh()"><i class="fa fa-refresh fa-btn" ng-class="{'fa-spin':refreshing}"></i></span>
+    </div>
     <div class="panel-body">
       <table class="table table-bordered table-striped table-responsive-rows sortable">
         <thead class="cf">
