@@ -38,7 +38,7 @@ angular.module('shepherd.campaigns',['restangular'])
   ];
 
   $scope.sort = {
-    column: 'template',
+    column: 'updated',
     descending: true
   };
 
