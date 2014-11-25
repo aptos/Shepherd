@@ -17,11 +17,19 @@ class CampaignsController < ApplicationController
       subject: t['key'][1],
       sent: t['value'][0],
       opened: t['value'][1],
-      clicked: t['value'][2]
+      clicked: t['value'][2],
+      updated: last_used(t['key'])
       }
     }
 
     render :json => @stats
+  end
+
+  private
+
+  def last_used key
+    (t,s) = key
+    Ahoy::Message.by_template_and_subject.startkey([t,s]).endkey([t,s,{}]).last['updated_at'] rescue nil
   end
 
 end

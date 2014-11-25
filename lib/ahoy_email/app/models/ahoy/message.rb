@@ -43,7 +43,7 @@ module Ahoy
         var opened = (!!doc.opened_at) ? 1 : 0;
         var clicked = (!!doc.clicked_at) ? 1 : 0;
         var template = (!!doc.template) ? doc.template : 'none';
-        emit([template, doc.subject], [1, opened, clicked]);
+        emit([template, doc.subject, doc.updated_at], [1, opened, clicked]);
       }
       };",
       :reduce => "_sum"
