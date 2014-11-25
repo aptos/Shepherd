@@ -1,0 +1,31 @@
+<div class="container">
+
+  <section class="panel panel-default">
+    <div class="panel-heading"><strong><span class="fa fa-signal"></span> Templates Success</strong></div>
+    <div class="panel-body">
+      <section class="table-flip-scroll">
+        <table class="table table-bordered table-striped cf">
+          <thead class="cf">
+            <tr>
+              <th>Template</th>
+              <th>Subject</th>
+              <th class="numeric">Sent</th>
+              <th class="numeric">Opens</th>
+              <th class="numeric">Clicks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in campaigns.template_stats">
+              <td>{{item.template}}</td>
+              <td>{{item.subject}}</td>
+              <td class="numeric">{{item.sent}}</td>
+              <td class="numeric">{{item.opened}}</td>
+              <td class="numeric">{{item.clicked}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </section>
+
+</div>

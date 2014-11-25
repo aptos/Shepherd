@@ -33,7 +33,20 @@ module Ahoy
       view :by_token
       view :by_user_id
       view :by_mailservice_id
-      view :by_template
+    end
+
+    design do
+      view :by_template_and_subject,
+      :map =>
+      "function(doc) {
+      if (doc.type == 'Ahoy::Message') {
+        var opened = (!!doc.opened_at) ? 1 : 0;
+        var clicked = (!!doc.clicked_at) ? 1 : 0;
+        var template = (!!doc.template) ? doc.template : 'none';
+        emit([template, doc.subject], [1, opened, clicked]);
+      }
+      };",
+      :reduce => "_sum"
     end
 
     design do
@@ -43,7 +56,7 @@ module Ahoy
       if (doc.type == 'Ahoy::Message') {
         var opened_at = (!!doc.opened_at) ? doc.opened_at : false;
         var clicked_at = (!!doc.clicked_at) ? doc.clicked_at : false;
-        emit(doc.to, { mailservice_id: doc.mailservice_id, from: doc.from, subject: doc.subject, sent_at: doc.sent_at, opened_at: opened_at, clicked_at: clicked_at });
+        emit(doc.to, { mailservice_id: doc.mailservice_id, from: doc.from, template: doc.template, subject: doc.subject, sent_at: doc.sent_at, opened_at: opened_at, clicked_at: clicked_at });
       }
       };"
     end

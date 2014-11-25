@@ -9,4 +9,8 @@ class  CouchRest::Model::Designs::View
     self.rows.map{|r| keyed_view[r['value'][key]] = r['value']}
     keyed_view
   end
+
+  def values
+    self.rows.map{|r| r['value'] }
+  end
 end
