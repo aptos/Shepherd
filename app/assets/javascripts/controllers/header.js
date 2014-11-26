@@ -24,6 +24,10 @@ angular.module('shepherd.header', [])
   return $scope.$on('site:changed', function(event) {
     console.info("Site changed", event)
     $scope.site = $rootScope.site;
+    Restangular.all('users').getList()
+    .then( function(users) {
+      if (!!users) Storage.set('users', users);
+    });
   });
 
 
@@ -41,6 +45,12 @@ angular.module('shepherd.header', [])
   $scope.getUsers = function (val) {
     if (!!Storage.get('usernames')) {
       return  _.pluck(Storage.get('users'), 'name');
+    } else {
+      Restangular.all('users').getList()
+      .then( function(users) {
+        if (!!users) Storage.set('users', users);
+        return  _.pluck(users, 'name');
+      });
     }
   };
 
