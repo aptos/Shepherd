@@ -32,7 +32,7 @@ angular.module('shepherd.header', [])
 
 
 }])
-.controller('NavCtrl', [ '$scope','$rootScope','$state','Restangular', 'Storage', function($scope, $rootScope, $state, Restangular, Storage) {
+.controller('NavCtrl', [ '$scope','$rootScope','$state','Restangular', 'Storage','$filter', function($scope, $rootScope, $state, Restangular, Storage, $filter) {
   $scope.navbarCollapsed = true;
 
   var refresh = function () {
@@ -42,17 +42,19 @@ angular.module('shepherd.header', [])
   };
   refresh();
 
-  $scope.getUsers = function () {
+  $scope.getUsers = function (val) {
     console.info("GetUsers")
     if (!!Storage.get('usernames')) {
       console.info("from Storage")
-      return  _.pluck(Storage.get('users'), 'name');
+      var names =  _.pluck(Storage.get('users'), 'name');
+      return $filter('limitTo')($filter('filter')(names, val), 8);
     } else {
       console.info("from request")
       return Restangular.all('users').getList()
       .then( function(users) {
         if (!!users) Storage.set('users', users);
-        return  _.pluck(users, 'name');
+        var names =  _.pluck(Storage.get('users'), 'name');
+        return $filter('limitTo')($filter('filter')(names, val), 8);
       });
     }
   };
