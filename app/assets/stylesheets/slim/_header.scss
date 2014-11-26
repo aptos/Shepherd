@@ -23,6 +23,9 @@
           a:hover {
             color: #fff;
           }
+          .active a {
+            color: $bright;
+          }
         }
 
         .hidden-mobile {
@@ -128,6 +131,22 @@
               text-overflow: ellipsis;
               overflow: hidden;
             }
+          }
+        }
+
+        .search-box {
+          max-width: 180px;
+          padding: ($header_height/2 - 17px) 0;
+
+          .input-group-addon {
+            padding: 6px 0 6px 12px;
+            border: none;
+            background-color: transparent;
+          }
+
+          .form-control {
+            border: none;
+            background: transparent;
           }
         }
 

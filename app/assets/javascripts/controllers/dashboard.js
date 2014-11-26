@@ -17,13 +17,14 @@ angular.module('shepherd.dashboard',['restangular'])
       }
     });
   }])
-.controller('UsersMapCtrl',['$scope','Restangular', function ($scope, Restangular) {
+.controller('UsersMapCtrl',['$scope','Restangular', 'Storage', function ($scope, Restangular, Storage) {
 
   $scope.as_of = "month";
 
   Restangular.all('users').getList()
   .then( function(users) {
     $scope.users = users;
+    if (!!users) Storage.set('users', users);
     updateUsersMap();
     $scope.total_users = $scope.users.length;
     $scope.new_users = users.reduce(function(u, user) { return (moment(user.created_at).isSame(moment(),$scope.as_of)) ? u + 1 : u; }, 0);

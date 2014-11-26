@@ -12,7 +12,7 @@ angular.module('shepherd.header', [])
     'taskit-pro': 'Juniper',
     'taskitone': 'TaskIT'
   };
-  
+
   $scope.setSite = function (site) {
     Restangular.one('site').get({site: site}).then( function (resp) {
       $scope.site = resp.site;
@@ -26,8 +26,9 @@ angular.module('shepherd.header', [])
     $scope.site = $rootScope.site;
   });
 
+
 }])
-.controller('NavCtrl', [ '$scope','$rootScope','$state','Restangular', function($scope, $rootScope, $state, Restangular) {
+.controller('NavCtrl', [ '$scope','$rootScope','$state','Restangular', 'Storage', function($scope, $rootScope, $state, Restangular, Storage) {
   $scope.navbarCollapsed = true;
 
   var refresh = function () {
@@ -37,7 +38,27 @@ angular.module('shepherd.header', [])
   };
   refresh();
 
-  return $scope.$on('taskRemaining:changed', function(event) {
-    refresh();
-  });
+  $scope.getUsers = function (val) {
+    if (Storage.get('usernames').length) {
+      return  _.pluck(Storage.get('users'), 'name');
+    }
+  };
+
+  $scope.openProfile = function () {
+    var users = _.where(Storage.get('users'), {'name' : $scope.query});
+    if (angular.isDefined(users[0])) $state.go('profile', {id: users[0].id});
+  };
+
+  // $scope.$watch('query', function () {
+  //   console.info("search", $scope.query)
+  //   if (Storage.get('usernames').length) {
+  //     var user = _.where(Storage.get('users'), {'name' : $scope.query});
+  //     console.info("Found", user)
+  //     if (angular.isDefined(user)) $state.go('profile', {id: user.id});
+  //   }
+  // });
+
+return $scope.$on('taskRemaining:changed', function(event) {
+  refresh();
+});
 }]);

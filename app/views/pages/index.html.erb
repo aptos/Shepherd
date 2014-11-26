@@ -18,7 +18,12 @@
             <li ui-sref-active="active"><a ui-sref="dashboard">Dashboard</a></li>
             <li ui-sref-active="active"><a ui-sref="users">Users</a></li>
             <li ui-sref-active="active"><a ui-sref="campaigns">Campaigns</a></li>
-
+            <li class="search-box visible-md visible-lg">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search..." typeahead="name for name in getUsers($viewValue) | filter:$viewValue | limitTo:8" ng-model="query" typeahead-on-select="openProfile()">
+              </div>
+            </li>
             <li class="dropdown alerts">
               <a href class="dropdown-toggle">
                 <i class="fa fa-bell-o"></i>

@@ -59,8 +59,8 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
     } else {
       $scope.lead = { uid: id};
     }
-    if (!lead.info) $scope.lead.info = { phone: null };
-    if (!!lead.info && !!lead.info.phone) $scope.phone = $scope.lead.info.phone;
+    if (!$scope.lead.info) $scope.lead.info = { phone: null };
+    if ($scope.lead.info.phone) $scope.phone = $scope.lead.info.phone;
   });
 
   $scope.updateLead = function (msg) {

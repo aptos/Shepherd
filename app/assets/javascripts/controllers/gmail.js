@@ -22,7 +22,6 @@ angular.module('shepherd.gmail', ['ngSanitize'])
       $scope.email_update = false;
     }, function () { $scope.email_update = false; });
   };
-  // $scope.inbox(); no needed, with query watch
 
   $scope.$watch('gmail.query', function () { $scope.inbox(); });
 
