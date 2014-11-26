@@ -39,7 +39,7 @@ angular.module('shepherd.header', [])
   refresh();
 
   $scope.getUsers = function (val) {
-    if (Storage.get('usernames').length) {
+    if (!!Storage.get('usernames')) {
       return  _.pluck(Storage.get('users'), 'name');
     }
   };
