@@ -42,11 +42,14 @@ angular.module('shepherd.header', [])
   };
   refresh();
 
-  $scope.getUsers = function (val) {
+  $scope.getUsers = function () {
+    console.info("GetUsers")
     if (!!Storage.get('usernames')) {
+      console.info("from Storage")
       return  _.pluck(Storage.get('users'), 'name');
     } else {
-      Restangular.all('users').getList()
+      console.info("from request")
+      return Restangular.all('users').getList()
       .then( function(users) {
         if (!!users) Storage.set('users', users);
         return  _.pluck(users, 'name');
