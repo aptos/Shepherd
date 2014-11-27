@@ -42,18 +42,22 @@ angular.module('shepherd.header', [])
   };
   refresh();
 
+  var userNames = function (users) {
+    var names = _.map(users, function (user) {
+      return (!!user.company) ? user.name + " - " + user.company.name : user.name;
+    })
+    return names;
+  };
+
   $scope.getUsers = function (val) {
-    console.info("GetUsers")
-    if (!!Storage.get('usernames')) {
-      console.info("from Storage")
-      var names =  _.pluck(Storage.get('users'), 'name');
+    if (!!Storage.get('users')) {
+      var names = userNames(Storage.get('users'));
       return $filter('limitTo')($filter('filter')(names, val), 8);
     } else {
-      console.info("from request")
       return Restangular.all('users').getList()
       .then( function(users) {
         if (!!users) Storage.set('users', users);
-        var names =  _.pluck(Storage.get('users'), 'name');
+        var names = userNames(Storage.get('users'));
         return $filter('limitTo')($filter('filter')(names, val), 8);
       });
     }
@@ -64,16 +68,7 @@ angular.module('shepherd.header', [])
     if (angular.isDefined(users[0])) $state.go('profile', {id: users[0].id});
   };
 
-  // $scope.$watch('query', function () {
-  //   console.info("search", $scope.query)
-  //   if (Storage.get('usernames').length) {
-  //     var user = _.where(Storage.get('users'), {'name' : $scope.query});
-  //     console.info("Found", user)
-  //     if (angular.isDefined(user)) $state.go('profile', {id: user.id});
-  //   }
-  // });
-
-return $scope.$on('taskRemaining:changed', function(event) {
-  refresh();
-});
+  return $scope.$on('taskRemaining:changed', function(event) {
+    refresh();
+  });
 }]);

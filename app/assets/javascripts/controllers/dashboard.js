@@ -24,7 +24,6 @@ angular.module('shepherd.dashboard',['restangular'])
   Restangular.all('users').getList()
   .then( function(users) {
     $scope.users = users;
-    if (!!users) Storage.set('users', users);
     updateUsersMap();
     $scope.total_users = $scope.users.length;
     $scope.new_users = users.reduce(function(u, user) { return (moment(user.created_at).isSame(moment(),$scope.as_of)) ? u + 1 : u; }, 0);
