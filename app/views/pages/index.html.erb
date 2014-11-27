@@ -21,7 +21,7 @@
             <li class="search-box visible-md visible-lg">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search..." typeahead="name for name in getUsers($viewValue)" ng-model="query" typeahead-on-select="openProfile()">
+                <input type="text" class="form-control" placeholder="Search..." typeahead="user as user.name + ' - ' + user.company for user in getUsers($viewValue)" ng-model="search_user" typeahead-on-select="openProfile()">
               </div>
             </li>
             <li class="dropdown alerts">

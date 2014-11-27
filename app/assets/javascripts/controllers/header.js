@@ -44,8 +44,8 @@ angular.module('shepherd.header', [])
 
   var userNames = function (users) {
     var names = _.map(users, function (user) {
-      return (!!user.company) ? user.name + " - " + user.company.name : user.name;
-    })
+      return (!!user.company) ? { id: user.id, name: user.name, company: user.company.name } : { id: user.id, name: user.name , company: ''};
+    });
     return names;
   };
 
@@ -64,8 +64,8 @@ angular.module('shepherd.header', [])
   };
 
   $scope.openProfile = function () {
-    var users = _.where(Storage.get('users'), {'name' : $scope.query});
-    if (angular.isDefined(users[0])) $state.go('profile', {id: users[0].id});
+    if (!$scope.search_user) return;
+    $state.go('profile', { id: $scope.search_user.id });
   };
 
   return $scope.$on('taskRemaining:changed', function(event) {
