@@ -27,6 +27,7 @@ class Company < CouchRest::Model::Base
   # Shepherd App
   design do
     view :by_name
+    view :by_domain
   end
 
   design do
