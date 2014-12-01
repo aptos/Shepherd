@@ -18,10 +18,10 @@ angular.module('shepherd.maps',[])
         zoomOnScroll: false,
         regionStyle: {
           initial: {
-            fill: '#EEEFF3'
+            fill: '#4E648E'
           },
           hover: {
-            fill: '#DDDDDD'
+            fill: '#152B55'
           }
         },
         markerStyle: {
