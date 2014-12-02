@@ -44,7 +44,7 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
     }, function () { console.error(resp); });
   }
 
-  $scope.segments = ['Onboard','Qualify','Educate','Close','Nurture'];
+  $scope.segments = ['Sales Followup','Provider Onboard','Onboard','Qualify','Educate','Close','Nurture'];
 
   Restangular.one('users',id).get()
   .then( function(user) {
