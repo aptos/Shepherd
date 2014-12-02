@@ -50,13 +50,15 @@ angular.module('shepherd.header', [])
   };
 
   $scope.getUsers = function (val) {
-    if (!!Storage.get('users')) {
+    if (!!Storage.fetch('users')) {
       var names = userNames(Storage.get('users'));
+      console.info("get Users from storage")
       return $filter('limitTo')($filter('filter')(names, val), 8);
     } else {
+      console.info("get users from db")
       return Restangular.all('users').getList()
       .then( function(users) {
-        if (!!users) Storage.set('users', users);
+        if (!!users) Storage.set('users', users, 60);
         var names = userNames(Storage.get('users'));
         return $filter('limitTo')($filter('filter')(names, val), 8);
       });
