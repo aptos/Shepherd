@@ -113,7 +113,7 @@ module Gmail
         parser = ParseMail.new gmail_message['payload']
         body = parser.parsed.join
       rescue
-        Rails.logger.error "Error decoding payload: #{payload.inspect}"
+        Rails.logger.error "Error decoding payload"
       end
       message = {
         id: id,
