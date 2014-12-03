@@ -4,8 +4,6 @@ module Ahoy
 
     def open
       if @message and !@message.opened_at
-        # @message.opened_at = Time.now
-        # @message.save!
         @message.update_attributes(opened_at: Time.now)
       end
       publish :open
@@ -16,7 +14,7 @@ module Ahoy
       if @message and !@message.clicked_at
         @message.clicked_at = Time.now
         @message.opened_at ||= @message.clicked_at
-        @message.save!
+        @message.save
       end
       url = params[:url]
       signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha1"), AhoyEmail.secret_token, url)
