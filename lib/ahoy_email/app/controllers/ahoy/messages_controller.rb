@@ -4,8 +4,9 @@ module Ahoy
 
     def open
       if @message and !@message.opened_at
-        @message.opened_at = Time.now
-        @message.save!
+        # @message.opened_at = Time.now
+        # @message.save!
+        @message.update_attributes(opened_at: Time.now)
       end
       publish :open
       send_data Base64.decode64("R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="), type: "image/gif", disposition: "inline"
