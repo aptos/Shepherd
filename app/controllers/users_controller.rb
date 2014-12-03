@@ -31,7 +31,9 @@ class UsersController < ApplicationController
     # add in leads who are not yet in users
     leads.keys.each do |uid|
       next unless leads[uid]['info']
-      user = { id: uid, name: leads[uid]['info']['name'], visits: 0, info: leads[uid]['info'] } rescue nil
+      logger.info "Segment: #{uid} - #{leads[uid]['segment']}"
+      company = leads[uid]['info']['company'] rescue ''
+      user = { id: uid, name: leads[uid]['info']['name'], visits: 0, company: { name: company }, lead: { segment: leads[uid]['segment'], info: leads[uid]['info'] }} rescue nil
       if user.nil?
       else
         @users.push(user)

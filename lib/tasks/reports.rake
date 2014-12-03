@@ -1,4 +1,3 @@
-
 namespace :reports do
 
 	desc "weekly report"
@@ -14,6 +13,6 @@ namespace :reports do
 		encoded_payload = Base64.urlsafe_encode64 payload.to_s
 		resp = client.send_message encoded_payload
 		puts resp
-		
+
 	end
 end
