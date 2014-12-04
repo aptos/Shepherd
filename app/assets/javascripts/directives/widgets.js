@@ -70,6 +70,9 @@ angular.module('shepherd.widgets',[])
     <a href="javascript:;" ng-click="due_in(1,\'d\',\'tomorrow\')">tomorrow</a>\
     </li>\
     <li class="list-group-item">\
+    <a href="javascript:;" ng-click="due_in(4,\'d\',\'in 3 days\')">in 3 days</a>\
+    </li>\
+    <li class="list-group-item">\
     <a href="javascript:;" ng-click="due_in(1,\'w\',\'in a week\')">in a week</a>\
     </li>\
     <li class="list-group-item">\
