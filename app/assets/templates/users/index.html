@@ -11,8 +11,8 @@
               <input type="text" class="form-control" placeholder="Search" ng-model="query" />
             </div>
           </form>
-          <div class="form-group dropdown add-user" ng-show="query.length">
-            <a href="javascript:;" class="btn-icon btn-icon-round bg-success dropdown-toggle" data-toggle="dropdown">
+          <div class="form-group dropdown add-user">
+            <a href="javascript:;" class="btn-icon btn-icon-round bg-success dropdown-toggle" ng-class="{'dim': !query.length}" data-toggle="dropdown">
               <span class="fa fa-plus" style="padding-left: 1px;"></span>
             </a>
             <div class="dropdown-menu with-arrow panel panel-default add-user-form" ui-not-close-on-click>

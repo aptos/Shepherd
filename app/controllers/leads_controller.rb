@@ -35,6 +35,7 @@ class LeadsController < ApplicationController
     else
       lead = Lead.new(params[:lead])
     end
+    lead.site ||= site_name
 
     lead.save!
 

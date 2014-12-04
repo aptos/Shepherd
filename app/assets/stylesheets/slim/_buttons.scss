@@ -11,6 +11,7 @@
   &.active {
     color: $color;
     background-color: $background;
+    opacity: inherit;
   }
   .open & {
     &.dropdown-toggle {
@@ -382,6 +383,8 @@
     color: $reverse;
   }
 }
+.btn-icon.dim { opacity: 0.7; }
+
 .btn-icon-lined {
   display: inline-block;
   text-align: center;

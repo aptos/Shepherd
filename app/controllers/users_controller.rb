@@ -21,7 +21,6 @@ class UsersController < ApplicationController
     # add stats
     stats = Hash.new{ |h,k| h[k] = Hash.new(&h.default_proc) }
     site.users.stats.reduce.group_level(2).rows.map{|r| stats[r['key'][0]][r['key'][1]] = r['value'] }
-
     # merge in values
     @users.map do |u|
       u[:lead] = leads.delete u['id'] # remove found leads from hash
