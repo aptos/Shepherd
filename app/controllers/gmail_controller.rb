@@ -55,7 +55,7 @@ class GmailController < ApplicationController
     render :json => { error: 'message not found' }, :status => 404 and return unless @message
 
     # remove all images - especially our tracer that will trigger opened_at when rendered!
-    @message[:body].gsub!(/<img .*?>/,'')
+    @message[:body] && @message[:body].gsub!(/<img .*?>/,'')
 
     # add ahoy data
     if @message['metadata'] = Ahoy::Message.by_mailservice_id.key(id).first
