@@ -28,8 +28,9 @@
               <h5 ng-show="user.company.name">{{user.company.name}}</h5>
               <span ng-show="!user.company.name">
                 <h5><a ng-click="edit_company=!edit_company" ng-show="!edit_company">{{lead.info.company || 'Edit Company'}}</a></h5>
-                <form ng-submit="edit_company=!edit_company">
-                  <input ng-model="company" type="text" placeholder="Company Name" class="form-control animate-slide-in-left inline-input" ng-show="!!edit_company">
+                <form ng-submit="edit_company=!edit_company" ng-show="!!edit_company">
+                  <input ng-model="company" type="text" placeholder="Company Name" class="form-control animate-slide-in-left inline-input" >
+                  <i class="fa fa-times cancel-name" ng-click="cancel()"></i>
                 </form>
               </span>
             </div>

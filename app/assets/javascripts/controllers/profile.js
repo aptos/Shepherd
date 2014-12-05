@@ -88,12 +88,19 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
   $scope.edit_company = false;
   $scope.$watch('edit_company', function () {
     if (!!$scope.edit_company) return;
-    if ($scope.company && $scope.compay != $scope.lead.info.company) {
+    if ($scope.company && $scope.company != $scope.lead.info.company) {
       console.info("Company updated!", $scope.company);
       $scope.lead.info.company = $scope.company;
       $scope.updateLead('Company updated!');
     }
   });
+
+  $scope.cancel = function () {
+    $scope.phone = $scope.lead.info.phone;
+    $scope.company = $scope.lead.info.company;
+    $scope.edit_phone = false;
+    $scope.edit_company = false;
+  };
 
   var getLocation = function(user) {
     if (!user) return;

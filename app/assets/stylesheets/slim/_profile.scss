@@ -77,6 +77,12 @@
     color: #777;
     min-width: 220px;
     .media-body { padding-top: 8px; }
+    .cancel-name {
+      float: right;
+      position: relative;
+      top: -24px;
+      cursor: pointer;
+    }
   }
 
   img.media-object {
