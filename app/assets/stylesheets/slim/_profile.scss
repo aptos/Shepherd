@@ -82,6 +82,11 @@
       position: relative;
       top: -24px;
       cursor: pointer;
+      opacity: 0.6;
+      @include transition(opacity .2s ease-in-out);
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 
