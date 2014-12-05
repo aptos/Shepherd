@@ -14,7 +14,7 @@
         <h1 class="text-thin" style="margin-top:0;">{{user.name || lead.info.name}}</h1>
         <h4 ng-show="user.info.headline">{{user.info.headline}}</h4>
         <span ng-show="!user.info.headline">
-          <h5><a class="link-light" ng-click="edit_title=!edit_title" ng-show="!edit_title">{{lead.info.title || 'Edit Title'}}</a></h5>
+          <h5><a class="link-light" ng-click="edit_title=!edit_title" ng-show="!edit_title">{{lead.info.title || 'title?'}}</a></h5>
           <form class="animate-slide-in-left" ng-submit="edit_title=!edit_title" ng-show="!!edit_title">
             <input ng-model="title" type="text" placeholder="Title" class="form-control inline-input" >
             <i class="fa fa-times cancel" ng-click="cancel()"></i>
