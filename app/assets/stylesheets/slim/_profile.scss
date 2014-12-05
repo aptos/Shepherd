@@ -11,10 +11,10 @@
     color: $bright;
     h3, h4 { color: $gray-lighter; }
     p { font-size: 1.2em; }
-    a:not(.btn-icon-round) {
+    a.link-light {
       color: $bright;
-      cursor: pointer;
     }
+    a { cursor: pointer; }
     .ui-map-small { margin-top: -10px; }
   }
 
@@ -76,6 +76,7 @@
     border-radius: 5px;
     color: #777;
     min-width: 220px;
+    .media-body { padding-top: 8px; }
   }
 
   img.media-object {

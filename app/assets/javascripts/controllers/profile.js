@@ -61,6 +61,7 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
     }
     if (!$scope.lead.info) $scope.lead.info = { phone: null };
     if ($scope.lead.info.phone) $scope.phone = $scope.lead.info.phone;
+    if ($scope.lead.info.company) $scope.company = $scope.lead.info.company;
   });
 
   $scope.updateLead = function (msg) {
@@ -81,6 +82,16 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
       console.info("Phone updated!", $scope.phone);
       $scope.lead.info.phone = $scope.phone;
       $scope.updateLead('Phone number updated!');
+    }
+  });
+
+  $scope.edit_company = false;
+  $scope.$watch('edit_company', function () {
+    if (!!$scope.edit_company) return;
+    if ($scope.company && $scope.compay != $scope.lead.info.company) {
+      console.info("Company updated!", $scope.company);
+      $scope.lead.info.company = $scope.company;
+      $scope.updateLead('Company updated!');
     }
   });
 
