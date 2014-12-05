@@ -62,6 +62,7 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
     if (!$scope.lead.info) $scope.lead.info = { phone: null };
     if ($scope.lead.info.phone) $scope.phone = $scope.lead.info.phone;
     if ($scope.lead.info.company) $scope.company = $scope.lead.info.company;
+    if ($scope.lead.info.title) $scope.title = $scope.lead.info.title;
   });
 
   $scope.updateLead = function (msg) {
@@ -95,11 +96,23 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
     }
   });
 
+  $scope.edit_title = false;
+  $scope.$watch('edit_title', function () {
+    if (!!$scope.edit_title) return;
+    if ($scope.title && $scope.title != $scope.lead.info.title) {
+      console.info("Title updated!", $scope.title);
+      $scope.lead.info.title = $scope.title;
+      $scope.updateLead('Title updated!');
+    }
+  });
+
   $scope.cancel = function () {
     $scope.phone = $scope.lead.info.phone;
     $scope.company = $scope.lead.info.company;
+    $scope.title = $scope.lead.info.title;
     $scope.edit_phone = false;
     $scope.edit_company = false;
+    $scope.edit_title = false;
   };
 
   var getLocation = function(user) {

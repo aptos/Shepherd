@@ -69,6 +69,15 @@
     .label { font-size: 100%; font-weight: normal;}
   }
 
+  .cancel {
+    cursor: pointer;
+    opacity: 0.6;
+    @include transition(opacity .2s ease-in-out);
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   .profile-company {
     min-height: 48px;
     background: white;
@@ -77,16 +86,10 @@
     color: #777;
     min-width: 220px;
     .media-body { padding-top: 8px; }
-    .cancel-name {
+    .cancel {
       float: right;
       position: relative;
       top: -24px;
-      cursor: pointer;
-      opacity: 0.6;
-      @include transition(opacity .2s ease-in-out);
-      &:hover {
-        opacity: 1;
-      }
     }
   }
 
