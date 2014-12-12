@@ -1,30 +1,54 @@
 <div class="container">
+  <div class="row">
+    <div class="col-md-12 overflow-hidden">
+      <section class="panel panel-default">
+        <div class="panel-heading">
+          <strong><span class="fa fa-signal"></span> Templates Success</strong>
+          <span class="refresh pull-right" ng-click="refresh()"><i class="fa fa-refresh fa-btn" ng-class="{'fa-spin':refreshing}"></i></span>
+        </div>
+        <div class="panel-body">
+          <table class="table table-bordered table-striped table-responsive-rows sortable">
+            <thead class="cf">
+              <tr>
+                <th ng-repeat="th in head" ng-click="changeSorting(th.column)" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls(th.column)]">{{th.head}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in messages.template_stats | orderBy:sort.column:sort.descending">
+                <td name="Template"><a ng-click="view(item.template)">{{item.template}}</a></td>
+                <td >{{item.subject}}</td>
+                <td name="Sent" class="numeric">{{item.sent}}</td>
+                <td name="Opens" class="numeric">{{item.opened}}</td>
+                <td name="Clicks" class="numeric">{{item.clicked}}</td>
+                <td name="Updated" class="date">{{item.updated | moment:'timeago'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-  <section class="panel panel-default">
-    <div class="panel-heading">
-      <strong><span class="fa fa-signal"></span> Templates Success</strong>
-      <span class="refresh pull-right" ng-click="refresh()"><i class="fa fa-refresh fa-btn" ng-class="{'fa-spin':refreshing}"></i></span>
+      <section class="panel panel-default panel-overlay" ng-class="{'open': !!show_message}">
+        <div class="panel-heading">
+          <strong>{{template.name}}</strong>
+          <span class="pull-right pointer" ng-click="close()"><i class="fa fa-times close"></i></span>
+        </div>
+        <div><small>updated: {{template.updated_at | moment:'timeago'}}</small></div>
+        <div class="panel-body layout-single-column">
+          <form name="templateForm" class="form-horizontal">
+            <div class="form-group">
+              <div class="col-xs-10">
+                <input type="text" class="form-control" ng-model="template.subject">
+              </div>
+            </div>
+            <div class="body">
+              <textarea class="form-control" rows="15" ng-model="template.body"></textarea>
+            </div>
+          </form>
+          <div class="template-actions">
+            <div class="btn btn-sm btn-primary" ng-click="update()" ng-disabled="templateForm.$pristine">Update</div>
+            <div class="btn btn-sm btn-default" ng-click="close()">Discard</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="panel-body">
-      <table class="table table-bordered table-striped table-responsive-rows sortable">
-        <thead class="cf">
-          <tr>
-            <th ng-repeat="th in head" ng-click="changeSorting(th.column)" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls(th.column)]">{{th.head}}</th>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="item in messages.template_stats | orderBy:sort.column:sort.descending">
-          <td name="Template"><a ng-click="view(item.template)">{{item.template}}</a></td>
-          <td >{{item.subject}}</td>
-          <td name="Sent" class="numeric">{{item.sent}}</td>
-          <td name="Opens" class="numeric">{{item.opened}}</td>
-          <td name="Clicks" class="numeric">{{item.clicked}}</td>
-          <td name="Updated" class="date">{{item.updated | moment:'timeago'}}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-</section>
-
-</div>

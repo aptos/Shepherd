@@ -19,6 +19,7 @@ Shepherd::Application.routes.draw do
   get '/reports/recent' => 'reports#recent'
   get '/api/messages' => 'messages#index'
   get '/api/messages/template' => 'messages#template'
+  post '/api/messages/template' => 'messages#update_template'
 
   # Users
   get '/api/users' => 'users#index'

@@ -15,7 +15,7 @@ angular.module('shepherd.messages',['restangular'])
       }
     });
   }])
-.controller('MessagesCtrl',['$scope','Restangular', function ($scope, Restangular) {
+.controller('MessagesCtrl',['$scope','Restangular','logger', function ($scope, Restangular, logger) {
 
   $scope.refresh = function () {
     $scope.refreshing = true;
@@ -23,16 +23,32 @@ angular.module('shepherd.messages',['restangular'])
     .then( function(messages) {
       $scope.messages = messages;
       $scope.refreshing = false;
-    }, function () { $scope.refreshing = false });
+    }, function () { $scope.refreshing = false; });
   };
   $scope.refresh();
 
+  $scope.show_message = false;
   $scope.view = function (name) {
     Restangular.one('messages/template').get({name: name})
     .then( function(template) {
       $scope.template = template;
+      $scope.show_message = true;
     });
-  }
+  };
+
+  $scope.close = function () {
+    $scope.show_message = false;
+  };
+
+  $scope.update = function () {
+    Restangular.one('messages').post('template',$scope.template)
+    .then( function(template) {
+      logger.logSuccess("Template Updated!");
+      $scope.show_message = false;
+    }, function () {
+      logger.logError("Bummer, something went wrong...");
+    });
+  };
 
   $scope.head = [
   {head: "Template", column: "template"},

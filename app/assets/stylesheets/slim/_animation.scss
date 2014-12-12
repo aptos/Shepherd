@@ -168,3 +168,11 @@
     @include animation(0.35s slideInLeft ease-in-out);
 }
 
+.animate-slide-in-right.ng-hide-add {
+    @include animation(0.35s slideOutRight ease-in-out);
+}
+
+.animate-slide-in-right.ng-hide-remove {
+    @include animation(0.35s slideInRight ease-in-out);
+}
+

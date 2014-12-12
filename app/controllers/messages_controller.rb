@@ -34,6 +34,20 @@ class MessagesController < ApplicationController
     render :json => template
   end
 
+  def update_template
+    name = params[:name]
+    message = {
+      'subject' => params[:subject],
+      'body' => params[:body]
+    }
+    unless params[:subject].length > 1 && params[:body].length > 10
+      render :json => { error: "template update requires subject and body content" }, :status => 400 and return
+    end
+
+    template = EmailTemplate.update name, message, false
+    render :json => template
+  end
+
   private
 
   def last_used key
