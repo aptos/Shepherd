@@ -14,8 +14,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in campaigns.template_stats | orderBy:sort.column:sort.descending">
-          <td name="Template">{{item.template}}</td>
+        <tr ng-repeat="item in messages.template_stats | orderBy:sort.column:sort.descending">
+          <td name="Template"><a ng-click="view(item.template)">{{item.template}}</a></td>
           <td >{{item.subject}}</td>
           <td name="Sent" class="numeric">{{item.sent}}</td>
           <td name="Opens" class="numeric">{{item.opened}}</td>

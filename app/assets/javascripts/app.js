@@ -22,6 +22,7 @@ var app = angular.module('shepherd', [
   'shepherd.notes',
   'shepherd.activity',
   'shepherd.gmail',
+  'shepherd.messages',
   'shepherd.campaigns'
   ])
 .run(['$rootScope', '$state', '$stateParams', '$cookies',

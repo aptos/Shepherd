@@ -17,7 +17,8 @@ Shepherd::Application.routes.draw do
 
   # Top level reports
   get '/reports/recent' => 'reports#recent'
-  get '/api/campaigns' => 'campaigns#index'
+  get '/api/messages' => 'messages#index'
+  get '/api/messages/template' => 'messages#template'
 
   # Users
   get '/api/users' => 'users#index'

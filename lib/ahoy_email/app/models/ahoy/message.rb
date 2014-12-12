@@ -39,7 +39,7 @@ module Ahoy
       view :by_template_and_subject,
       :map =>
       "function(doc) {
-      if (doc.type == 'Ahoy::Message') {
+      if (doc.type == 'Ahoy::Message' && !!doc.template) {
         var opened = (!!doc.opened_at) ? 1 : 0;
         var clicked = (!!doc.clicked_at) ? 1 : 0;
         var template = (!!doc.template) ? doc.template : 'none';

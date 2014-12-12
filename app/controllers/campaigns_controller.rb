@@ -1,35 +1,24 @@
 class CampaignsController < ApplicationController
-  before_filter :authenticate_user!
-
   respond_to :json
 
+  # show all referrals for current user
   def index
-    summary = Ahoy::Message.summary.values
-    @stats = {
-      sent: summary.count,
-      opened: summary.select{|r| r['opened_at']}.count,
-      clicked: summary.select{|r| r['clicked_at']}.count
-    }
-
-    by_template = Ahoy::Message.by_template_and_subject.reduce.group_level(2).rows
-    @stats[:template_stats] = by_template.map{|t| {
-      template: t['key'][0],
-      subject: t['key'][1],
-      sent: t['value'][0],
-      opened: t['value'][1],
-      clicked: t['value'][2],
-      updated: last_used(t['key'])
-      }
-    }
-
-    render :json => @stats
+    @campaigns = Campaign.by_utm_campaign.all
+    render :json => @campaigns
   end
 
-  private
+  def create
+    @campaign = Campaign.create params[:utm_campaign]
+    render :json => @campaign
+  end
 
-  def last_used key
-    (t,s) = key
-    Ahoy::Message.by_template_and_subject.startkey([t,s]).endkey([t,s,{}]).last['updated_at'] rescue nil
+  def show
+    id = "utm_campaign:#{params[:utm_campaign]}"
+    @campaign = Campaign.find(id)
+    unless @campaign
+      render :json => { error: "campaign not found: #{params[:utm_campaign]}" }, :status => 404 and return
+    end
+    render :json => @campaign
   end
 
 end
