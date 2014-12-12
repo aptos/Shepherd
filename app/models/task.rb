@@ -29,6 +29,8 @@ class Task < CouchRest::Model::Base
 
   timestamps!
 
+  proxied_by :site
+
   ##
   # Shepherd App
   design do

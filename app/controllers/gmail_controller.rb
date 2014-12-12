@@ -69,6 +69,7 @@ class GmailController < ApplicationController
   def send_message
     @message = params[:gmail][:new_message]
     template = params[:gmail]['template']
+    template ||= 'none'
     if params[:gmail]['save_template']
       EmailTemplate.update template, @message
     end
@@ -78,17 +79,24 @@ class GmailController < ApplicationController
     @message['from_name'] = current_user.name
     client = Gmail::Client.new current_user
 
-    payload = Gmailer.standard_email(@message)
-    Rails.logger.info "*** Sending Email\n\n #{payload}"
+    # add utm_params for tracking
+    utm_params = {
+      utm_params: true,
+      utm_campaign: 'introducing_taskit',
+      utm_source: 'shepherd',
+      utm_content: template.downcase.gsub(/[^A-Za-z0-9]/, '_')
+    }
+    @payload = Gmailer.standard_email(@message, utm_params)
+    Rails.logger.info "*** Sending Email\n\n #{@payload}"
     begin
-      encoded_payload = Base64.urlsafe_encode64 payload.to_s
+      encoded_payload = Base64.urlsafe_encode64 @payload.to_s
       response = client.send_message encoded_payload
     rescue
       render :json => { error: 'Gmail client error', message: response }, :status => 400 and return
     end
 
     # Update message with gmail id
-    ahoy_message = Ahoy::Message.find payload["Ahoy-Message-Id"].to_s
+    ahoy_message = Ahoy::Message.find @payload["Ahoy-Message-Id"].to_s
     ahoy_message.update_attributes(mailservice_id: response['id'], sent_at: Time.now, template: template)
     render :json => response
   end

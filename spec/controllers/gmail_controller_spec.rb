@@ -30,7 +30,7 @@ describe GmailController, :type => :controller do
     end
     it "returns summary messages from the query" do
       get :inbox, { q: 'bswilkerson@gmail.com' }
-      assigns(:list)['messages'].last[:labelIds].should eq ["SENT", "UNREAD"]
+      assigns(:list)['messages'].last[:labelIds].should eq ["SENT", "SUMMARY", "UNREAD"]
       assigns(:list)['messages'].last[:subject].should eq @message[:subject]
     end
   end
@@ -55,13 +55,24 @@ describe GmailController, :type => :controller do
     before do
       @message = {
         subject: 'testing 1,2,3',
-        body: "Text message body"
+        body: "Text message body\n<a href='https://www.taskit.io'>TaskIT.io</a>"
       }
     end
+
     it "sends a message" do
       post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message}}
       resp = JSON response.body
       resp['id'].should_not be_nil
+    end
+
+    it "adds tracking to links" do
+      post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message}}
+      assigns(:payload).body.should match 'utm_campaign%3Dintroducing_taskit'
+    end
+
+    it "tracks template as utm_content" do
+      post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message, 'template' => 'Welcome to TaskIT!'}}
+      assigns(:payload).body.should match 'utm_content%3Dwelcome_to_taskit_'
     end
   end
 

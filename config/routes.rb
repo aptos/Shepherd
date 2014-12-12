@@ -44,6 +44,12 @@ Shepherd::Application.routes.draw do
   post '/api/gmail/message/:uid' => 'gmail#send_message', :constraints => { :uid => /[^\/]*/ }
   get '/api/gmail/templates' => 'gmail#templates'
 
+  # Campaigns
+  get '/api/campaigns' => 'campaigns#index'
+  get '/api/campaigns/create' => 'campaigns#create'
+  get '/api/campaigns/:utm_campaign' => 'campaigns#show'
+  post '/api/campaigns/:utm_campaign' => 'campaigns#create'
+
   # Tasks aka Projects
   get '/api/tasks' => 'tasks#index'
   get '/api/tasks/stats' => 'tasks#stats'
