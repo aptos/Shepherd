@@ -14,42 +14,32 @@ angular.module('shepherd.campaigns',['restangular'])
   }])
 .controller('campaignsCtrl',['$scope','Restangular', function ($scope, Restangular) {
 
-
   $scope.refresh = function () {
-    $scope.refreshing = true;
     Restangular.one('campaigns').get()
     .then( function(campaigns) {
       $scope.campaigns = campaigns;
-      $scope.refreshing = false;
-    }, function () { $scope.refreshing = false });
+      summarize($scope.campaigns);
+    });
   };
   $scope.refresh();
 
-  // $scope.head = [
-  // {head: "Template", column: "template"},
-  // {head: "Subject", column: "subject"},
-  // {head: "Sent", column: "sent"},
-  // {head: "Opens", column: "opened"},
-  // {head: "Clicks", column: "clicked"},
-  // {head: "Updated", column: "updated"}
-  // ];
+  $scope.totals = {
+    utm_source: 0,
+    utm_medium: 0,
+    utm_content: 0
+  };
 
-  // $scope.sort = {
-  //   column: 'updated',
-  //   descending: true
-  // };
+  var summarize = function (campaigns) {
+    console.info("campaigns", campaigns)
+    _.forEach(campaigns, function (campaign) {
 
-  // $scope.selectedCls = function(column) {
-  //   return column == $scope.sort.column && 'sort-' + $scope.sort.descending;
-  // };
+      _.forEach($scope.totals, function (value, key) {
+        console.info("v,k", value, key, campaign[key])
+        var total = _.reduce(campaign[key], function (sum, num) {return sum + num; } );
+        $scope.totals[key] = total;
+      });
 
-  // $scope.changeSorting = function(column) {
-  //   var sort = $scope.sort;
-  //   if (sort.column == column) {
-  //     sort.descending = !sort.descending;
-  //   } else {
-  //     sort.column = column;
-  //     sort.descending = false;
-  //   }
-  // };
+    });
+  };
+
 }]);

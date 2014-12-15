@@ -1,1 +1,25 @@
-campaigns summary
+<section class="panel panel-default map-panel center-block">
+  <div class="panel-heading text-left"><strong>Campaigns</strong></div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="text-left">
+        <div class="campaigns">
+          <div ng-repeat="campaign in campaigns">
+            <h3>{{campaign.utm_campaign}}</h3>
+            <h4>Sources</h4>
+            <div ng-repeat="(name, count) in campaign.utm_source">
+              <p>{{name}}</p>
+
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{count}}" aria-valuemin="0" aria-valuemax="{{totals.utm_source}}" style="width: {{count/totals.utm_source * 100}}%;">
+                  {{count}} visits
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
