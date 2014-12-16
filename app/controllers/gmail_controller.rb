@@ -114,8 +114,8 @@ class GmailController < ApplicationController
 
   def create_links message
     begin
-      message.gsub!(/(\s)taskit.io(\s)/,'\1' + 'https://www.taskit.io' + '\2')
-      message.gsub!(/(\s)juniper.taskit.io(\s)/,'\1' + 'https://juniper.taskit.io' + '\2')
+      message.gsub!(/(\s)taskit.io(\s)/,'\1' + "<a href='https://www.taskit.io'>taskit.io</a>" + '\2')
+      message.gsub!(/(\s)juniper.taskit.io(\s)/,'\1' + "<a href='https://juniper.taskit.io'>juniper.taskit.io</a>" + '\2')
     rescue
       message
     end
