@@ -82,10 +82,15 @@ class GmailController < ApplicationController
     # add utm_params for tracking
     utm_params = {
       utm_params: true,
-      utm_campaign: 'introducing_taskit',
+      utm_campaign: site_name.gsub(/[^A-Za-z0-9]/, '_'),
       utm_source: 'shepherd',
       utm_content: template.downcase.gsub(/[^A-Za-z0-9]/, '_')
     }
+
+    # replace site references with links
+    @message[:body] = create_links @message[:body]
+
+    # get payload and send
     @payload = Gmailer.standard_email(@message, utm_params)
     Rails.logger.info "*** Sending Email\n\n #{@payload}"
     begin
@@ -104,5 +109,18 @@ class GmailController < ApplicationController
   def templates
     render :json => EmailTemplate.by_name.all
   end
+
+  private
+
+  def create_links message
+    begin
+      message.gsub!(/(\s)taskit.io(\s)/,'\1' + 'https://www.taskit.io' + '\2')
+      message.gsub!(/(\s)juniper.taskit.io(\s)/,'\1' + 'https://juniper.taskit.io' + '\2')
+    rescue
+      message
+    end
+    message
+  end
+
 
 end

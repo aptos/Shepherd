@@ -15,7 +15,7 @@
             </thead>
             <tbody>
               <tr ng-repeat="item in messages.template_stats | orderBy:sort.column:sort.descending">
-                <td name="Template"><a ng-click="view(item.template)">{{item.template}}</a></td>
+                <td name="Template" class="pointer"><a ng-click="view(item.template)">{{item.template}}</a></td>
                 <td >{{item.subject}}</td>
                 <td name="Sent" class="numeric">{{item.sent}}</td>
                 <td name="Opens" class="numeric">{{item.opened}}</td>
@@ -34,20 +34,24 @@
         </div>
         <div><small>updated: {{template.updated_at | moment:'timeago'}}</small></div>
         <div class="panel-body layout-single-column">
-          <form name="templateForm" class="form-horizontal">
+          <div class="template-actions">
+            <div class="btn btn-sm btn-success" ng-click="update()" ng-disabled="templateForm.$pristine">Update</div>
+            <div class="btn btn-sm btn-default" ng-click="close()">Discard</div>
+          </div>
+          <form name="templateForm" class="form-horizontal margin-top-30">
             <div class="form-group">
               <div class="col-xs-10">
+                Subject:
                 <input type="text" class="form-control" ng-model="template.subject">
               </div>
             </div>
             <div class="body">
+              <p>Hi Mr. Customer,</p>
               <textarea class="form-control" rows="15" ng-model="template.body"></textarea>
+              <p>Regards,</p>
+              {{me.name}}
             </div>
           </form>
-          <div class="template-actions">
-            <div class="btn btn-sm btn-primary" ng-click="update()" ng-disabled="templateForm.$pristine">Update</div>
-            <div class="btn btn-sm btn-default" ng-click="close()">Discard</div>
-          </div>
         </div>
       </div>
     </div>

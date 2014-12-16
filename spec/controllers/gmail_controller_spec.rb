@@ -43,12 +43,12 @@ describe GmailController, :type => :controller do
       resp['body'].should_not be_empty
     end
 
-    it "returns decoded message with special chars" do
-      get :message, { id: '1498760c93aec913' }
-      resp = JSON response.body
-      resp['headers'].should_not be_empty
-      resp['body'].should_not be_empty
-    end
+    # it "returns decoded message with special chars" do
+    #   get :message, { id: '1498760c93aec913' }
+    #   resp = JSON response.body
+    #   resp['headers'].should_not be_empty
+    #   resp['body'].should_not be_empty
+    # end
   end
 
   describe "send_message" do
@@ -67,12 +67,32 @@ describe GmailController, :type => :controller do
 
     it "adds tracking to links" do
       post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message}}
-      assigns(:payload).body.should match 'utm_campaign%3Dintroducing_taskit'
+      assigns(:payload).body.should match 'utm_campaign%3DTaskIT'
     end
 
     it "tracks template as utm_content" do
       post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message, 'template' => 'Welcome to TaskIT!'}}
       assigns(:payload).body.should match 'utm_content%3Dwelcome_to_taskit_'
+    end
+
+    it "replaces references with links to taskit.io" do
+      @message[:body] = "start of line\ntaskit.io string\nend of line taskit.io\nmid line taskit.io reference\nhttp://www.taskit.io should not change"
+      post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message}}
+
+      assigns(:message)[:body].should match 'start of line\nhttps://www.taskit.io string'
+      assigns(:message)[:body].should match 'end of line https://www.taskit.io\n'
+      assigns(:message)[:body].should match 'mid line https://www.taskit.io reference'
+      assigns(:message)[:body].should match 'http://www.taskit.io should not change'
+    end
+
+    it "replaces references with links to juniper.taskit.io" do
+      @message[:body] = "start of line\njuniper.taskit.io string\nend of line juniper.taskit.io\nmid line juniper.taskit.io reference\nhttp://juniper.taskit.io should not change"
+      post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message}}
+
+      assigns(:message)[:body].should match 'start of line\nhttps://juniper.taskit.io string'
+      assigns(:message)[:body].should match 'end of line https://juniper.taskit.io\n'
+      assigns(:message)[:body].should match 'mid line https://juniper.taskit.io reference'
+      assigns(:message)[:body].should match 'http://juniper.taskit.io should not change'
     end
   end
 

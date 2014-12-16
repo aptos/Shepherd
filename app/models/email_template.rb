@@ -25,8 +25,9 @@ class EmailTemplate < CouchRest::Model::Base
     # remove greeting
     paragraphs.shift
 
-    # remove farewell
+    # remove farewell, handles one liner or two
     paragraphs.pop
+    paragraphs.pop if paragraphs.last[-1] == ","
 
     paragraphs.join("\n\n")
   end
