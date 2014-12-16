@@ -79,20 +79,29 @@ describe GmailController, :type => :controller do
       @message[:body] = "start of line\ntaskit.io string\nend of line taskit.io\nmid line taskit.io reference\nhttp://www.taskit.io should not change"
       post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message}}
 
-      assigns(:message)[:body].should match 'start of line\nhttps://www.taskit.io string'
-      assigns(:message)[:body].should match 'end of line https://www.taskit.io\n'
-      assigns(:message)[:body].should match 'mid line https://www.taskit.io reference'
-      assigns(:message)[:body].should match 'http://www.taskit.io should not change'
+      assigns(:message)[:body].should match "start of line\n<a href='https://www.taskit.io'>taskit.io</a> string"
+      assigns(:message)[:body].should match "end of line <a href='https://www.taskit.io'>taskit.io</a>\n"
+      assigns(:message)[:body].should match "mid line <a href='https://www.taskit.io'>taskit.io</a> reference"
+      assigns(:message)[:body].should match "http://www.taskit.io should not change"
     end
 
     it "replaces references with links to juniper.taskit.io" do
+      controller.stub(:site_name).and_return('Juniper')
       @message[:body] = "start of line\njuniper.taskit.io string\nend of line juniper.taskit.io\nmid line juniper.taskit.io reference\nhttp://juniper.taskit.io should not change"
       post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message}}
 
-      assigns(:message)[:body].should match 'start of line\nhttps://juniper.taskit.io string'
-      assigns(:message)[:body].should match 'end of line https://juniper.taskit.io\n'
-      assigns(:message)[:body].should match 'mid line https://juniper.taskit.io reference'
-      assigns(:message)[:body].should match 'http://juniper.taskit.io should not change'
+      assigns(:message)[:body].should match "start of line\n<a href='https://juniper.taskit.io'>juniper.taskit.io</a> string"
+      assigns(:message)[:body].should match "end of line <a href='https://juniper.taskit.io'>juniper.taskit.io</a>\n"
+      assigns(:message)[:body].should match "mid line <a href='https://juniper.taskit.io'>juniper.taskit.io</a> reference"
+      assigns(:message)[:body].should match "http://juniper.taskit.io should not change"
+    end
+
+    it "sets correct utm_campaign" do
+      controller.stub(:site_name).and_return('Juniper')
+      @message[:body] = "start of line\njuniper.taskit.io string\nend of line juniper.taskit.io\nmid line juniper.taskit.io reference\nhttp://juniper.taskit.io should not change"
+      post :send_message, { uid:'bswilkerson@gmail.com', gmail: {new_message: @message}}
+
+      assigns(:payload).body.should match "utm_campaign%3DJuniper"
     end
   end
 
