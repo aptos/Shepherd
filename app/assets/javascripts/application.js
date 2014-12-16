@@ -24,6 +24,7 @@
 //= require angular-bootstrap
 //= require angular-cookies
 //= require angular-elastic
+//= require ./plugins/angular.easypiechart
 //= require ./plugins/jquery-jvectormap-2.0.0.min
 //= require ./plugins/jquery-jvectormap-world-mill-en
 //= require app

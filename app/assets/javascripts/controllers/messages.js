@@ -17,11 +17,34 @@ angular.module('shepherd.messages',['restangular'])
   }])
 .controller('MessagesCtrl',['$scope','Restangular','logger', function ($scope, Restangular, logger) {
 
+  // pie charts
+  var easypie = {
+    percent: 0,
+    options: {
+      animate: {
+        duration: 600,
+        enabled: true
+      },
+      barColor: "#7FABD2",
+      lineCap: "round",
+      size: 180,
+      lineWidth: 20,
+      scaleLength: 0
+    }
+  };
+
+  $scope.opens = angular.extend({}, easypie);
+  $scope.clicks = angular.extend({}, easypie);
+
   $scope.refresh = function () {
     $scope.refreshing = true;
     Restangular.one('messages').get()
     .then( function(messages) {
       $scope.messages = messages;
+
+      $scope.opens.percent = Math.floor(messages.opened/messages.sent * 100);
+      $scope.clicks.percent = Math.floor(messages.clicked/messages.sent * 100);
+
       $scope.refreshing = false;
     }, function () { $scope.refreshing = false; });
   };

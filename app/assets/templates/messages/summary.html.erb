@@ -1,36 +1,44 @@
 <div class="container text-center">
+
   <div class="col-sm-3">
-    <div class="panel mini-box">
-      <span class="btn-icon btn-icon-round btn-icon-md bg-primary">
-        <span class="fa fa-paper-plane-o"></span>
-      </span>
-      <div class="box-info">
-        <p class="size-h2">{{messages.sent}}</p>
-        <p class="text-muted">Messages<br/>Sent</p>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Messages Sent</h3>
+      </div>
+      <div class="panel-body text-center" style="height: 220px;">
+        <div class="panel mini-box">
+          <span class="btn-icon btn-icon-round btn-icon-lg bg-primary">
+            <span class="fa fa-paper-plane-o"></span>
+          </span>
+          <div class="box-info">
+            <p class="size-h1">{{messages.sent}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Messages Opened ({{messages.opened}})</h3>
+      </div>
+      <div class="panel-body text-center">
+        <div easypiechart options="opens.options" percent="opens.percent" class="easypiechart">
+          <span class="pie-percent" ng-bind="opens.percent"></span>
+        </div>
       </div>
     </div>
   </div>
 
-   <div class="col-sm-3">
-    <div class="panel mini-box">
-      <span class="btn-icon btn-icon-round btn-icon-md bg-success">
-        <span class="fa fa-check-square-o"></span>
-      </span>
-      <div class="box-info">
-        <p class="size-h2">{{messages.opened}}</p>
-        <p class="text-muted">Messages<br/>Opened</p>
+  <div class="col-sm-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Links Clicked ({{messages.clicked}})</h3>
       </div>
-    </div>
-  </div>
-
-   <div class="col-sm-3">
-    <div class="panel mini-box">
-      <span class="btn-icon btn-icon-round btn-icon-md bg-danger">
-        <span class="fa fa-external-link"></span>
-      </span>
-      <div class="box-info">
-        <p class="size-h2">{{messages.clicked}}</p>
-        <p class="text-muted">Links<br/>Clicked</p>
+      <div class="panel-body text-center">
+        <div easypiechart options="clicks.options" percent="clicks.percent" class="easypiechart">
+          <span class="pie-percent" ng-bind="clicks.percent"></span>
+        </div>
       </div>
     </div>
   </div>

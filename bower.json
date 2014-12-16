@@ -13,7 +13,8 @@
       "restangular": "latest",
       "bootstrap-sass-official": "latest",
       "toastr": "~2.0.1",
-      "angular-elastic": "latest"
+      "angular-elastic": "latest",
+      "jquery.easy-pie-chart": "~2.1.4"
     }
   }
 }

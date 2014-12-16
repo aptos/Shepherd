@@ -12,6 +12,7 @@ var app = angular.module('shepherd', [
   'restangular',
   'ui.bootstrap',
   'monospaced.elastic',
+  'easypiechart',
   'shepherd.services',
   'shepherd.widgets',
   'shepherd.header',
