@@ -10,18 +10,15 @@ class Campaign < CouchRest::Model::Base
 
   proxied_by :site
 
-  # def self.create utm_campaign
-  #   id = URI.escape "utm_campaign:#{utm_campaign}"
-  #   if campaign = Campaign.find(id)
-  #     return campaign
-  #   end
-
-  #   create! do |c|
-  #     c.utm_campaign = id
-  #   end
-  # end
-
   design do
-    view :by_utm_campaign
+    view :by_campaign_and_day,
+    :map =>
+    "function(doc) {
+    if (doc.type == 'Campaign') {
+      var d = new Date(Date.parse(doc.created_at));
+      emit([doc.utm_campaign, d.getFullYear(), d.getMonth() + 1, d.getDate()], doc);
+      }
+      };"
   end
+
 end
