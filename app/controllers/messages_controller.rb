@@ -28,9 +28,7 @@ class MessagesController < ApplicationController
   def template
     name = params[:name]
     template = EmailTemplate.by_name.key(name).first
-    unless template
-      render :json => { error: "template not found: #{params[:name]}" }, :status => 404 and return
-    end
+    template ||= EmailTemplate.new( :name => name )
     render :json => template
   end
 
