@@ -74,7 +74,6 @@ angular.module('shepherd.messages',['restangular'])
   };
 
   $scope.head = [
-  {head: "Template", column: "template"},
   {head: "Subject", column: "subject"},
   {head: "Sent", column: "sent"},
   {head: "Opens", column: "opened"},
@@ -82,22 +81,4 @@ angular.module('shepherd.messages',['restangular'])
   {head: "Updated", column: "updated"}
   ];
 
-  $scope.sort = {
-    column: 'updated',
-    descending: true
-  };
-
-  $scope.selectedCls = function(column) {
-    return column == $scope.sort.column && 'sort-' + $scope.sort.descending;
-  };
-
-  $scope.changeSorting = function(column) {
-    var sort = $scope.sort;
-    if (sort.column == column) {
-      sort.descending = !sort.descending;
-    } else {
-      sort.column = column;
-      sort.descending = false;
-    }
-  };
 }]);

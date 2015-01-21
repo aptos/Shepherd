@@ -8,19 +8,25 @@ class MessagesController < ApplicationController
     @stats = {
       sent: summary.count,
       opened: summary.select{|r| r['opened_at']}.count,
-      clicked: summary.select{|r| r['clicked_at']}.count
+      clicked: summary.select{|r| r['clicked_at']}.count,
+      template_stats: []
     }
 
-    by_template = Ahoy::Message.by_template_and_subject.reduce.group_level(2).rows
-    @stats[:template_stats] = by_template.map{|t| {
-      template: t['key'][0],
-      subject: t['key'][1],
-      sent: t['value'][0],
-      opened: t['value'][1],
-      clicked: t['value'][2],
-      updated: last_used(t['key'])
+    Ahoy::Message.by_template_and_subject.reduce.group_level(1).rows.each do |row|
+      name = row['key'].first
+      stats = row['value']
+      messages_by_template = Ahoy::Message.by_template_and_subject.startkey([name]).endkey([name,{}]).reduce.group_level(2).rows
+      messages = messages_by_template.map{|m|
+        {
+          subject: m['key'][1],
+          sent: m['value'][0],
+          opened: m['value'][1],
+          clicked: m['value'][2],
+          updated: last_used(m['key'])
+        }
       }
-    }
+      @stats[:template_stats].push({ name: name, stats: stats, messages: messages })
+    end
 
     render :json => @stats
   end
