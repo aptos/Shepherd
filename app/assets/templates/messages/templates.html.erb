@@ -7,21 +7,29 @@
           <span class="refresh pull-right" ng-click="refresh()"><i class="fa fa-refresh fa-btn" ng-class="{'fa-spin':refreshing}"></i></span>
         </div>
         <div class="panel-body">
-          <table class="table table-bordered table-striped table-responsive-rows sortable">
+          <table class="table table-bordered">
             <thead class="cf">
               <tr>
-                <th ng-repeat="th in head" ng-click="changeSorting(th.column)" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls(th.column)]">{{th.head}}</th>
+                <th ng-repeat="th in head">{{th.head}}</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="item in messages.template_stats | orderBy:sort.column:sort.descending">
-                <td name="Template" class="pointer"><a ng-click="view(item.template)">{{item.template}}</a></td>
-                <td >{{item.subject}}</td>
-                <td name="Sent" class="numeric">{{item.sent}}</td>
-                <td name="Opens" class="numeric">{{item.opened}}</td>
-                <td name="Clicks" class="numeric">{{item.clicked}}</td>
-                <td name="Updated" class="date">{{item.updated | moment:'timeago'}}</td>
+              <tr ng-repeat-start="template in messages.template_stats | orderBy:name" ng-click="view(template.name)" class="alert-info pointer">
+                <td>{{template.name}}</td>
+                <td>{{template.stats[0]}}</td>
+                <td>{{template.stats[1]}}</td>
+                <td>{{template.stats[2]}}</td>
+                <td></td>
               </tr>
+
+              <tr ng-repeat="message in template.messages">
+                <td >{{message.subject}}</td>
+                <td name="Sent" class="numeric">{{message.sent}}</td>
+                <td name="Opens" class="numeric">{{message.opened}}</td>
+                <td name="Clicks" class="numeric">{{message.clicked}}</td>
+                <td name="Updated" class="date">{{message.updated | moment:'timeago'}}</td>
+              </tr>
+              <tr ng-repeat-end></tr>
             </tbody>
           </table>
         </div>

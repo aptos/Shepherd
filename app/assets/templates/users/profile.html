@@ -20,7 +20,7 @@
             <i class="fa fa-times cancel" ng-click="cancel()"></i>
           </form>
         </span>
-        <p>{{user.email || lead.uid}} <span class="user-mailto"><a ng-href="mailto:{{user.email || lead.uid}}" target="_blank"><i class="fa fa-envelope-o"></i><a/></span></p>
+        <p>{{user.info.email || user.email || lead.uid}} <span class="user-mailto"><a ng-href="mailto:{{user.email || lead.uid}}" target="_blank"><i class="fa fa-envelope-o"></i><a/></span></p>
         <p ng-show="lead.info.phone && !edit_phone">
           <a class="link-light" ng-click="edit_phone=!edit_phone">{{lead.info.phone}}</a> <span class="user-phone"><a ng-href="tel:{{lead.info.phone}}"><i class="fa fa-phone"></i><a/></span></p>
           <p ng-show="!!edit_phone || !lead.info.phone">

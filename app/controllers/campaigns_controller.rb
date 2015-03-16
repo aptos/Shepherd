@@ -3,21 +3,19 @@ class CampaignsController < ApplicationController
 
   # show all referrals for current user
   def index
-    @campaigns = site.campaigns.by_utm_campaign.all
+    @campaigns = site.campaigns.by_campaign_and_day.all
     render :json => @campaigns
   end
 
-  def create
-    @campaign = site.campaigns.create params[:utm_campaign]
-    render :json => @campaign
-  end
-
   def show
-    id = "utm_campaign:#{params[:utm_campaign]}"
-    @campaign = site.campaigns.find(id)
+    unless id = params[:utm_campaign]
+      render :json => { error: "utm_campaign parameter is required" }, :status => 400 and return
+    end
+    @campaign = site.campaigns.by_campaign_and_day.startkey([id]).endkey([id,{},{},{}]).all
     unless @campaign
       render :json => { error: "campaign not found: #{params[:utm_campaign]}" }, :status => 404 and return
     end
+
     render :json => @campaign
   end
 

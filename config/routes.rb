@@ -46,9 +46,7 @@ Shepherd::Application.routes.draw do
 
   # Campaigns
   get '/api/campaigns' => 'campaigns#index'
-  get '/api/campaigns/create' => 'campaigns#create'
   get '/api/campaigns/:utm_campaign' => 'campaigns#show'
-  post '/api/campaigns/:utm_campaign' => 'campaigns#create'
 
   # Tasks aka Projects
   get '/api/tasks' => 'tasks#index'
