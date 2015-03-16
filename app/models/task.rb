@@ -37,10 +37,23 @@ class Task < CouchRest::Model::Base
     view :summary,
     :map =>
     "function(doc) {
-    if (doc['type'] == 'Task') {
+    if (doc['type'] == 'Task' && (doc['owner'] != null) && (doc['status'] != null)) {
       var company = (!!doc.company) ? doc.company : '';
       var location = (!!doc.location) ? doc.location : '';
-      emit(doc.owner, { id: doc._id, title: doc.title, location: location, owner_name: doc.owner_name, company: doc.company, status: doc.status, accepted_bid: doc.accepted_bid, views: doc.views, created_at: doc.created_at });
+      var start_date = (!!doc.start_date) ? doc.start_date : '';
+      var work_order_id = (!!doc.work_order_id) ? doc.work_order_id : '';
+      var description = (doc.description.length > 300) ? doc.description.substring(0,300) + '...' : doc.description;
+      emit([doc['owner'], doc['status']], {
+        id: doc._id,
+        title: doc.title,
+        location: location,
+        start_date: start_date,
+        status: doc.status,
+        description: description,
+        accepted_bid: doc.accepted_bid,
+        work_order_id: work_order_id,
+        views: doc.views,
+        created_at: doc.created_at });
     }
     };"
   end
@@ -50,37 +63,6 @@ class Task < CouchRest::Model::Base
 
   design do
     view :by_owner
-    view :by_status
-  end
-
-  design do
-    view :tags,
-    :map =>
-    "function(doc) {
-    if (doc['type'] === 'Task') {
-      if (doc['tags'] && doc['status'] === 'Open') {
-        doc.tags.forEach(function(tag) {
-          if (tag.length) emit(tag, 1);
-            });
-  }
-  }
-  }",
-  :reduce =>
-  "_sum"
-  end
-
-  design do
-    view :preview,
-    :map =>
-    "function(doc) {
-    if (doc['type'] === 'Task' && doc['status'] === 'Open' && doc.company) {
-      var b = doc.bounty || 0;
-      var bids_due = (doc.bids_due) ? doc.bids_due : doc.start_date;
-      emit({due_date: bids_due, company: doc.company, summary: doc.title, bounty: b}, 1);
-    }
-    }",
-    :reduce =>
-    "_sum"
   end
 
 end
