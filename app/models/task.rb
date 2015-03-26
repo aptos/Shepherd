@@ -63,6 +63,7 @@ class Task < CouchRest::Model::Base
 
   design do
     view :by_owner
+    view :by_status
   end
 
 end
