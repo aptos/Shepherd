@@ -80,5 +80,4 @@ class User < CouchRest::Model::Base
       "_count"
   end
 
-
 end
