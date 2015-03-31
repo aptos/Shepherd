@@ -6,7 +6,7 @@ describe UsersController, :type => :controller do
     request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:linkedin]
     controller.stub(:authenticate_user!).and_return(true)
 
-    controller.stub(:site).and_return(Site.create(slug: "taskitone_development"))
+    controller.stub(:site).and_return(Site.create(slug: "taskit2015_development"))
   end
 
   describe "index" do

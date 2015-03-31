@@ -94,8 +94,8 @@ Shepherd::Application.configure do
 
   # Adding supported databases
   config.sites = [
-    { db: 'taskitone', label: 'TaskIT'},
-    { db: 'taskit-pro', label: 'Juniper'}
+    { db: 'taskit2015', label: 'TaskIT'},
+    { db: 'taskit-juniper', label: 'Juniper'}
   ]
 
   # Hipchat API - move to initializer at some point
