@@ -20,32 +20,7 @@ class Setting < CouchRest::Model::Base
 
   design do
     view :by_uid
-  end
-
-  design do
-    view :summary,
-      :map =>
-      "function(doc) {
-        if (doc['type'] == 'Setting') {
-          var latLong = (!!doc.latLong) ? doc.latLong : '';
-          var email = (!!doc.contact.email) ? doc.contact.email : doc.uid;
-          emit(
-            doc.uid,
-            { uid: doc.uid, name: doc.name, email: doc.contact.email, email_notifications: doc.email_notifications, role: doc.role, entity: doc.entity, company_id: doc.company_id, latLong: latLong, company_list_admin: doc.company_list_admin  }
-            );
-        }
-      };"
-
-    view :by_email,
-      :map =>
-      "function(doc) {
-        if (doc['type'] == 'Setting' && doc.contact.email) {
-          emit(
-            doc.contact.email,
-            { uid: doc.uid, name: doc.name, email: doc.contact.email, latLong: doc.latLong }
-            );
-        }
-      };"
+    view :by_email
   end
 
 end

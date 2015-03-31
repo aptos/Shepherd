@@ -6,14 +6,6 @@ class UsersController < ApplicationController
   def index
     @users = site.users.summary.rows.map{|r| r['value']}
 
-    # add in values from settings
-    settings = Hash.new
-    site.settings.summary.rows.map{|r| settings[r['key']] = r['value'] }
-    @users.map do |s|
-      next unless settings[s['id']]
-      ['email','role', 'entity', 'latLong','email_notifications'].map { |v| s[v] = settings[s['id']][v] if settings[s['id']][v] }
-    end
-
     # add lead
     leads = Hash.new
     Lead.by_site.key(site_name).map{|r| leads[r[:uid]] = r.to_hash.slice('segment','info')}

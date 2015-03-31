@@ -14,10 +14,6 @@ class NotesController < ApplicationController
     @note.owner = current_user.email
     @note.save!
 
-    if @note.due_date == Date.today
-      hipchat.send(@note.owner, @note.details, :notify => true, :color => 'yellow')
-    end
-
     render :json => @note
   end
 

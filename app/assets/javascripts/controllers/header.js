@@ -9,8 +9,8 @@ angular.module('shepherd.header', [])
 
   $scope.site = $cookies.site || 'taskitone';
   $scope.siteNames = {
-    'taskit-pro': 'Juniper',
-    'taskitone': 'TaskIT'
+    'taskit-juniper': 'Juniper',
+    'taskit2015': 'TaskIT'
   };
 
   $scope.setSite = function (site) {

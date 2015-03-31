@@ -34,10 +34,14 @@ class Company < CouchRest::Model::Base
     view :locations,
     :map =>
     "function(doc) {
-    if (doc['type'] == 'Company') {
+    if (doc.type == 'Company') {
       var logo = (!!doc.s3_logo_url) ? doc.s3_logo_url : '';
       var locations = (typeof(doc.locations) != 'undefined' ) ? doc.locations.all : '';
-      if (!!doc.name) emit(doc.name, { id: doc._id, locations: locations, logo: logo, website_url: doc.website_url });
+      if (!!doc.name) emit(doc.name, {
+        id: doc._id,
+        locations: locations,
+        logo: logo,
+        website_url: doc.website_url });
       }
       };"
   end
@@ -48,15 +52,32 @@ class Company < CouchRest::Model::Base
     view :summary,
     :map =>
     "function(doc) {
-    if (doc['type'] == 'Company') {
+    if (doc.type == 'Company' && doc.name) {
       var logo = (!!doc.s3_logo_url) ? doc.s3_logo_url : '';
       var employee_count_range = (typeof(doc.employee_count_range) != 'undefined' ) ? doc.employee_count_range.name : '';
-      var locations = (typeof(doc.locations) != 'undefined' ) ? doc.locations.all : '';
-      var industries = (typeof(doc.industries) != 'undefined' ) ? doc.industries.all : '';
+      var locations = '';
+      var cities = '';
+      if (typeof(doc.locations) != 'undefined' ) {
+        locations = doc.locations;
+        cities = locations.all.map(function(loc) { return loc.address.city; });
+      }
       var specialties = (typeof(doc.specialties) != 'undefined' ) ? doc.specialties.all : '';
       var skills = (typeof(doc.skills) != 'undefined' ) ? doc.skills : [];
-      var partnerships = (typeof(doc.partnerships) != 'undefined' ) ? doc.partnerships : '';
-      if (!!doc.name) emit(doc.name, { id: doc._id, description: doc.description, employee_count_range: employee_count_range, founded_year: doc.founded_year, ticker: doc.ticker, locations: locations, industries: industries, specialties: specialties, skills: skills, website_url: doc.website_url, logo: logo, partnerships: partnerships });
+      var domain = (!!doc.domain) ? doc.domain : doc._id;
+      emit(doc.name, {
+        id: doc._id,
+        domain: domain,
+        name: doc.name,
+        description: doc.description,
+        employee_count_range: employee_count_range,
+        founded_year: doc.founded_year,
+        locations: locations,
+        cities: cities,
+        specialties: specialties,
+        skills: skills,
+        website_url: doc.website_url,
+        logo: logo,
+        pending: doc.pending });
       }
       };"
   end
@@ -65,21 +86,26 @@ class Company < CouchRest::Model::Base
     view :skills,
     :map =>
     "function(doc) {
-    if (doc['type'] == 'Company') {
+    if (doc.type == 'Company') {
       var locations = (typeof(doc.locations) != 'undefined' ) ? doc.locations.all : '';
       var logo = (!!doc.s3_logo_url) ? doc.s3_logo_url : '';
-      var partnerships = (typeof(doc.partnerships) != 'undefined' ) ? doc.partnerships : '';
-      if (doc['skills']) {
+      if (doc.skills) {
         doc.skills.forEach(function(skill) {
-          emit(skill, { id: doc._id, name: doc.name, locations: locations, logo: logo, partnerships: partnerships});
-          });
-    }
-    if (doc['specialties']) {
-      doc.specialties.all.forEach(function(specialty) {
-        emit(specialty, { id: doc._id, name: doc.name, locations: locations, logo: logo, partnerships: partnerships});
+          emit(skill, { id: doc._id, name: doc.name, locations: locations, logo: logo});
         });
-    }
-    }
-    }"
+      }
+      if (doc.badges) {
+        Object.keys(doc.badges).forEach(function(badge) {
+          emit(badge, { id: doc._id, name: doc.name, locations: locations, logo: logo});
+        });
+      }
+      if (doc.specialties) {
+        doc.specialties.all.forEach(function(specialty) {
+          emit(specialty, { id: doc._id, name: doc.name, locations: locations, logo: logo});
+        });
+      }
+      }
+    }",
+    :reduce => "_count"
   end
 end

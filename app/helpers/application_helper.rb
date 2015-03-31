@@ -36,11 +36,6 @@ module ApplicationHelper
     Shepherd::Application.config.sites.find{|s| s[:db] == db_name}[:label]
   end
 
-  def hipchat
-    @hipchat ||= HipChat::Client.new(Shepherd::Application.config.hipchat[:token])[Shepherd::Application.config.hipchat[:room]]
-  end
-
-
   def gmail_client
     gmail = Gmail()
     if gmail.expired?

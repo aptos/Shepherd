@@ -30,15 +30,9 @@ Shepherd::Application.configure do
 
   # Adding supported databases
   config.sites = [
-    { db: 'taskitone', label: 'TaskIT'},
-    { db: 'taskit-pro', label: 'Juniper'}
+    { db: 'taskit2015', label: 'TaskIT'},
+    { db: 'taskit-juniper', label: 'Juniper'}
   ]
-
-  # Hipchat API - move to initializer at some point
-  config.hipchat = {
-    room: 855995,
-    token: '1d688676778d81d4f467a37effa029'
-  }
 
   # ahoy application tracking
   config.action_mailer.default_url_options = { host: "localhost:5000" }

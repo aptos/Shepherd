@@ -69,6 +69,8 @@ group :test, :development do
   gem "factory_girl_rails", "~> 4.0"
   gem 'faker'
   gem 'dotenv-rails'
+  gem 'guard'
+  gem 'guard-livereload', require: false
   gem 'pry'
   gem 'pry-byebug'
 end
