@@ -58,7 +58,7 @@
               </select>
             </span>
           </li>
-          <li><span class="label label-primary">Role: {{user.role}}</span></li>
+          <li><span class="label label-primary">Roles: {{user.roles.join(",")}}</span></li>
           <li><span class="label label-default">Visits: {{user.visits}}</span></li>
           <li><span class="label label-info">Last Visit: {{user.last_visit |  moment:'timeago'}}</span</li>
         </ul>
