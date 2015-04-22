@@ -63,5 +63,22 @@ module ApplicationHelper
     projects = site.tasks.summary.rows.select{|r| ['Open','Invitation'].include? r['value']['status'] }
     projects.map{|p| p['value'] }
   end
+end
 
+class Array
+  def simple_csv
+    csv = String.new
+    if self[0].is_a?(Array)
+      self.each do |r|
+        csv += r.simple_csv + "\n"
+      end
+      return csv
+    else
+      ary = self.clone
+      ary.each_with_index {|c,i| ary[i] = ary[i].gsub("'","^") if c.is_a?(String)}
+      ary.each_with_index {|c,i| ary[i] = "'#{c}'" if c.is_a?(String) && c.include?(",") }
+      csv = ary.join(",")
+      return csv.gsub(/\"|nil/, "").gsub("'","\"").gsub("^","'")
+    end
+  end
 end

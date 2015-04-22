@@ -1,16 +1,17 @@
 class User < CouchRest::Model::Base
   property :uid, String
   property :provider, type: String, :default => 'linkedin'
-  property :admin, TrueClass, :default => false, :read_only => true
   property :name, String
   property :positions, Array
+  property :entity, String, :default => "Company"
   property :company, Hash
+  # DANGER!! EMAIL is used as UserID for Invoices
   property :email, type: String
   property :info, Hash
+  property :current_location, Hash
   property :skills, Array
   property :certifications, Array
   property :recommendations, Array
-  property :documents, Hash
   property :s3_img_url, String
   property :current_location, Hash
   property :visits, Integer, default: 1

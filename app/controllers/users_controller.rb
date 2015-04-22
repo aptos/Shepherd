@@ -34,6 +34,25 @@ class UsersController < ApplicationController
     render :json => @users
   end
 
+  def providers
+    @users = site.users.summary.rows.map{|r| r['value']}
+
+    settings = site.settings.by_uid.all
+    keyed_view = Hash.new
+    settings.map{|r| keyed_view[r['uid']] = r}
+
+    @users.delete_if{|u| !keyed_view[u['id']]['roles'].include? 'provider' }
+    @users.map{|u| u['email'] = keyed_view[u['id']]['email'] }
+
+    if params[:format] == "csv"
+      user_map = @users.map{|u| [u['email'], u['name'], u['company']['name']]}
+      user_map.unshift ['email', 'name', 'company']
+      render text: user_map.simple_csv
+    else
+      render :json => @users
+    end
+  end
+
   def show
     user = site.users.find(params[:id])
     unless user
