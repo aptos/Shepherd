@@ -37,9 +37,4 @@ Shepherd::Application.configure do
   # ahoy application tracking
   config.action_mailer.default_url_options = { host: "localhost:5000" }
 
-  # Adding supported databases
-  config.sites = [
-    { db: 'taskit2015', label: 'TaskIT'},
-    { db: 'taskit-juniper', label: 'Juniper'}
-  ]
 end

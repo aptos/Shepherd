@@ -3,7 +3,7 @@ angular.module('shepherd.users',['restangular'])
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     .state('users', {
-      url: '/users',
+      url: '/users/?db',
       views: {
         '': {
           templateUrl: 'users/index.html',
@@ -12,9 +12,11 @@ angular.module('shepherd.users',['restangular'])
       }
     });
   }])
-.controller('UsersCtrl',['$scope','Restangular','logger', function ($scope, Restangular, logger) {
+.controller('UsersCtrl',['$scope','$stateParams','Restangular','logger', function ($scope, $stateParams, Restangular, logger) {
+  $scope.db = $stateParams.db;
+
   var refresh = function () {
-    Restangular.all('users').getList()
+    Restangular.all('users').getList({db: $scope.db})
     .then( function(users) {
       $scope.users = users;
     });
@@ -40,17 +42,6 @@ angular.module('shepherd.users',['restangular'])
       sort.column = column;
       sort.descending = false;
     }
-  };
-
-  $scope.addLead = function () {
-    console.info("Add Lead", $scope.new_lead);
-    $scope.saving = true;
-    Restangular.all('leads').post($scope.new_lead).then( function (lead) {
-      logger.logSuccess(lead.info.name + " has been added");
-      $scope.new_lead = {};
-      refresh();
-      $scope.saving = false;
-    }, function () { $scope.saving = false; logger.logError("Bummer, something went wrong..."); });
   };
 
 }]);

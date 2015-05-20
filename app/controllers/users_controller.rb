@@ -8,29 +8,37 @@ class UsersController < ApplicationController
 
     # add lead
     leads = Hash.new
-    Lead.by_site.key(site_name).map{|r| leads[r[:uid]] = r.to_hash.slice('segment','info')}
+    Lead.by_uid.map{|r| leads[r[:uid]] = r.to_hash.slice('segment','info')}
 
     # add stats
     stats = Hash.new{ |h,k| h[k] = Hash.new(&h.default_proc) }
     site.users.stats.reduce.group_level(2).rows.map{|r| stats[r['key'][0]][r['key'][1]] = r['value'] }
+
     # merge in values
     @users.map do |u|
-      u[:lead] = leads.delete u['id'] # remove found leads from hash
+      u[:lead] = leads[u['id']]
       u[:stats] = stats[u['id']]
     end
 
-    # add in leads who are not yet in users
-    leads.keys.each do |uid|
-      next unless leads[uid]['info']
-      logger.info "Segment: #{uid} - #{leads[uid]['segment']}"
-      company = leads[uid]['info']['company'] rescue ''
-      user = { id: uid, name: leads[uid]['info']['name'], visits: 0, company: { name: company }, lead: { segment: leads[uid]['segment'], info: leads[uid]['info'] }} rescue nil
-      if user.nil?
-      else
-        @users.push(user)
-      end
-    end
+    render :json => @users
+  end
 
+  def summary
+    slug = Site.by_slug.key("taskit2015_#{Rails.env}").first
+    taskit_users = slug.users.summary.rows.map{|r|
+      co = (r['value']['company']) ? r['value']['company']['name'] : ''
+      { id: r['key'], name: r['value']['name'], company: co}
+    }
+
+    # id: user.id, name: user.name, company: user.company.name
+
+    slug = Site.by_slug.key("taskit-juniper_#{Rails.env}").first
+    juniper_users = slug.users.summary.rows.map{|r|
+      co = (r['value']['company']) ? r['value']['company']['name'] : ''
+      { id: r['key'], name: r['value']['name'], company: co}
+    }
+
+    @users = (taskit_users + juniper_users).uniq.sort_by{|u| u['id']}
     render :json => @users
   end
 
@@ -54,12 +62,18 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = site.users.find(params[:id])
+    slug = Site.by_slug.key("taskit2015_#{Rails.env}").first
+    user = slug.users.find(params[:id])
+    unless user
+      slug = Site.by_slug.key("taskit-juniper_#{Rails.env}").first
+      user = slug.users.find(params[:id])
+    end
     unless user
       render :json => { error: "user not found #{params[:id]}"}, status: 404 and return
     end
+    settings = slug.settings.by_uid.key(params[:id]).first
     user['last_visit'] = user.updated_at
-    settings = site.settings.by_uid.key(params[:id]).first
+    user['site'] = slug.name
     user.merge! settings
 
     render :json => user

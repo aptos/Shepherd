@@ -1,4 +1,12 @@
 <div class="page page-dashboard text-center">
-  <div ui-view="worldMap"></div>
-  <div ui-view="taskStats"></div>
+ <label class="ui-radio">
+  <input name="radio1" type="radio" value="taskit2015" ng-model="db" ng-change="refresh()">
+  <span>TaskIT</span>
+</label>
+<label class="ui-radio">
+  <input name="radio1" type="radio" value="taskit-juniper" ng-model="db" ng-change="refresh()">
+  <span>Juniper</span>
+</label>
+<div ui-view="worldMap"></div>
+<div ui-view="taskStats"></div>
 </div>

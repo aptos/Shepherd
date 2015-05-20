@@ -5,36 +5,48 @@ angular.module('shepherd.dashboard',['restangular'])
     .state('dashboard', {
       url: '/',
       views: {
-        '': { templateUrl: 'dashboard/layout.html' },
+        '': {
+          templateUrl: 'dashboard/layout.html',
+          controller: 'DashboardCtrl'
+        },
         'worldMap@dashboard': {
-          templateUrl: 'dashboard/user_map.html',
-          controller: 'UsersMapCtrl'
+          templateUrl: 'dashboard/user_map.html'
         },
         'taskStats@dashboard': {
-          templateUrl: 'dashboard/task_stats.html',
-          controller: 'TasksCtrl'
+          templateUrl: 'dashboard/task_stats.html'
         }
       }
     });
   }])
-.controller('UsersMapCtrl',['$scope','Restangular', 'Storage', function ($scope, Restangular, Storage) {
+.controller('DashboardCtrl',['$scope','Restangular', 'Storage', function ($scope, Restangular, Storage) {
 
   $scope.as_of = "month";
+  $scope.db = (Storage.get('db')) ? Storage.get('db'): "taskit2015";
 
-  Restangular.all('users').getList()
-  .then( function(users) {
-    $scope.users = users;
-    updateUsersMap();
-    $scope.total_users = $scope.users.length;
-    $scope.new_users = users.reduce(function(u, user) { return (moment(user.created_at).isSame(moment(),$scope.as_of)) ? u + 1 : u; }, 0);
-    $scope.visitors = users.reduce(function(u, user) { return (moment(user.updated_at).isSame(moment(),$scope.as_of)) ? u + 1 : u; }, 0);
-  });
+  $scope.refresh = function () {
+    Storage.set('db', $scope.db);
+    Restangular.all('users').getList({db: $scope.db})
+    .then( function(users) {
+      $scope.users = users;
+      updateUsersMap();
+      $scope.total_users = $scope.users.length;
+      $scope.new_users = users.reduce(function(u, user) { return (moment(user.created_at).isSame(moment(),$scope.as_of)) ? u + 1 : u; }, 0);
+      $scope.visitors = users.reduce(function(u, user) { return (moment(user.updated_at).isSame(moment(),$scope.as_of)) ? u + 1 : u; }, 0);
+    });
 
-  Restangular.all('companies/locations').getList()
-  .then( function(companies) {
-    $scope.companies = companies;
-    updateCompanyMap();
-  });
+    Restangular.all('companies/locations').getList({db: $scope.db})
+    .then( function(companies) {
+      $scope.companies = companies;
+      updateCompanyMap();
+    });
+
+    Restangular.one('tasks/stats').get({db: $scope.db})
+    .then( function(stats) {
+      $scope.stats = stats;
+    });
+  };
+
+  $scope.refresh();
 
   // Initialize map
   var marker_data;
@@ -89,12 +101,4 @@ angular.module('shepherd.dashboard',['restangular'])
     });
     $scope.markers = marker_data;
   };
-}])
-.controller('TasksCtrl',['$scope','Restangular', function ($scope, Restangular) {
-  $scope.as_of = "month";
-
-  Restangular.one('tasks/stats').get()
-  .then( function(stats) {
-    $scope.stats = stats;
-  });
 }]);

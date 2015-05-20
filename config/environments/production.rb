@@ -92,18 +92,6 @@ Shepherd::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  # Adding supported databases
-  config.sites = [
-    { db: 'taskit2015', label: 'TaskIT'},
-    { db: 'taskit-juniper', label: 'Juniper'}
-  ]
-
-  # Hipchat API - move to initializer at some point
-  config.hipchat = {
-    room: 855995,
-    token: '1d688676778d81d4f467a37effa029'
-  }
-
   # ahoy application tracking
   config.action_mailer.default_url_options = { host: "taskit-crm.herokuapp.com" }
 end

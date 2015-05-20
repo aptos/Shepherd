@@ -3,12 +3,15 @@ class LeadsController < ApplicationController
 
   respond_to :json
 
+  def index
+    @leads = Lead.info.values
+
+    render :json => @leads
+  end
+
   ## NOTE: lead access is always by UID, which maps to User model email
   def show
     lead = Lead.by_uid.key(params[:uid]).first
-
-    Rails.logger.info "Here is your lead: #{lead.inspect}"
-
     render :json => lead
   end
 
@@ -20,7 +23,6 @@ class LeadsController < ApplicationController
 
     lead = Lead.new(
       uid: new_lead[:email],
-      site: site_name,
       info: new_lead[:info]
     )
     lead.save!

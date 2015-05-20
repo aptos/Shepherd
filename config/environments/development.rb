@@ -28,12 +28,6 @@ Shepherd::Application.configure do
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
 
-  # Adding supported databases
-  config.sites = [
-    { db: 'taskit2015', label: 'TaskIT'},
-    { db: 'taskit-juniper', label: 'Juniper'}
-  ]
-
   # ahoy application tracking
   config.action_mailer.default_url_options = { host: "localhost:5000" }
 end

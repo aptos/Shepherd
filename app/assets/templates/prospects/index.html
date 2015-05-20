@@ -1,0 +1,77 @@
+<div class="container">
+  <section class="panel panel-default center-block users-report">
+    <div class="panel-heading text-left">
+      <strong><i class="fa fa-user fa-lg"></i> Prospects</strong>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" ng-model="query" />
+            </div>
+          </form>
+          <div class="form-group dropdown add-user">
+            <a href="javascript:;" class="btn-icon btn-icon-round bg-success dropdown-toggle" ng-class="{'dim': !query.length}" data-toggle="dropdown">
+              <span class="fa fa-plus" style="padding-left: 1px;"></span>
+            </a>
+            <div class="dropdown-menu with-arrow panel panel-default add-user-form" ui-not-close-on-click>
+              <form name="newLead" class="form-validation">
+                <div class="panel-heading">
+                  <span>Add Lead</span>
+                  <span class="pull-right">
+                    <button type="submit" class="btn btn-success btn-w-sm" data-ng-disabled="newLead.$invalid" ng-click="addLead()">Add</button>
+                  </span>
+                </div>
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <input ng-model="new_lead.info.name" type="text" class="form-control" placeholder="Buddy Gonzo" required>
+                  </li>
+                  <li class="list-group-item">
+                    <input ng-model="new_lead.email" type="email" class="form-control" placeholder="buddy@big.new" required>
+                  </li>
+                  <li class="list-group-item">
+                    <input ng-model="new_lead.info.company" type="text" class="form-control" placeholder="Gonzo Inc.">
+                  </li>
+                  <li class="list-group-item">
+                    <input ng-model="new_lead.info.title" type="text" class="form-control" placeholder="Head Honcho at Gonzo">
+                  </li>
+                  <li class="list-group-item">
+                    <input ng-model="new_lead.info.phone" type="text" class="form-control" placeholder="(415) 555-1212">
+                  </li>
+                </ul>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <h4>
+            <a>{{(prospects | filter:query).length}} prospects</a>
+          </h4>
+        </div>
+      </div>
+      <div class="row">
+        <table class="table table-hover table-responsive-rows sortable user-table">
+          <thead>
+            <tr>
+              <th class="row-name" ng-click="changeSorting('email')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('email')]">Email</th>
+              <th class="row-name" ng-click="changeSorting('name')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('name')]">Prospect</th>
+              <th class="row-name" ng-click="changeSorting('company')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('company')]">Company</th>
+              <th class="row-name" ng-click="changeSorting('segment')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('segment')]">Segment</th>
+              <th class="row-name" ng-click="changeSorting('updated_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('updated_at')]">Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="prospect in prospects | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: prospect.email})">
+              <td name="Email">{{prospect.email}}</td>
+              <td name="Name">{{prospect.name}}</td>
+              <td name="Company">{{prospect.company}}</td>
+              <td name="Segment" >{{prospect.segment}}</td>
+              <td name="Updated" >{{prospect.updated_at | moment:dateformat}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

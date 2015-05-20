@@ -14,3 +14,19 @@ class  CouchRest::Model::Designs::View
     self.rows.map{|r| r['value'] }
   end
 end
+
+
+# Adding supported databases
+Shepherd::Application.configure do
+  config.sites = [
+    { db: 'taskit2015', label: 'TaskIT'},
+    { db: 'taskit-juniper', label: 'Juniper'}
+  ]
+end
+
+Shepherd::Application.config.sites.each do |site|
+  Rails.logger.info "****  Creating db slug for #{site[:label]}"
+  slug = Site.by_slug.key("#{site[:db]}_#{Rails.env}").first
+  slug ||= Site.create(slug: "#{site[:db]}_#{Rails.env}", name: site[:label] )
+end
+

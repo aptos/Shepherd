@@ -22,12 +22,10 @@ module ApplicationHelper
   end
 
   def site
-    db_name = cookies[:site] || Shepherd::Application.config.sites.first[:db]
-    Rails.logger.info "DB: #{db_name}"
-    unless @site
-      @site = Site.by_slug.key("#{db_name}_#{Rails.env}").first
-      @site ||= Site.create(slug: "#{db_name}_#{Rails.env}" )
-    end
+    @db_name = params[:db]
+    @db_name ||= Shepherd::Application.config.sites.first[:db]
+    @site = Site.by_slug.key("#{@db_name}_#{Rails.env}").first
+    Rails.logger.info "Site: #{@site.name}"
     @site
   end
 

@@ -16,9 +16,10 @@
         <div class="collapse navbar-collapse" collapse="navbarCollapsed">
           <ul class="nav navbar-nav nav-left">
             <li ui-sref-active="active"><a ui-sref="dashboard">Dashboard</a></li>
-            <li ui-sref-active="active"><a ui-sref="users">Users</a></li>
+            <li ui-sref-active="active"><a ui-sref="users({db:'taskit2015'})">TaskIT</a></li>
+            <li ui-sref-active="active"><a ui-sref="users({db:'taskit-juniper'})">Juniper</a></li>
+            <li ui-sref-active="active"><a ui-sref="prospects">Prospects</a></li>
             <li ui-sref-active="active"><a ui-sref="messages">Messages</a></li>
-            <li ui-sref-active="active"><a ui-sref="campaigns">Campaigns</a></li>
             <li class="search-box visible-md visible-lg">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
@@ -55,19 +56,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown text-normal" ng-controller="SiteCtrl">
-                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                  <div>{{siteNames[site]}}</div>
-                </a>
-                <ul class="dropdown-menu with-arrow pull-right" role="menu">
-                  <% Shepherd::Application.config.sites.each do |site| %>
-                  <li ng-hide="site == '<%= site[:db] %>'">
-                    <a href="javascript:;" ng-click="setSite('<%= site[:db] %>')"><%= site[:label] %></a>
-                  </li>
-                  <% end %>
-                </ul>
                 <li ui-sref-active="active"><a ui-sref="signout">Sign Out</a></li>
               </ul>
-
             </div>
           </div>
         </nav>

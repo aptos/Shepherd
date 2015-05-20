@@ -3,7 +3,7 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
   function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     .state('profile', {
-      url: '/users/:id?site',
+      url: '/users/:id?db',
       views: {
         '': {
           templateUrl: 'users/profile.html',
@@ -35,18 +35,11 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
   }])
 .controller('UserCtrl',['$scope','$rootScope','$stateParams','Restangular','logger', function ($scope, $rootScope, $stateParams, Restangular, logger) {
   var id = $stateParams.id;
-
-  if (!!$stateParams.site && $stateParams.site != $rootScope.site) {
-    console.info("Changing site to: ",$stateParams.site)
-    Restangular.one('site').get({site: $stateParams.site}).then( function (resp) {
-      $rootScope.site = resp.site;
-      $rootScope.$broadcast('site:changed');
-    }, function () { console.error(resp); });
-  }
+  var db = $stateParams.db;
 
   $scope.segments = ['Sales Followup','Provider Onboard','Onboard','Qualify','Educate','Close','Nurture'];
 
-  Restangular.one('users',id).get()
+  Restangular.one('users',id).get({db: db})
   .then( function(user) {
     $scope.user = user;
     getLocation(user);
@@ -119,7 +112,7 @@ angular.module('shepherd.profile',['restangular','ui.bootstrap'])
     if (!user) return;
     if (!!user.latLong) {
       $scope.latLong = user.latLong;
-      $scope.address = user.contact.address;
+      $scope.address = user.address;
     } else if(!!user.current_location) {
       $scope.latLong = user.current_location.latLong;
       $scope.address = user.current_location.address;

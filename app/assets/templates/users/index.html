@@ -11,37 +11,6 @@
               <input type="text" class="form-control" placeholder="Search" ng-model="query" />
             </div>
           </form>
-          <div class="form-group dropdown add-user">
-            <a href="javascript:;" class="btn-icon btn-icon-round bg-success dropdown-toggle" ng-class="{'dim': !query.length}" data-toggle="dropdown">
-              <span class="fa fa-plus" style="padding-left: 1px;"></span>
-            </a>
-            <div class="dropdown-menu with-arrow panel panel-default add-user-form" ui-not-close-on-click>
-              <form name="newLead" class="form-validation">
-                <div class="panel-heading">
-                  <span>Add Lead</span>
-                  <span class="pull-right">
-                  <button type="submit" class="btn btn-success btn-w-sm" data-ng-disabled="newLead.$invalid" ng-click="addLead()">Add</button>
-                </span>
-              </div>
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <input ng-model="new_lead.info.name" type="text" class="form-control" placeholder="Buddy Gonzo" required>
-                </li>
-                <li class="list-group-item">
-                  <input ng-model="new_lead.email" type="email" class="form-control" placeholder="buddy@big.new" required>
-                </li>
-                <li class="list-group-item">
-                  <input ng-model="new_lead.info.company" type="text" class="form-control" placeholder="Gonzo Inc.">
-                </li>
-                <li class="list-group-item">
-                  <input ng-model="new_lead.info.title" type="text" class="form-control" placeholder="Head Honcho at Gonzo">
-                </li>
-                <li class="list-group-item">
-                  <input ng-model="new_lead.info.phone" type="text" class="form-control" placeholder="(415) 555-1212">
-                </li>
-              </ul>
-            </form>
-          </div>
         </div>
       </div>
       <div class="col-sm-3">
@@ -49,40 +18,39 @@
           <a>{{(users | filter:query).length}} users</a>
         </h4>
       </div>
+      <div class="row">
+        <table class="table table-hover table-responsive-rows sortable user-table">
+          <thead>
+            <tr>
+              <th class="row-name" ng-click="changeSorting('name')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('name')]">User</th>
+              <th class="row-name" ng-click="changeSorting('lead.segment')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('lead.segment')]">Segment</th>
+              <th class="row-name" ng-click="changeSorting('visits')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('visits')]">Visits</th>
+              <th class="row-name" ng-click="changeSorting('updated_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('updated_at')]">Last Visit</th>
+              <th class="row-name" ng-click="changeSorting('created_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('created_at')]">Joined</th>
+              <th class="row-name">
+                <span ng-click="changeSorting('stats.tasks')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('stats.tasks')]">Projects</span>/
+                <span ng-click="changeSorting('stats.bids')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('stats.bids')]">Bids</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: user.id, db: db})">
+              <td name="Name">{{user.name}}
+                <br />
+                <a ng-href="{{user.company['website']}}">{{user.company['name']}}</a>
+              </td>
+              <td name="Segment" >{{user.lead.segment}}</td>
+              <td name="Visits" >{{user.visits}}</td>
+              <td name="Last Visit" >{{user.updated_at | moment:dateformat}}</td>
+              <td name="Joined" >{{user.created_at | moment:dateformat}}</td>
+              <td name="Projects/Bids" >
+                <span ng-show="user.stats.tasks || user.stats.bids">{{user.stats.tasks || 0}}/{{user.stats.bids || 0}}</span>
+                <span ng-hide="user.stats.tasks || user.stats.bids"> - </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="row">
-      <table class="table table-hover table-responsive-rows sortable user-table">
-        <thead>
-          <tr>
-            <th class="row-name" ng-click="changeSorting('name')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('name')]">User</th>
-            <th class="row-name" ng-click="changeSorting('lead.segment')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('lead.segment')]">Segment</th>
-            <th class="row-name">
-              <span ng-click="changeSorting('stats.tasks')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('stats.tasks')]">Projects</span>/
-              <span ng-click="changeSorting('stats.bids')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('stats.bids')]">Bids</span>
-            </th>
-            <th class="row-name" ng-click="changeSorting('visits')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('visits')]">Visits</th>
-            <th class="row-name" ng-click="changeSorting('updated_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('updated_at')]">Last Visit</th>
-            <th class="row-name" ng-click="changeSorting('created_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('created_at')]">Joined</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: user.id})">
-            <td name="Name">{{user.name}}
-              <br />
-              <a ng-href="{{user.company['website']}}">{{user.company['name']}}</a>
-            </td>
-            <td name="Segment" >{{user.lead.segment}}</td>
-            <td name="Projects/Bids" >
-              <span ng-show="user.stats.tasks || user.stats.bids">{{user.stats.tasks || 0}}/{{user.stats.bids || 0}}</span>
-              <span ng-hide="user.stats.tasks || user.stats.bids"> - </span>
-            </td>
-            <td name="Visits" >{{user.visits}}</td>
-            <td name="Last Visit" >{{user.updated_at | moment:dateformat}}</td>
-            <td name="Joined" >{{user.created_at | moment:dateformat}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
+  </section>
 </div>

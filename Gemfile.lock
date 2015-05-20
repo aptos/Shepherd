@@ -200,13 +200,8 @@ GEM
       multi_json (~> 1.8)
     hashie (3.3.1)
     hike (1.2.3)
-    hipchat (1.4.0)
-      httparty
     hitimes (1.2.2)
     http_parser.rb (0.6.0)
-    httparty (0.13.2)
-      json (~> 1.8)
-      multi_xml (>= 0.5.2)
     i18n (0.6.11)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
@@ -363,7 +358,6 @@ DEPENDENCIES
   foreman
   guard
   guard-livereload
-  hipchat
   jquery-rails
   memcachier
   omniauth
