@@ -77,8 +77,8 @@
           <div ui-view="gmail"></div>
         </tab>
         <tab class="pointer">
-          <tab-heading>
-          <i class="fa fa-rocket"></i> Activity
+          <tab-heading ng-controller="ActivityCtrl">
+          <i class="fa fa-rocket"></i> Activity <span class="badge badge-danger" ng-show="!!activities.length">{{activities.length}}</span>
         </tab-heading>
         <div ui-view="activity"></div>
       </tab>

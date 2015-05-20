@@ -23,7 +23,7 @@
           <thead>
             <tr>
               <th class="row-name" ng-click="changeSorting('name')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('name')]">User</th>
-              <th class="row-name" ng-click="changeSorting('lead.segment')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('lead.segment')]">Segment</th>
+              <th class="row-name" ng-click="changeSorting('lead.segment')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('lead.segment')]">Segments</th>
               <th class="row-name" ng-click="changeSorting('visits')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('visits')]">Visits</th>
               <th class="row-name" ng-click="changeSorting('updated_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('updated_at')]">Last Visit</th>
               <th class="row-name" ng-click="changeSorting('created_at')" ng-class="{'sort-true': 'sort-desc', 'sort-false': 'sort-asc'}[selectedCls('created_at')]">Joined</th>
@@ -39,7 +39,7 @@
                 <br />
                 <a ng-href="{{user.company['website']}}">{{user.company['name']}}</a>
               </td>
-              <td name="Segment" >{{user.lead.segment}}</td>
+              <td name="Segments" >{{user.segments.join(', ')}}</td>
               <td name="Visits" >{{user.visits}}</td>
               <td name="Last Visit" >{{user.updated_at | moment:dateformat}}</td>
               <td name="Joined" >{{user.created_at | moment:dateformat}}</td>

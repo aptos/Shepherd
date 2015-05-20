@@ -2,34 +2,28 @@ class Task < CouchRest::Model::Base
   property :_id, String
   property :owner, String
   property :owner_name, String
-  property :owner_email, String
   property :owner_title, String
+  property :team, Array
   property :company, String
   property :title, String
   property :description, String
-  property :bids_due, type: Date
+  property :service_id, String
   property :start_date, type: Date
-  property :due_date, type: Date
-  property :budget, Integer
-  property :budget_type, String
-  property :site, String
   property :location, String
   property :latLong, Array
   property :tags, Array
-  property :status, String
-  property :documents, Hash
+  property :status, String, :default => "Open"
   property :attachments, Hash
   property :accepted_bid, String
   property :bid_owner, String
   property :bid_owner_name, String
   property :work_order_id, String
-  property :bounty, Integer
   property :views, Integer, :default => 0
   property :edited_at, Time, :default => Time.now
 
   timestamps!
 
-  # proxied_by :site
+  proxied_by :site
 
   design do
     view :summary,

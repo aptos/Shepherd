@@ -14,10 +14,21 @@ class UsersController < ApplicationController
     stats = Hash.new{ |h,k| h[k] = Hash.new(&h.default_proc) }
     site.users.stats.reduce.group_level(2).rows.map{|r| stats[r['key'][0]][r['key'][1]] = r['value'] }
 
-    # merge in values
+    # add settings provider role
+    provider = Hash.new
+    site.settings.by_uid.all.map{|r| provider[r['uid']] = r['roles'].include?('provider') }
+
+    # create segments array
     @users.map do |u|
       u[:lead] = leads[u['id']]
       u[:stats] = stats[u['id']]
+      u[:segment] = u[:lead]['segment'] if u[:lead]
+      u[:segments] = []
+      u[:segments].push u[:lead]['segment'] if u[:lead]
+      u[:segments].push "Provider" if provider[u['id']]
+      u[:role] = "Provider" if provider[u['id']]
+      u[:active] = "Active" if u['visits'] > 5
+      u[:new] = "New" if u['created_at'].to_date > 30.days.ago
     end
 
     render :json => @users
@@ -81,7 +92,23 @@ class UsersController < ApplicationController
 
   def activity
     key = params[:id]
-    @activities = site.users.activity.startkey([key]).endkey([key,{},{},{}]).rows
+
+    slug = Site.by_slug.key("taskit2015_#{Rails.env}").first
+    taskit_tasks = slug.users.activity.startkey([key]).endkey([key,{},{},{}]).rows
+    taskit_tasks.map{|t|
+      type = (t['key'][2] == 'Bid') ? "projects/proposals" : "projects"
+      t['url'] = "https://www.taskit.io/#{type}/show/#{t['id']}"
+    }
+
+    slug = Site.by_slug.key("taskit-juniper_#{Rails.env}").first
+    juniper_tasks = slug.users.activity.startkey([key]).endkey([key,{},{},{}]).rows
+    juniper_tasks.map{|t|
+      type = (t['key'][2] == 'Bid') ? "projects/proposals" : "projects"
+      t['url'] = "https://juniper.taskit.io/#{type}/show/#{t['id']}"
+    }
+
+    @activities = taskit_tasks + juniper_tasks
+
     @activities = [] unless @activities
 
     render :json => @activities

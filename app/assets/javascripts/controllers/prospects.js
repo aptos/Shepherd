@@ -12,7 +12,7 @@ angular.module('shepherd.prospects',['restangular'])
       }
     });
   }])
-.controller('ProspectsCtrl',['$scope','$stateParams','Restangular', function ($scope, $stateParams, Restangular) {
+.controller('ProspectsCtrl',['$scope','$stateParams','Restangular','logger', function ($scope, $stateParams, Restangular,logger) {
   var db = $stateParams.db;
 
   var refresh = function () {
@@ -26,8 +26,8 @@ angular.module('shepherd.prospects',['restangular'])
   $scope.dateformat = 'timeago';
 
   $scope.sort = {
-    column: 'updated_at',
-    descending: true
+    column: 'email',
+    descending: false
   };
 
   $scope.selectedCls = function(column) {
