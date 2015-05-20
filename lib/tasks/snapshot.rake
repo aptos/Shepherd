@@ -2,7 +2,6 @@ require 'restclient'
 require 'json'
 require 'couchrest'
 require 'couchrest_model'
-require 'pry'
 
 task :default => ':snapshot'
 namespace :db do
