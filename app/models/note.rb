@@ -4,6 +4,7 @@ class Note < CouchRest::Model::Base
   property :uid, String
   property :site, String
   property :owner, String
+  property :company, String
   property :details, String
   property :due_date, Date
   property :completed, TrueClass, :default => false

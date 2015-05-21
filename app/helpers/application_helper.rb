@@ -44,6 +44,11 @@ module ApplicationHelper
     gmail
   end
 
+  # Send announcements to slack
+  def slack
+    @slack ||= Slack::Notifier.new Shepherd::Application.config.slack_api[:url], channel: Shepherd::Application.config.slack_api[:channel]
+  end
+
   def recent_users days, db_name
     site = Site.by_slug.key("#{db_name}_#{Rails.env}").first
     last_week = Date.today - days.to_i

@@ -94,4 +94,10 @@ Shepherd::Application.configure do
 
   # ahoy application tracking
   config.action_mailer.default_url_options = { host: "taskit-crm.herokuapp.com" }
+
+  # Slack API
+  config.slack_api = {
+    url: 'https://hooks.slack.com/services/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',
+    channel: '#analytics'
+  }
 end

@@ -14,6 +14,13 @@ class NotesController < ApplicationController
     @note.owner = current_user.email
     @note.save!
 
+    if @note.due_date == Date.today
+      msg = "Msg for #{@note.owner} from Shepherd:\n"
+      msg += "<a href='https://taskit-crm.herokuapp.com/users/#{@note.uid}'>#{@note.name} - #{@note.company}</a>\n"
+      msg += @note.details
+      slack.ping msg, channel: '#app_important'
+    end
+
     render :json => @note
   end
 

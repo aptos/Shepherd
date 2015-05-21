@@ -37,7 +37,10 @@
                 </div>
                 <ul class="list-group">
                   <li class="list-group-item"  ng-repeat="task in reminders | orderBy: ['due_date','updated_at']" ng-click="$state.go('profile', {id: task.uid, site: task.site})">
-                    <h5>{{task.name}}</h5>
+                    <h5>
+                      {{task.name}} <span ng-show="task.company">- <i>{{task.company}}</i></span>
+                    </h5>
+
                     <div class="media">
                       <span class="pull-left media-left media-icon">
                         <span class="btn-icon btn-icon-round" ng-class="{true:'btn-primary', false: 'btn-warning'}[is_due(task.due_date)]">

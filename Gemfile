@@ -39,6 +39,9 @@ gem 'faraday', '>= 0.9.0'
 # email tracking
 gem 'ahoy_email', path: 'lib/ahoy_email'
 
+# slack integration
+gem 'slack-notifier'
+
 # javascript assets
 gem 'underscore-rails'
 
