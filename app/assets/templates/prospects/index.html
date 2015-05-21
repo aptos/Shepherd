@@ -63,11 +63,11 @@
           </thead>
           <tbody>
             <tr ng-repeat="prospect in prospects | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: prospect.email})">
-              <td name="Email">{{prospect.email}}</td>
-              <td name="Name">{{prospect.name}}</td>
-              <td name="Company">{{prospect.company}}</td>
-              <td name="Segment" >{{prospect.segment}}</td>
-              <td name="Updated" >{{prospect.updated_at | moment:dateformat}}</td>
+              <td name="Email">{{::prospect.email}}</td>
+              <td name="Name">{{::prospect.name}}</td>
+              <td name="Company">{{::prospect.company}}</td>
+              <td name="Segment" >{{::prospect.segment}}</td>
+              <td name="Updated" >{{::prospect.updated_at | moment:dateformat}}</td>
             </tr>
           </tbody>
         </table>

@@ -55,18 +55,9 @@ angular.module('shepherd.gmail', ['ngSanitize'])
 
   $scope.template_names = [
   'CEO Welcome - A',
-  'CEO Welcome - B',
   'Concierge Welcome - A',
-  'Concierge Welcome - B',
-  'Sales Welcome - A',
-  'Sales Welcome - B',
-  'Provider Invite',
-  'Provider Educate - Invite Team',
-  'First Followup - Onboard',
-  'First Followup - Educate',
-  'Pimp Your Profile',
-  'Thanks - Client',
-  'Thanks - Provider'
+  'Followup - Educate',
+  'Project Invitation'
   ];
 
   var updateTemplates = function () {

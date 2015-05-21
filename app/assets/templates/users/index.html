@@ -35,16 +35,16 @@
           </thead>
           <tbody>
             <tr ng-repeat="user in users | filter:query | orderBy:sort.column:sort.descending" ng-click="$state.go('profile', {id: user.id, db: db})">
-              <td name="Name">{{user.name}}
+              <td name="Name">{{::user.name}}
                 <br />
-                <a ng-href="{{user.company['website']}}">{{user.company['name']}}</a>
+                <a ng-href="{{user.company['website']}}">{{::user.company['name']}}</a>
               </td>
-              <td name="Segments" >{{user.segments.join(', ')}}</td>
-              <td name="Visits" >{{user.visits}}</td>
-              <td name="Last Visit" >{{user.updated_at | moment:dateformat}}</td>
-              <td name="Joined" >{{user.created_at | moment:dateformat}}</td>
+              <td name="Segments" >{{::user.segments.join(', ')}}</td>
+              <td name="Visits" >{{::user.visits}}</td>
+              <td name="Last Visit" >{{::user.updated_at | moment:dateformat}}</td>
+              <td name="Joined" >{{::user.created_at | moment:dateformat}}</td>
               <td name="Projects/Bids" >
-                <span ng-show="user.stats.tasks || user.stats.bids">{{user.stats.tasks || 0}}/{{user.stats.bids || 0}}</span>
+                <span ng-show="user.stats.tasks || user.stats.bids">{{::user.stats.tasks || 0}}/{{::user.stats.bids || 0}}</span>
                 <span ng-hide="user.stats.tasks || user.stats.bids"> - </span>
               </td>
             </tr>
