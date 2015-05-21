@@ -4,6 +4,11 @@
       <section class="panel panel-default">
         <div class="panel-heading">
           <strong><span class="fa fa-signal"></span> Templates Success</strong>
+          <span style="padding-left: 30px">
+            <a class="btn-icon btn-icon-round btn-info compose pointer" title="New Template" ng-click="view('New Template')">
+              <i class="fa fa-plus"></i>
+            </a>
+          </span>
           <span class="refresh pull-right" ng-click="refresh()"><i class="fa fa-refresh fa-btn" ng-class="{'fa-spin':refreshing}"></i></span>
         </div>
         <div class="panel-body">
@@ -14,7 +19,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat-start="template in messages.template_stats | orderBy:name" ng-click="view(template.name)" class="alert-info pointer">
+              <tr ng-repeat-start="template in messages.template_stats" ng-click="view(template.name)" class="alert-info pointer">
                 <td>{{template.name}}</td>
                 <td>{{template.stats[0]}}</td>
                 <td>{{template.stats[1]}}</td>
@@ -37,7 +42,12 @@
 
       <section class="panel panel-default panel-overlay" ng-class="{'open': !!show_message}">
         <div class="panel-heading">
-          <strong>{{template.name}}</strong>
+          <span ng-hide="!!template._id">
+            <input type="text" class="form-control" ng-model="template.name" style="max-width: 300px;" >
+          </span>
+          <span ng-show="!!template._id">
+            <strong>{{template.name}}</strong>
+          </span>
           <span class="pull-right pointer" ng-click="close()"><i class="fa fa-times close"></i></span>
         </div>
         <div><small>updated: {{template.updated_at | moment:'timeago'}}</small></div>
@@ -51,6 +61,7 @@
               <div class="col-xs-10">
                 Subject:
                 <input type="text" class="form-control" ng-model="template.subject">
+                <strong>Be sure to <a href="http://www.aminstitute.com/cgi-bin/headline.cgi" target="_blank">test your subject</a></strong>
               </div>
             </div>
             <div class="body">

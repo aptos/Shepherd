@@ -61,10 +61,10 @@ angular.module('shepherd.gmail', ['ngSanitize'])
   ];
 
   var updateTemplates = function () {
-    console.info("Update Templates")
     Restangular.one('gmail/templates').get().then( function (templates) {
       $scope.templates = templates;
-    }, function () { console.error('Oops!'); })
+      $scope.template_names = _.uniq(_.pluck(templates,'name'));
+    }, function () { console.error('Oops!'); });
   };
   updateTemplates();
 

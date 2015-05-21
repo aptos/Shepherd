@@ -8,7 +8,7 @@
   <div class="panel-body">
     <div class="text-center"><span ng-show="!!email_update"><i class="fa fa-spinner fa-spin"></i></span></div>
     <ul class="activity-list list-unstyled">
-      <li ng-repeat="item in messages | orderBy:'date'" >
+      <li ng-repeat="item in messages | orderBy:'date':true" >
         <div class="activity-date">{{item.date | moment:'timeago'}}</div>
         <div class="view pointer" ng-class="{true:'text-primary', false:''}[hasLabel(item,'INBOX')]" ng-click="!hasLabel(item,'SUMMARY') && read(item.id)">
           <div class="label label-info" ng-show="hasLabel(item,'SUMMARY')">{{item.from}}</div>

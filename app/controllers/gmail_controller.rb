@@ -17,11 +17,11 @@ class GmailController < ApplicationController
     if params['q']
       summary = Ahoy::Message.summary.key(params['q']).as_hash('mailservice_id')
       @list['messages'].map do |m|
+        m['date'] = m['date'].to_time
         if values = summary[m['id']]
           m['labelIds'] ||= []
           m['labelIds'] << 'UNREAD' unless values['opened_at']
           m['timestamps'] = [values['opened_at'], values['clicked_at']]
-
           summary.delete m['id']
         end
       end
@@ -30,19 +30,22 @@ class GmailController < ApplicationController
       if summary.length
         summary.values.each do |message|
           m = {
-            id: message['mailservice_id'],
-            labelIds: ["SENT","SUMMARY"],
-            date: message["sent_at"],
-            subject: message['subject'],
-            from: message['from']
+            'id' => message['mailservice_id'],
+            'labelIds' => ["SENT","SUMMARY"],
+            'date' => message["sent_at"],
+            'subject' => message['subject'],
+            'from' => message['from']
           }
-          m[:labelIds] << 'UNREAD' unless message['opened_at']
-          m[:labelIds] << 'CLICKED' if message['clicked_at']
-
+          m['labelIds'] << 'UNREAD' unless message['opened_at']
+          m['labelIds'] << 'CLICKED' if message['clicked_at']
+          m['date'] = m['date'].to_time if m['date']
           @list['messages'] << m
         end
       end
     end
+
+    # normalize dates
+    # @list['messages'].map{|m| m['date'] = m['date'].to_time }
 
     render :json => @list
   end

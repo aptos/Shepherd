@@ -25,7 +25,7 @@ module ApplicationHelper
     @db_name = params[:db]
     @db_name ||= Shepherd::Application.config.sites.first[:db]
     @site = Site.by_slug.key("#{@db_name}_#{Rails.env}").first
-    Rails.logger.info "Site: #{@site.name}"
+    # Rails.logger.info "Site: #{@site.name}"
     @site
   end
 

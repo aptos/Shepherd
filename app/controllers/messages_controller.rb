@@ -28,6 +28,10 @@ class MessagesController < ApplicationController
       @stats[:template_stats].push({ name: name, stats: stats, messages: messages })
     end
 
+    sent_templates = @stats[:template_stats].map{|t| t[:name]}.uniq
+    all_templates =  EmailTemplate.by_name.all.map{|t| t[:name]}.uniq
+    (all_templates - sent_templates).map{|t| @stats[:template_stats].push({ name: t, stats: [0,0,0], messages: [] }) }
+
     render :json => @stats
   end
 
