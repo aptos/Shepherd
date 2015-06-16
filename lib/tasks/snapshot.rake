@@ -6,6 +6,7 @@ require 'couchrest_model'
 task :default => ':snapshot'
 namespace :db do
 
+  @timestamp = Time.now.strftime('%Y%m%d')
 
   desc "backup database"
   task :snapshot do

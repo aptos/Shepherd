@@ -35,6 +35,19 @@ class MessagesController < ApplicationController
     render :json => @stats
   end
 
+  def at_subject
+    template = params[:template]
+    subject = params[:subject]
+
+    unless template && subject
+      render :json => { error: "template and subject parameters required" }, :status => 400 and return
+    end
+    @messages = Ahoy::Message.by_template_and_subject.startkey([template,subject]).endkey([template,subject,{}]).all
+    @messages = @messages.map{|m| m.to_hash.slice("to","from","sent_at","opened_at","clicked_at")}
+
+    render :json=> @messages
+  end
+
   def template
     name = params[:name]
     template = EmailTemplate.by_name.key(name).first

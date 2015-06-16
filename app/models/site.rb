@@ -7,6 +7,7 @@ class Site < CouchRest::Model::Base
   proxy_for :tasks
   proxy_for :companies
   proxy_for :campaigns
+  proxy_for :analytics
 
   design do
     view :by_slug

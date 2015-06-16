@@ -7,65 +7,69 @@ Shepherd::Application.routes.draw do
   get '/signin/:provider' => 'sessions#new'
   get '/signout' => 'sessions#destroy'
   get '/auth/failure' => 'pages#index'
-  get '/api/me' => 'sessions#me'
 
-  # Api Access for our app
-  #
-  get '/api/signout' => 'sessions#destroy'
-  # Multi-db site selection
-  match '/api/site' => 'sessions#change_site', via: [:get, :post]
+  scope '/api' do
 
-  # Top level reports
-  get '/reports/recent' => 'reports#recent'
-  get '/api/messages' => 'messages#index'
-  get '/api/messages/template' => 'messages#template'
-  post '/api/messages/template' => 'messages#update_template'
+    # Api Access for our app
+    #
+    get '/me' => 'sessions#me'
+    get '/signout' => 'sessions#destroy'
 
-  # Users
-  get '/api/users' => 'users#index'
-  get '/api/users/summary' => 'users#summary'
-  get '/api/users/:id' => 'users#show', :constraints => { :id => /[^\/]*/ }
-  get '/api/users/:id/activity' => 'users#activity', :constraints => { :id => /[^\/]*/ }
-  get '/api/providers' => 'users#providers'
+    # Top level reports
+    get '/analytics/search' => 'analytics#search'
+    get '/analytics/views' => 'analytics#views'
+    get '/reports/recent' => 'reports#recent'
+    get '/messages' => 'messages#index'
+    get '/messages/template' => 'messages#template'
+    post '/messages/template' => 'messages#update_template'
+    get '/messages/at_subject' => 'messages#at_subject'
 
-  # Lead, local version of User
-  get '/api/leads' => 'leads#index'
-  get '/api/leads/:uid' => 'leads#show', :constraints => { :uid => /[^\/]*/ }
-  post '/api/leads' => 'leads#create'
-  post '/api/leads/:uid' => 'leads#update', :constraints => { :uid => /[^\/]*/ }
+    # Users
+    get '/users' => 'users#index'
+    get '/users/summary' => 'users#summary'
+    get '/users/:id' => 'users#show', :constraints => { :id => /[^\/]*/ }
+    get '/users/:id/activity' => 'users#activity', :constraints => { :id => /[^\/]*/ }
+    get '/providers' => 'users#providers'
 
-  # Notes
-  get '/api/leads/:uid/notes' => 'leads#notes', :constraints => { :uid => /[^\/]*/ }
-  get '/api/notes' => 'notes#reminders'
-  post '/api/notes' => 'notes#create', :constraints => { :uid => /[^\/]*/ }
-  post '/api/notes/:id' => 'notes#update'
-  delete '/api/notes/:id' => 'notes#destroy'
+    # Lead, local version of User
+    get '/leads' => 'leads#index'
+    get '/leads/:uid' => 'leads#show', :constraints => { :uid => /[^\/]*/ }
+    post '/leads' => 'leads#create'
+    post '/leads/:uid' => 'leads#update', :constraints => { :uid => /[^\/]*/ }
 
-  # Gmail
-  get '/api/gmail/inbox' => 'gmail#inbox'
-  get '/api/gmail/message/:id' => 'gmail#message'
-  post '/api/gmail/message/:uid' => 'gmail#send_message', :constraints => { :uid => /[^\/]*/ }
-  get '/api/gmail/templates' => 'gmail#templates'
+    # Notes
+    get '/leads/:uid/notes' => 'leads#notes', :constraints => { :uid => /[^\/]*/ }
+    get '/notes' => 'notes#reminders'
+    post '/notes' => 'notes#create', :constraints => { :uid => /[^\/]*/ }
+    post '/notes/:id' => 'notes#update'
+    delete '/notes/:id' => 'notes#destroy'
 
-  # Campaigns
-  get '/api/campaigns' => 'campaigns#index'
-  get '/api/campaigns/:utm_campaign' => 'campaigns#show'
+    # Gmail
+    get '/gmail/inbox' => 'gmail#inbox'
+    get '/gmail/message/:id' => 'gmail#message'
+    post '/gmail/message/:uid' => 'gmail#send_message', :constraints => { :uid => /[^\/]*/ }
+    get '/gmail/templates' => 'gmail#templates'
 
-  # Tasks aka Projects
-  get '/api/tasks' => 'tasks#index'
-  get '/api/tasks/stats' => 'tasks#stats'
-  get '/api/tasks/:id' => 'tasks#summary', :constraints => { :id => /[^\/]*/ }
+    # Campaigns
+    get '/campaigns' => 'campaigns#index'
+    get '/campaigns/:utm_campaign' => 'campaigns#show'
 
-  # Companies
-  get '/api/companies' => 'companies#index'
-  get '/api/companies/locations' => 'companies#locations'
-  get '/api/companies/:id' => 'companies#show', :constraints => { :id => /[^\/]*/ }
+    # Tasks aka Projects
+    get '/tasks' => 'tasks#index'
+    get '/tasks/stats' => 'tasks#stats'
+    get '/tasks/:id' => 'tasks#summary', :constraints => { :id => /[^\/]*/ }
+
+    # Companies
+    get '/companies' => 'companies#index'
+    get '/companies/locations' => 'companies#locations'
+    get '/companies/:id' => 'companies#show', :constraints => { :id => /[^\/]*/ }
+  end
 
   # Ahoy email tracking routes
   mount AhoyEmail::Engine => "/ahoy"
 
   # SEO enabled paths for angular routes
-	get "*path.html" => "pages#index", :layout => 0
+  get "*path.html" => "pages#index", :layout => 0
   get "*path", :to => 'pages#index'
 
 end
