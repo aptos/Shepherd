@@ -29,25 +29,31 @@ class Task < CouchRest::Model::Base
     view :summary,
     :map =>
     "function(doc) {
-    if (doc['type'] == 'Task' && (doc['owner'] != null) && (doc['status'] != null)) {
-      var company = (!!doc.company) ? doc.company : '';
-      var location = (!!doc.location) ? doc.location : '';
-      var start_date = (!!doc.start_date) ? doc.start_date : '';
-      var work_order_id = (!!doc.work_order_id) ? doc.work_order_id : '';
-      var description = (doc.description.length > 300) ? doc.description.substring(0,300) + '...' : doc.description;
-      emit([doc['owner'], doc['status']], {
-        id: doc._id,
-        title: doc.title,
-        location: location,
-        start_date: start_date,
-        status: doc.status,
-        description: description,
-        accepted_bid: doc.accepted_bid,
-        work_order_id: work_order_id,
-        views: doc.views,
-        created_at: doc.created_at });
-    }
-    };"
+      if (doc['type'] == 'Task' && (doc['owner'] != null) && (doc['status'] != null)) {
+        var company = (!!doc.company) ? doc.company : '';
+        var location = (!!doc.location) ? doc.location : '';
+        var start_date = (!!doc.start_date) ? doc.start_date : '';
+        var work_order_id = (!!doc.work_order_id) ? doc.work_order_id : '';
+        var description = (doc.description.length > 300) ? doc.description.substring(0,300) + '...' : doc.description;
+        var team = (!!doc.team) ? doc.team.map(function(m){ return m.id}).concat(doc.owner) : [doc.owner];
+        team.forEach(function(m) {
+          emit([m, doc.status], {
+            id: doc._id,
+            title: doc.title,
+            location: location,
+            start_date: start_date,
+            owner: doc.owner,
+            team: doc.team,
+            status: doc.status,
+            description: description,
+            accepted_bid: doc.accepted_bid,
+            work_order_id: work_order_id,
+            views: doc.views,
+            created_at: doc.created_at
+          });
+        })
+      };
+    }"
   end
 
   design do

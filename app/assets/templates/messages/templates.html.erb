@@ -27,13 +27,21 @@
                 <td></td>
               </tr>
 
-              <tr ng-repeat="message in template.messages">
-                <td >{{message.subject}}</td>
+              <tr ng-repeat-start="message in template.messages">
+                <td class="pointer"><a ng-click="message_results($parent.$index, $index)">{{message.subject}}</a></td>
                 <td name="Sent" class="numeric">{{message.sent}}</td>
                 <td name="Opens" class="numeric">{{message.opened}}</td>
                 <td name="Clicks" class="numeric">{{message.clicked}}</td>
                 <td name="Updated" class="date">{{message.updated | moment:'timeago'}}</td>
               </tr>
+              <tr ng-repeat="result in message.results" ng-show="!!message.display">
+                <td>{{result.to}}</td>
+                <td>{{result.sent_at | moment:'timeago'}}</td>
+                <td>{{result.opened_at | moment:'timeago'}}</td>
+                <td>{{result.clicked_at | moment:'timeago'}}</td>
+              </tr>
+              <tr ng-repeat-end></tr>
+
               <tr ng-repeat-end></tr>
             </tbody>
           </table>

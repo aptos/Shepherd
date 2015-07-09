@@ -59,6 +59,19 @@ angular.module('shepherd.messages',['restangular'])
     });
   };
 
+  $scope.message_results = function (template_idx, subject_idx) {
+    var template = $scope.messages.template_stats[template_idx].name,
+    subject = $scope.messages.template_stats[template_idx].messages[subject_idx].subject;
+
+    $scope.messages.template_stats[template_idx].messages[subject_idx].display = !$scope.messages.template_stats[template_idx].messages[subject_idx].display;
+    if (!$scope.messages.template_stats[template_idx].messages[subject_idx].display) return;
+
+    Restangular.one('messages/at_subject').get({template: template, subject: subject})
+    .then( function(data) {
+      $scope.messages.template_stats[template_idx].messages[subject_idx].results = data;
+    });
+  };
+
   $scope.close = function () {
     $scope.show_message = false;
   };
